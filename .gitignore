@@ -51,3 +51,10 @@ next-env.d.ts
 # OS
 .DS_Store
 Thumbs.db
+
+# Development documentation (PRIVATE - not for public viewing)
+CLAUDE.md
+DESIGN-GUIDE.md
+AIMI-CHARACTER-GUIDE.md
+STATUS.md
+QUICKSTART.md
