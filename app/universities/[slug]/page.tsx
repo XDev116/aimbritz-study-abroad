@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowRight, Award, BookOpen, Building, Calendar, DollarSign, ExternalLink, Globe, MapPin } from "lucide-react";
+import { ArrowRight, Award, BookOpen, Building, Calendar, DollarSign, ExternalLink, Globe, GraduationCap, MapPin } from "lucide-react";
 import { getAllUniversitySlugs, getUniversityBySlug } from "@/lib/data/universities";
 
 interface UniversityPageProps {
