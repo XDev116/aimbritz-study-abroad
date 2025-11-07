@@ -1,0 +1,349 @@
+// This is your Prisma schema file
+// For Phase 1, this schema is ready but not yet connected to a database
+// In Phase 2, you'll connect this to Supabase PostgreSQL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// PHASE 1: Public Website Data Models
+// ============================================================================
+
+model University {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  country     String
+  countryCode String
+  city        String
+  description String   @db.Text
+  logo        String?
+  ranking     Int?
+  website     String?
+  established Int?
+  type        String   // Public or Private
+  courses     Course[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([country])
+  @@index([slug])
+}
+
+model Course {
+  id             String     @id @default(cuid())
+  name           String
+  degree         String     // Bachelor, Master, PhD
+  duration       String
+  tuitionFee     Float
+  currency       String     @default("USD")
+  intakeDates    String[]
+  requirements   String     @db.Text
+  university     University @relation(fields: [universityId], references: [id], onDelete: Cascade)
+  universityId   String
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  @@index([universityId])
+  @@index([degree])
+}
+
+model Country {
+  id              String   @id @default(cuid())
+  name            String   @unique
+  slug            String   @unique
+  code            String   @unique // US, UK, CA, AU
+  flag            String
+  description     String   @db.Text
+  benefits        String[]
+  visaInfo        String   @db.Text
+  costOfLiving    String   @db.Text
+  topCourses      String[]
+  universitiesCount Int    @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([slug])
+  @@index([code])
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String   @db.Text
+  content     String   @db.Text
+  author      String
+  publishedAt DateTime
+  category    String
+  readTime    String
+  image       String?
+  published   Boolean  @default(true)
+  views       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([slug])
+  @@index([category])
+  @@index([publishedAt])
+}
+
+// ============================================================================
+// PHASE 1: AI/RAG - Store embeddings for semantic search (for future chatbot)
+// ============================================================================
+
+model DocumentEmbedding {
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  embedding Float[]  // Vector embedding (requires pgvector extension)
+  metadata  Json     // Store source, type, etc.
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
+
+// ============================================================================
+// PHASE 2: Admin Dashboard & User Management
+// ============================================================================
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String
+  password      String    // Hashed password
+  role          String    @default("admin") // admin, counselor, manager, super_admin
+  avatar        String?
+  phone         String?
+  department    String?
+  isActive      Boolean   @default(true)
+  lastLoginAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  // Relations for future phases
+  applications  Application[]
+  notes         StudentNote[]
+
+  @@index([email])
+  @@index([role])
+}
+
+// ============================================================================
+// PHASE 3: CRM & Student Application Tracking System
+// ============================================================================
+
+model Student {
+  id               String        @id @default(cuid())
+  firstName        String
+  lastName         String
+  email            String        @unique
+  phone            String
+  country          String
+  city             String?
+  dateOfBirth      DateTime?
+  passport         String?
+  // Academic Info
+  education        String?       @db.Text // JSON string for education history
+  testScores       String?       @db.Text // JSON string for test scores (IELTS, TOEFL, etc.)
+  // Application Status
+  status           String        @default("inquiry") // inquiry, consultation, applied, admitted, visa_process, enrolled
+  leadSource       String?       // website, referral, social_media, etc.
+  assignedCounselor String?
+  // Preferences
+  preferredCountries String[]
+  preferredCourses   String[]
+  budget           Float?
+  intakeYear       String?
+  // Metadata
+  applications     Application[]
+  notes            StudentNote[]
+  documents        Document[]
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@index([assignedCounselor])
+}
+
+model Application {
+  id              String    @id @default(cuid())
+  student         Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId       String
+  universityId    String
+  universityName  String
+  courseId        String?
+  courseName      String
+  intake          String    // e.g., "Fall 2025", "Spring 2026"
+  status          String    @default("pending") // pending, submitted, under_review, offer_received, rejected, accepted
+  applicationFee  Float?
+  submittedAt     DateTime?
+  offerDate       DateTime?
+  offerType       String?   // conditional, unconditional
+  deadline        DateTime?
+  notes           String?   @db.Text
+  counselor       User?     @relation(fields: [counselorId], references: [id])
+  counselorId     String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([studentId])
+  @@index([status])
+  @@index([counselorId])
+}
+
+model StudentNote {
+  id          String   @id @default(cuid())
+  student     Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId   String
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    String
+  content     String   @db.Text
+  type        String   // call_log, meeting, email, general
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([studentId])
+  @@index([authorId])
+}
+
+model Document {
+  id          String   @id @default(cuid())
+  student     Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId   String
+  name        String
+  type        String   // passport, transcript, lor, sop, resume, test_scores, etc.
+  url         String
+  uploadedAt  DateTime @default(now())
+  uploadedBy  String?
+
+  @@index([studentId])
+  @@index([type])
+}
+
+// ============================================================================
+// PHASE 4: HRM System (Human Resource Management)
+// ============================================================================
+
+model Employee {
+  id            String    @id @default(cuid())
+  employeeId    String    @unique // EMP001, EMP002, etc.
+  userId        String?   @unique // Link to User table if employee has system access
+  firstName     String
+  lastName      String
+  email         String    @unique
+  phone         String
+  dateOfBirth   DateTime?
+  dateOfJoining DateTime
+  department    String
+  designation   String
+  reportingTo   String?   // Employee ID of manager
+  salary        Float?
+  // Address
+  address       String?   @db.Text
+  city          String?
+  country       String?
+  // Status
+  employmentType String   @default("full_time") // full_time, part_time, contract
+  status        String    @default("active") // active, on_leave, terminated
+  // Relations
+  leaves        Leave[]
+  attendance    Attendance[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([employeeId])
+  @@index([department])
+  @@index([status])
+}
+
+model Leave {
+  id          String    @id @default(cuid())
+  employee    Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  employeeId  String
+  leaveType   String    // sick, casual, vacation, unpaid
+  startDate   DateTime
+  endDate     DateTime
+  days        Int
+  reason      String    @db.Text
+  status      String    @default("pending") // pending, approved, rejected
+  approvedBy  String?
+  approvedAt  DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([employeeId])
+  @@index([status])
+  @@index([startDate])
+}
+
+model Attendance {
+  id          String    @id @default(cuid())
+  employee    Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  employeeId  String
+  date        DateTime  @db.Date
+  checkIn     DateTime?
+  checkOut    DateTime?
+  status      String    @default("present") // present, absent, half_day, work_from_home
+  notes       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([employeeId, date])
+  @@index([employeeId])
+  @@index([date])
+}
+
+// ============================================================================
+// PHASE 5+: Additional Features
+// ============================================================================
+
+// Contact Form Submissions
+model ContactSubmission {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  phone       String
+  country     String?
+  message     String   @db.Text
+  status      String   @default("new") // new, contacted, converted, closed
+  assignedTo  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+// Newsletter Subscriptions
+model Newsletter {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  status      String   @default("active") // active, unsubscribed
+  subscribedAt DateTime @default(now())
+  unsubscribedAt DateTime?
+
+  @@index([email])
+  @@index([status])
+}
+
+// Testimonials
+model Testimonial {
+  id          String   @id @default(cuid())
+  studentName String
+  country     String
+  university  String
+  content     String   @db.Text
+  rating      Int      @default(5)
+  image       String?
+  isApproved  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isApproved])
+}
