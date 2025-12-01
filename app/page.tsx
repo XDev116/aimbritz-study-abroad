@@ -1,14 +1,11 @@
 import Link from "next/link";
-import { ArrowRight, Globe, Users, Award, CheckCircle, BookOpen, FileCheck, Plane, Sparkles, GraduationCap, TrendingUp, Globe2 } from "lucide-react";
+import { ArrowRight, Globe, Users, Award, CheckCircle, BookOpen, FileCheck, Plane, Sparkles, GraduationCap, Globe2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-
-const stats = [
-  { label: "Universities", value: "500+", icon: BookOpen },
-  { label: "Countries", value: "50+", icon: Globe2 },
-  { label: "Students Placed", value: "10,000+", icon: Users },
-  { label: "Success Rate", value: "95%", icon: TrendingUp },
-];
+import { StatsSection } from "@/components/home/stats-section";
+import { SuccessStorySection } from "@/components/home/success-story-section";
+import { FAQSection } from "@/components/home/faq-section";
+import { CinematicHero } from "@/components/home/cinematic-hero";
 
 const countries = [
   {
@@ -138,115 +135,8 @@ const testimonials = [
 export default function HomePage() {
   return (
     <>
-      {/* Hero Section - Full Height Banner */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-white">
-        {/* Decorative Background Elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Large decorative blur orbs */}
-          <div className="absolute top-20 right-20 w-[500px] h-[500px] bg-gradient-to-br from-black/10 via-gray-500/5 to-transparent rounded-full blur-3xl animate-float-slow" />
-          <div className="absolute -bottom-20 -left-20 w-[600px] h-[600px] bg-gradient-to-tr from-black/8 via-gray-500/5 to-transparent rounded-full blur-3xl animate-float-slow-delayed" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-br from-black/3 to-transparent rounded-full blur-3xl" />
-
-          {/* Subtle grid pattern */}
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.015)_1px,transparent_1px)] bg-[size:80px_80px]" />
-
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/50 to-white" />
-        </div>
-
-        <div className="container mx-auto px-6 lg:px-8 relative z-10 py-20">
-          <div className="mx-auto max-w-6xl">
-            {/* Main Hero Content */}
-            <div className="text-center mb-16">
-              {/* Animated Badge */}
-              <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass-card border-2 border-black/10 mb-8 animate-fade-in shadow-lg">
-                <Sparkles className="w-4 h-4 animate-pulse" />
-                <span className="text-sm font-bold bg-gradient-to-r from-black to-gray-700 bg-clip-text text-transparent">
-                  #1 Study Abroad Consultancy
-                </span>
-              </div>
-
-              {/* Massive Headline */}
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight mb-8 leading-tight">
-                <span className="block bg-gradient-to-r from-black via-gray-900 to-black bg-clip-text text-transparent animate-fade-in">
-                  Your Dream
-                </span>
-                <span className="block bg-gradient-to-r from-gray-800 via-black to-gray-800 bg-clip-text text-transparent animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                  University Awaits
-                </span>
-              </h1>
-
-              {/* Subheading */}
-              <p className="mt-6 text-xl sm:text-2xl md:text-3xl leading-relaxed text-gray-600 max-w-4xl mx-auto font-light animate-fade-in" style={{ animationDelay: '0.4s' }}>
-                Expert guidance for studying at top universities across{" "}
-                <span className="font-bold text-black">50+ countries</span>.
-                Your journey to global education starts here.
-              </p>
-
-              {/* CTA Buttons */}
-              <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 animate-fade-in" style={{ animationDelay: '0.6s' }}>
-                <Button size="lg" className="bg-black hover:bg-gray-900 text-white shadow-2xl hover:shadow-3xl transition-all group text-lg px-8 py-7 rounded-2xl" asChild>
-                  <Link href="/universities">
-                    Explore Universities
-                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </Button>
-                <Button size="lg" variant="outline" className="border-2 border-black/30 hover:border-black hover:bg-black hover:text-white transition-all text-lg px-8 py-7 rounded-2xl shadow-lg" asChild>
-                  <Link href="/contact">
-                    <Users className="mr-2 h-5 w-5" />
-                    Book Free Consultation
-                  </Link>
-                </Button>
-              </div>
-
-              {/* Trust Indicators */}
-              <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-sm text-gray-500 animate-fade-in" style={{ animationDelay: '0.8s' }}>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-600" />
-                  <span>Free Consultation</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-600" />
-                  <span>95% Success Rate</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-600" />
-                  <span>10,000+ Students Placed</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Stats Grid with Glass Cards - Enhanced */}
-            <div className="grid grid-cols-2 gap-6 sm:grid-cols-4 sm:gap-8 animate-fade-in" style={{ animationDelay: '1s' }}>
-              {stats.map((stat, index) => (
-                <div
-                  key={stat.label}
-                  className="glass-card rounded-3xl p-8 border-2 border-black/5 hover:border-black/20 transition-all hover:scale-105 hover:shadow-2xl group cursor-pointer"
-                  style={{ animationDelay: `${1 + index * 0.1}s` }}
-                >
-                  <div className="flex flex-col items-center text-center">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-black to-gray-800 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
-                      <stat.icon className="w-7 h-7 text-white" />
-                    </div>
-                    <div className="text-4xl sm:text-5xl font-black bg-gradient-to-br from-black to-gray-700 bg-clip-text text-transparent">
-                      {stat.value}
-                    </div>
-                    <div className="mt-2 text-sm font-bold text-gray-600 uppercase tracking-wide">{stat.label}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Scroll Indicator */}
-            <div className="mt-20 text-center animate-bounce">
-              <div className="inline-flex flex-col items-center gap-2 text-gray-400">
-                <span className="text-xs uppercase tracking-wider font-semibold">Scroll to explore</span>
-                <ArrowRight className="w-5 h-5 rotate-90" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Cinematic Hero Section - Video-Style Animation */}
+      <CinematicHero />
 
       {/* Popular Destinations */}
       <section className="py-20 bg-gradient-to-b from-white to-gray-50/50 relative overflow-hidden">
@@ -302,6 +192,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Statistics Section with Animated Counters */}
+      <StatsSection />
 
       {/* How It Works - Timeline Style */}
       <section className="py-20 bg-white relative overflow-hidden">
@@ -402,6 +295,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Success Story / Our Journey Section */}
+      <SuccessStorySection />
+
       {/* Testimonials */}
       <section className="py-20 bg-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(0,0,0,0.03),transparent_50%)]" />
@@ -446,6 +342,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* FAQ Section */}
+      <FAQSection />
 
       {/* CTA Section with Glassmorphic Banner */}
       <section className="py-20 bg-gradient-to-br from-black via-gray-900 to-black text-white relative overflow-hidden">

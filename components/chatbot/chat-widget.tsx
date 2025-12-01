@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { X, Send, Minimize2, User, Sparkles } from "lucide-react";
+import { X, Send, Minimize2, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ProfessorCharacter } from "./professor-character";
 
 interface Message {
   id: string;
@@ -15,10 +16,12 @@ interface Message {
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
+  const [hasWalkedIn, setHasWalkedIn] = useState(false);
+  const [showGreeting, setShowGreeting] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      text: "Hi! I'm Aimi, your AI study abroad companion. I'm here to guide you through your journey to global education. How can I help you today?",
+      text: "Hi! 👋 I'm your AimBritz study abroad assistant. I have information about the top 100 universities worldwide!\n\nTry asking me:\n• 'Show me UK universities'\n• 'Tell me about Oxford'\n• 'Universities for Computer Science'\n• 'Affordable universities'\n\nWhat would you like to know?",
       sender: "bot",
       timestamp: new Date(),
     },
@@ -35,7 +38,24 @@ export function ChatWidget() {
     scrollToBottom();
   }, [messages]);
 
-  const handleSendMessage = () => {
+  // Walk-in animation on page load
+  useEffect(() => {
+    const walkInTimer = setTimeout(() => {
+      setHasWalkedIn(true);
+      // Show greeting after walk-in
+      setTimeout(() => {
+        setShowGreeting(true);
+        // Auto-hide greeting after 8 seconds
+        setTimeout(() => {
+          setShowGreeting(false);
+        }, 8000);
+      }, 500);
+    }, 1000);
+
+    return () => clearTimeout(walkInTimer);
+  }, []);
+
+  const handleSendMessage = async () => {
     if (!inputValue.trim()) return;
 
     const userMessage: Message = {
@@ -46,258 +66,240 @@ export function ChatWidget() {
     };
 
     setMessages((prev) => [...prev, userMessage]);
+    const userQuestion = inputValue;
     setInputValue("");
     setIsTyping(true);
 
-    // Simulate bot response
-    setTimeout(() => {
-      const botMessage: Message = {
+    try {
+      // Call Gemini API
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          messages: [{ content: userQuestion, role: "user" }],
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        // Show error message
+        const errorMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          text: `⚠️ ${data.error}\n\nPlease contact support if this issue persists.`,
+          sender: "bot",
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, errorMessage]);
+      } else {
+        // Show AI response
+        const botMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          text: data.message,
+          sender: "bot",
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, botMessage]);
+      }
+    } catch (error) {
+      console.error("Chat error:", error);
+      // Show fallback error message
+      const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: "Thanks for your message! I'm currently in demo mode, but soon I'll be able to help you find the perfect university, guide you through visa applications, and answer all your study abroad questions. Feel free to contact our team for immediate assistance!",
+        text: "Sorry, I'm having trouble connecting right now. Please try again in a moment.",
         sender: "bot",
         timestamp: new Date(),
       };
-      setMessages((prev) => [...prev, botMessage]);
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
       setIsTyping(false);
-    }, 1500);
+    }
   };
 
   const quickActions = [
-    "Find Universities 🎓",
-    "Visa Information 🛂",
-    "Application Process 📝",
-    "Talk to Counselor 👨‍🎓",
+    { icon: "🇬🇧", text: "UK Universities", action: () => {
+      setInputValue("Show me UK universities");
+      setTimeout(() => handleSendMessage(), 100);
+    }},
+    { icon: "💻", text: "Computer Science", action: () => {
+      setInputValue("Universities for Computer Science");
+      setTimeout(() => handleSendMessage(), 100);
+    }},
+    { icon: "💰", text: "Budget Options", action: () => {
+      setInputValue("Affordable universities");
+      setTimeout(() => handleSendMessage(), 100);
+    }},
+    { icon: "📞", text: "Contact Us", action: () => window.location.href = "/contact" },
   ];
 
   return (
     <>
-      {/* Floating Aimi Character - Always Visible */}
+      {/* Professional Business Character */}
       {!isOpen && (
-        <button
-          onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 group"
-          aria-label="Open chat with Aimi"
-        >
-          {/* Outer Orbit Ring - Rotates */}
-          <div className="absolute inset-0 w-24 h-24 sm:w-28 sm:h-28 -left-4 -top-4">
-            <div className="absolute inset-0 rounded-full border-2 border-black/20 animate-spin-slow"
-                 style={{ animationDuration: '20s' }}>
-              {/* Orbit Dots */}
-              <div className="absolute top-0 left-1/2 w-2 h-2 bg-black rounded-full -translate-x-1/2" />
-              <div className="absolute bottom-0 left-1/2 w-2 h-2 bg-black/60 rounded-full -translate-x-1/2" />
-            </div>
-          </div>
-
-          {/* Middle Pulse Ring */}
-          <div className="absolute inset-0 w-20 h-20 sm:w-24 sm:h-24 -left-2 -top-2 animate-pulse-ring" />
-
-          {/* Main Aimi Orb - 3D Glassmorphic Sphere */}
-          <div className="relative w-16 h-16 sm:w-20 sm:h-20 group-hover:scale-110 transition-all duration-500 ease-out">
-            {/* Glow Effect */}
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-black via-gray-800 to-black blur-xl opacity-40 animate-glow" />
-
-            {/* Main Glass Orb */}
-            <div className="relative w-full h-full rounded-full overflow-hidden shadow-2xl">
-              {/* Glass layers for 3D depth */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/90 via-gray-100/80 to-gray-300/70 backdrop-blur-xl" />
-
-              {/* Inner gradient sphere */}
-              <div className="absolute inset-2 rounded-full bg-gradient-to-br from-gray-900 via-gray-800 to-black shadow-inner" />
-
-              {/* Highlight shine effect */}
-              <div className="absolute top-2 left-2 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-white/60 to-transparent blur-sm" />
-
-              {/* Center AI Icon - Animated */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative">
-                  {/* AI Brain Pattern */}
-                  <svg
-                    className="w-8 h-8 sm:w-10 sm:h-10 text-white animate-float"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <circle cx="12" cy="12" r="3" fill="currentColor" />
-                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"
-                          strokeLinecap="round"
-                          className="animate-pulse" />
-                  </svg>
-
-                  {/* Sparkle accent */}
-                  <Sparkles className="absolute -top-1 -right-1 w-3 h-3 text-white animate-twinkle" />
-                </div>
+        <div className={`fixed bottom-6 right-6 z-50 ${!hasWalkedIn ? "translate-x-[200%]" : ""} transition-all duration-1000 ease-out`}>
+          {/* Greeting Speech Bubble */}
+          {showGreeting && hasWalkedIn && (
+            <div className="absolute bottom-full right-0 mb-4 animate-slide-down">
+              <div className="relative bg-white rounded-2xl shadow-2xl px-5 py-4 border border-gray-200 max-w-[280px]">
+                <p className="text-base font-bold text-gray-900 mb-1">
+                  👋 How can I help you?
+                </p>
+                <p className="text-sm text-gray-600">
+                  I'm here to guide your study abroad journey
+                </p>
+                {/* Speech bubble tail */}
+                <div className="absolute -bottom-2 right-12 w-4 h-4 bg-white border-r border-b border-gray-200 transform rotate-45" />
               </div>
+            </div>
+          )}
 
-              {/* Glass reflection */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent" />
+          {/* Professional 3D Character */}
+          <button
+            onClick={() => {
+              setIsOpen(true);
+              setShowGreeting(false);
+            }}
+            className="relative group focus:outline-none"
+            aria-label="Chat with advisor"
+          >
+            {/* Scalable Professor Character Component */}
+            <ProfessorCharacter
+              expression="happy"
+              pose="waving"
+              outfit="default"
+              size={200}
+              animate={true}
+            />
+
+            {/* Chat Notification Badge - Animated */}
+            <div className="absolute -top-2 -right-2 w-10 h-10 bg-gradient-to-br from-green-400 via-green-500 to-green-600 rounded-full border-4 border-white shadow-lg animate-bounce-notification flex items-center justify-center">
+              <span className="text-white text-base font-bold">💬</span>
             </div>
 
-            {/* Active Status Ring */}
-            <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-gradient-to-br from-green-400 to-green-600 rounded-full border-3 border-white shadow-lg animate-pulse-slow" />
-          </div>
-
-          {/* Speech Bubble "Hi! I'm Aimi 👋" */}
-          <div className="absolute bottom-full right-0 mb-6 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none animate-bounce-slow">
-            <div className="glass-card rounded-2xl px-5 py-3 shadow-2xl whitespace-nowrap backdrop-blur-xl border-2 border-black/10">
-              <p className="text-sm font-bold bg-gradient-to-r from-black via-gray-800 to-black bg-clip-text text-transparent">
-                Hi! I'm Aimi 👋
-              </p>
-              <p className="text-xs text-gray-600 mt-0.5">Your AI study companion</p>
-              {/* Arrow pointing down */}
-              <div className="absolute top-full right-8 w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-white/90" />
+            {/* Hover tooltip - Enhanced */}
+            <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
+              <span className="text-sm font-bold text-gray-900 bg-white px-5 py-2.5 rounded-xl shadow-2xl border-2 border-gray-200">
+                👋 Click to chat!
+              </span>
             </div>
-          </div>
-
-          {/* Floating particles effect */}
-          <div className="absolute inset-0 w-32 h-32 -left-8 -top-8 pointer-events-none">
-            <div className="absolute top-4 left-4 w-1 h-1 bg-black/30 rounded-full animate-float-particle-1" />
-            <div className="absolute top-8 right-6 w-1.5 h-1.5 bg-black/20 rounded-full animate-float-particle-2" />
-            <div className="absolute bottom-6 left-8 w-1 h-1 bg-black/25 rounded-full animate-float-particle-3" />
-          </div>
-        </button>
+          </button>
+        </div>
       )}
 
       {/* Chat Window */}
       {isOpen && (
         <div
-          className={`fixed bottom-6 right-6 z-50 w-[calc(100vw-3rem)] sm:w-96 transition-all duration-300 ${
-            isMinimized ? "h-16" : "h-[600px] max-h-[80vh]"
-          }`}
+          className={`fixed bottom-6 right-6 z-50 transition-all duration-300 ${
+            isMinimized ? "w-80 h-16" : "w-full sm:w-96 h-[600px]"
+          } max-w-[calc(100vw-3rem)] max-h-[calc(100vh-3rem)]`}
         >
-          <div className="glass-card rounded-2xl shadow-2xl h-full flex flex-col overflow-hidden border-2 border-black/10">
-            {/* Header with Aimi */}
-            <div className="bg-gradient-to-r from-black via-gray-900 to-black text-white px-4 py-4 sm:px-6 sm:py-5 flex items-center justify-between border-b border-white/10">
+          <div className="glass-card rounded-3xl shadow-2xl h-full flex flex-col overflow-hidden border border-gray-200 animate-scale-in">
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-600">
               <div className="flex items-center gap-3">
-                {/* Mini Aimi Avatar */}
-                <div className="relative">
-                  <div className="w-11 h-11 rounded-full bg-gradient-to-br from-white/90 via-gray-200/80 to-gray-400/70 backdrop-blur-xl flex items-center justify-center shadow-lg border-2 border-white/20">
-                    <svg
-                      className="w-6 h-6 text-black animate-float"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <circle cx="12" cy="12" r="3" fill="currentColor" />
-                      <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"
-                            strokeLinecap="round" />
-                    </svg>
-                  </div>
-                  <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-black animate-pulse" />
+                {/* Mini Avatar */}
+                <div className="relative w-12 h-12 rounded-full bg-white shadow-lg overflow-hidden border-2 border-white">
+                  <svg viewBox="0 0 100 100" className="w-full h-full">
+                    <rect width="100" height="100" fill="#f8fafc" />
+                    <ellipse cx="50" cy="40" rx="18" ry="20" fill="#fcd9b8" />
+                    <circle cx="45" cy="38" r="3" fill="#1e293b" />
+                    <circle cx="55" cy="38" r="3" fill="#1e293b" />
+                    <path d="M 42 48 Q 50 52 58 48" stroke="#dc2626" strokeWidth="2" fill="none" strokeLinecap="round" />
+                    <rect x="40" y="35" width="8" height="6" fill="none" stroke="#1e293b" strokeWidth="1.5" rx="1" />
+                    <rect x="52" y="35" width="8" height="6" fill="none" stroke="#1e293b" strokeWidth="1.5" rx="1" />
+                    <path d="M 35 28 Q 50 22 65 28 L 65 35 Q 50 32 35 35 Z" fill="#3b3228" />
+                    <rect x="30" y="55" width="40" height="30" fill="#3b82f6" />
+                    <rect x="47" y="55" width="6" height="15" fill="#dc2626" />
+                  </svg>
+                  <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse" />
                 </div>
 
-                {/* Aimi Info */}
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-bold text-base sm:text-lg flex items-center gap-2">
-                    Aimi
-                    <Sparkles className="w-4 h-4 text-yellow-400 animate-twinkle" />
-                  </h3>
-                  <p className="text-xs text-gray-300 flex items-center gap-1.5">
+                <div>
+                  <h3 className="font-bold text-white text-lg">Study Abroad Advisor</h3>
+                  <p className="text-xs text-blue-100 flex items-center gap-1">
                     <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                    AI Study Companion • Online
+                    Online Now
                   </p>
                 </div>
               </div>
 
-              {/* Actions */}
-              <div className="flex items-center gap-2">
+              <div className="flex gap-2">
                 <button
                   onClick={() => setIsMinimized(!isMinimized)}
-                  className="hover:bg-white/10 p-2 rounded-lg transition-colors"
-                  aria-label={isMinimized ? "Maximize" : "Minimize"}
+                  className="p-2 hover:bg-white/10 rounded-xl transition-colors"
+                  aria-label="Minimize"
                 >
-                  <Minimize2 className="w-4 h-4" />
+                  <Minimize2 className="h-5 w-5 text-white" />
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="hover:bg-white/10 p-2 rounded-lg transition-colors"
+                  className="p-2 hover:bg-white/10 rounded-xl transition-colors"
                   aria-label="Close chat"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="h-5 w-5 text-white" />
                 </button>
               </div>
             </div>
 
-            {/* Chat Content - Hidden when minimized */}
             {!isMinimized && (
               <>
                 {/* Messages Area */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-br from-white/50 via-gray-50/50 to-white/50">
+                <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-gray-50 to-white">
                   {messages.map((message) => (
                     <div
                       key={message.id}
-                      className={`flex items-start gap-2 animate-slide-in ${
-                        message.sender === "user" ? "flex-row-reverse" : "flex-row"
+                      className={`flex gap-3 animate-slide-in ${
+                        message.sender === "user" ? "justify-end" : "justify-start"
                       }`}
                     >
-                      {/* Avatar */}
-                      <div
-                        className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
-                          message.sender === "user"
-                            ? "bg-gradient-to-br from-black to-gray-800 text-white shadow-lg"
-                            : "bg-gradient-to-br from-white/90 via-gray-100/80 to-gray-200/70 backdrop-blur-xl border-2 border-black/10 shadow-md"
-                        }`}
-                      >
-                        {message.sender === "user" ? (
-                          <User className="w-4 h-4" />
-                        ) : (
-                          <svg
-                            className="w-4 h-4 text-black"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                          >
-                            <circle cx="12" cy="12" r="2" fill="currentColor" />
-                            <path d="M12 4v3M12 17v3M6.34 6.34l2.12 2.12M15.54 15.54l2.12 2.12M4 12h3M17 12h3M6.34 17.66l2.12-2.12M15.54 8.46l2.12-2.12"
-                                  strokeLinecap="round" />
-                          </svg>
-                        )}
-                      </div>
+                      {message.sender === "bot" && (
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 border-2 border-blue-600 flex items-center justify-center flex-shrink-0 shadow-md">
+                          <span className="text-xs">👔</span>
+                        </div>
+                      )}
 
-                      {/* Message Bubble */}
                       <div
-                        className={`max-w-[75%] rounded-2xl px-4 py-2.5 shadow-md ${
+                        className={`max-w-[75%] rounded-2xl px-4 py-3 shadow-sm ${
                           message.sender === "user"
-                            ? "bg-gradient-to-br from-black to-gray-900 text-white"
-                            : "glass-card border border-black/5"
+                            ? "bg-blue-600 text-white rounded-br-none"
+                            : "bg-white border border-gray-200 text-gray-900 rounded-bl-none"
                         }`}
                       >
-                        <p className="text-sm leading-relaxed">{message.text}</p>
-                        <p className={`text-xs mt-1.5 ${
-                          message.sender === "user" ? "text-gray-400" : "text-gray-500"
-                        }`}>
+                        <p className="text-sm whitespace-pre-line">{message.text}</p>
+                        <span className="text-xs opacity-70 mt-1 block">
                           {message.timestamp.toLocaleTimeString([], {
                             hour: "2-digit",
                             minute: "2-digit",
                           })}
-                        </p>
+                        </span>
                       </div>
+
+                      {message.sender === "user" && (
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center flex-shrink-0 shadow-md">
+                          <User className="h-4 w-4 text-white" />
+                        </div>
+                      )}
                     </div>
                   ))}
 
-                  {/* Typing Indicator */}
                   {isTyping && (
-                    <div className="flex items-start gap-2 animate-slide-in">
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 bg-gradient-to-br from-white/90 via-gray-100/80 to-gray-200/70 backdrop-blur-xl border-2 border-black/10">
-                        <svg
-                          className="w-4 h-4 text-black"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                        >
-                          <circle cx="12" cy="12" r="2" fill="currentColor" />
-                          <path d="M12 4v3M12 17v3M6.34 6.34l2.12 2.12M15.54 15.54l2.12 2.12M4 12h3M17 12h3M6.34 17.66l2.12-2.12M15.54 8.46l2.12-2.12"
-                                strokeLinecap="round" />
-                        </svg>
+                    <div className="flex gap-3 animate-slide-in">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 border-2 border-blue-600 flex items-center justify-center shadow-md">
+                        <span className="text-xs">👔</span>
                       </div>
-                      <div className="glass-card rounded-2xl px-4 py-3 border border-black/5">
-                        <div className="flex gap-1.5">
-                          <div className="w-2 h-2 bg-gray-600 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                          <div className="w-2 h-2 bg-gray-600 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                          <div className="w-2 h-2 bg-gray-600 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                      <div className="bg-white border border-gray-200 rounded-2xl rounded-bl-none px-4 py-3 shadow-sm">
+                        <div className="flex gap-1">
+                          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
+                          <div
+                            className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                            style={{ animationDelay: "0.2s" }}
+                          />
+                          <div
+                            className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                            style={{ animationDelay: "0.4s" }}
+                          />
                         </div>
                       </div>
                     </div>
@@ -306,52 +308,46 @@ export function ChatWidget() {
                   <div ref={messagesEndRef} />
                 </div>
 
-                {/* Quick Actions */}
-                {messages.length === 1 && (
-                  <div className="px-4 pb-3 bg-white/50 border-t border-black/5">
-                    <p className="text-xs text-gray-600 mb-2 font-medium">Quick actions:</p>
-                    <div className="flex flex-wrap gap-2">
-                      {quickActions.map((action) => (
-                        <button
-                          key={action}
-                          onClick={() => setInputValue(action)}
-                          className="glass-card px-3 py-2 rounded-full text-xs font-medium hover:bg-white hover:shadow-md transition-all border border-black/5 hover:scale-105"
-                        >
-                          {action}
-                        </button>
-                      ))}
-                    </div>
+                {/* Quick Actions - Compact */}
+                <div className="px-4 py-2 border-t border-gray-200 bg-gray-50">
+                  <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+                    {quickActions.map((action, index) => (
+                      <button
+                        key={index}
+                        onClick={action.action}
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-gray-100 rounded-full transition-all text-xs font-medium border border-gray-200 shadow-sm whitespace-nowrap flex-shrink-0"
+                      >
+                        <span className="text-sm">{action.icon}</span>
+                        <span>{action.text}</span>
+                      </button>
+                    ))}
                   </div>
-                )}
+                </div>
 
                 {/* Input Area */}
-                <div className="p-4 bg-white border-t-2 border-black/5">
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      handleSendMessage();
-                    }}
-                    className="flex gap-2"
-                  >
+                <div className="p-4 border-t border-gray-200 bg-white">
+                  <div className="flex gap-2">
                     <Input
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
-                      placeholder="Ask Aimi anything..."
-                      className="flex-1 border-black/20 focus:border-black h-11 rounded-xl"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          handleSendMessage();
+                        }
+                      }}
+                      placeholder="Type your message..."
+                      className="flex-1 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                     />
                     <Button
-                      type="submit"
-                      size="icon"
-                      className="bg-gradient-to-br from-black to-gray-900 text-white hover:from-gray-900 hover:to-black shrink-0 h-11 w-11 rounded-xl shadow-lg"
+                      onClick={handleSendMessage}
                       disabled={!inputValue.trim()}
+                      className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-6 shadow-md"
                     >
-                      <Send className="w-4 h-4" />
+                      <Send className="h-4 w-4" />
                     </Button>
-                  </form>
-
-                  {/* Powered by */}
-                  <p className="text-xs text-center text-gray-500 mt-3">
-                    Powered by AI • <span className="font-semibold bg-gradient-to-r from-black to-gray-700 bg-clip-text text-transparent">AimBritz</span>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2 text-center">
+                    We're here to help you achieve your study abroad dreams! 🎓
                   </p>
                 </div>
               </>
@@ -359,120 +355,6 @@ export function ChatWidget() {
           </div>
         </div>
       )}
-
-      {/* Custom Animations */}
-      <style jsx global>{`
-        @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-
-        @keyframes pulse-ring {
-          0%, 100% {
-            transform: scale(1);
-            opacity: 0.3;
-          }
-          50% {
-            transform: scale(1.1);
-            opacity: 0.1;
-          }
-        }
-
-        @keyframes glow {
-          0%, 100% { opacity: 0.4; }
-          50% { opacity: 0.6; }
-        }
-
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-3px); }
-        }
-
-        @keyframes twinkle {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.3; transform: scale(0.8); }
-        }
-
-        @keyframes pulse-slow {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.7; }
-        }
-
-        @keyframes bounce-slow {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-5px); }
-        }
-
-        @keyframes float-particle-1 {
-          0%, 100% { transform: translate(0, 0); opacity: 0.3; }
-          50% { transform: translate(10px, -20px); opacity: 0; }
-        }
-
-        @keyframes float-particle-2 {
-          0%, 100% { transform: translate(0, 0); opacity: 0.3; }
-          50% { transform: translate(-15px, -25px); opacity: 0; }
-        }
-
-        @keyframes float-particle-3 {
-          0%, 100% { transform: translate(0, 0); opacity: 0.3; }
-          50% { transform: translate(8px, -18px); opacity: 0; }
-        }
-
-        @keyframes slide-in {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .animate-spin-slow {
-          animation: spin-slow 20s linear infinite;
-        }
-
-        .animate-pulse-ring {
-          animation: pulse-ring 2s ease-in-out infinite;
-        }
-
-        .animate-glow {
-          animation: glow 3s ease-in-out infinite;
-        }
-
-        .animate-float {
-          animation: float 3s ease-in-out infinite;
-        }
-
-        .animate-twinkle {
-          animation: twinkle 2s ease-in-out infinite;
-        }
-
-        .animate-pulse-slow {
-          animation: pulse-slow 2s ease-in-out infinite;
-        }
-
-        .animate-bounce-slow {
-          animation: bounce-slow 2s ease-in-out infinite;
-        }
-
-        .animate-float-particle-1 {
-          animation: float-particle-1 4s ease-in-out infinite;
-        }
-
-        .animate-float-particle-2 {
-          animation: float-particle-2 5s ease-in-out infinite 1s;
-        }
-
-        .animate-float-particle-3 {
-          animation: float-particle-3 4.5s ease-in-out infinite 0.5s;
-        }
-
-        .animate-slide-in {
-          animation: slide-in 0.3s ease-out;
-        }
-      `}</style>
     </>
   );
 }

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Logo, LogoIcon } from "./logo";
@@ -62,7 +62,17 @@ export function Header() {
           </div>
 
           {/* Desktop CTA */}
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+          <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-4">
+            <Button
+              variant="outline"
+              className="border-black text-black hover:bg-black hover:text-white rounded-xl transition-colors"
+              asChild
+            >
+              <a href="tel:+1234567890" className="flex items-center gap-2">
+                <Phone className="h-4 w-4" />
+                Talk to Expert
+              </a>
+            </Button>
             <Button className="bg-black hover:bg-gray-900 text-white shadow-lg rounded-xl" asChild>
               <Link href="/contact">Get Started</Link>
             </Button>
@@ -108,7 +118,17 @@ export function Header() {
                 ))}
               </div>
 
-              <div className="mt-8 pt-6 border-t border-black/10">
+              <div className="mt-8 pt-6 border-t border-black/10 space-y-3">
+                <Button
+                  variant="outline"
+                  className="w-full border-black text-black hover:bg-black hover:text-white rounded-xl py-6"
+                  asChild
+                >
+                  <a href="tel:+1234567890" className="flex items-center justify-center gap-2">
+                    <Phone className="h-5 w-5" />
+                    Talk to Expert
+                  </a>
+                </Button>
                 <Button asChild className="w-full bg-black hover:bg-gray-900 text-white shadow-lg rounded-xl py-6">
                   <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>
                     Get Started
