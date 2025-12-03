@@ -1,7 +1,6 @@
 import { MetadataRoute } from 'next';
 import { countries, getAllCountrySlugs } from '@/lib/data/countries';
 import { universities, getAllUniversitySlugs } from '@/lib/data/universities';
-import { blogPosts, getAllBlogSlugs } from '@/lib/data/blog';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://aimbritz.com';
@@ -13,7 +12,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/countries',
     '/universities',
     '/services',
-    '/blog',
     '/contact',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
@@ -38,13 +36,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  // Blog pages
-  const blogPages = getAllBlogSlugs().map((slug) => ({
-    url: `${baseUrl}/blog/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.6,
-  }));
-
-  return [...staticPages, ...countryPages, ...universityPages, ...blogPages];
+  return [...staticPages, ...countryPages, ...universityPages];
 }
