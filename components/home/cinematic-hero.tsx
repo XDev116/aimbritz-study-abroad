@@ -61,6 +61,67 @@ export function CinematicHero() {
   const [count, setCount] = useState(0);
   const [questionWordIndex, setQuestionWordIndex] = useState(0);
   const [showMainText, setShowMainText] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [videosLoaded, setVideosLoaded] = useState(false);
+
+  // Preload critical images on mount
+  useEffect(() => {
+    const imagesToPreload = [
+      ...PLACEHOLDER_IMAGES.students.slice(0, 8),
+      "/team/team1.png",
+      "/team/team2.png",
+      "/team/team3.png",
+      "/team/team4.png",
+      "/team/team5.png",
+      "/team/team6.png",
+    ];
+
+    let loadedCount = 0;
+    const totalImages = imagesToPreload.length;
+
+    imagesToPreload.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        loadedCount++;
+        if (loadedCount === totalImages) {
+          setImagesLoaded(true);
+        }
+      };
+      img.onerror = () => {
+        loadedCount++;
+        if (loadedCount === totalImages) {
+          setImagesLoaded(true);
+        }
+      };
+    });
+
+    // Preload videos
+    const videos = [
+      "/videos/University_Choice_Background_Video.mp4",
+      "/videos/Website_Banner_Video_Creation.mp4",
+      "/videos/Graduation_Video_for_Study_Abroad.mp4",
+    ];
+
+    let videosLoadedCount = 0;
+    videos.forEach((src) => {
+      const video = document.createElement("video");
+      video.preload = "auto";
+      video.src = src;
+      video.onloadeddata = () => {
+        videosLoadedCount++;
+        if (videosLoadedCount === videos.length) {
+          setVideosLoaded(true);
+        }
+      };
+      video.onerror = () => {
+        videosLoadedCount++;
+        if (videosLoadedCount === videos.length) {
+          setVideosLoaded(true);
+        }
+      };
+    });
+  }, []);
 
   // Question word animation for Scene 0
   useEffect(() => {
@@ -112,26 +173,50 @@ export function CinematicHero() {
 
   return (
     <div className="relative w-full h-[90vh] min-h-[600px] overflow-hidden bg-white">
-      {/* Animated World Map Background - Optimized */}
+      {/* Loading Screen */}
+      {(!imagesLoaded || !videosLoaded) && (
+        <div className="absolute inset-0 bg-white z-50 flex items-center justify-center">
+          <div className="text-center">
+            <div className="w-16 h-16 border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-lg font-semibold text-gray-700">Loading Experience...</p>
+            <p className="text-sm text-gray-500 mt-2">
+              {!imagesLoaded && !videosLoaded ? "Loading images and videos" :
+               !imagesLoaded ? "Loading images" : "Loading videos"}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Animated World Map Background - Your Custom SVG */}
       <div
-        className="absolute inset-0 opacity-20 pointer-events-none z-0"
-        style={{
-          backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Equirectangular_projection_SW.jpg/1280px-Equirectangular_projection_SW.jpg')`,
-          backgroundSize: '200% 100%',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'repeat-x',
-          filter: 'grayscale(100%) brightness(1.2)',
-          animation: 'scroll-bg 120s linear infinite',
-        }}
-      />
+        className="absolute inset-0 opacity-15 pointer-events-none z-0 overflow-hidden"
+      >
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '200vw',
+            height: '100%',
+            backgroundImage: `url('/images/worldmap/68624446_sl_070722_51460_26.svg')`,
+            backgroundSize: 'auto 100%',
+            backgroundPosition: '0 center',
+            backgroundRepeat: 'repeat-x',
+            animation: 'scroll-bg 120s linear infinite',
+            WebkitBackfaceVisibility: 'hidden',
+            backfaceVisibility: 'hidden',
+            willChange: 'transform',
+          }}
+        />
+      </div>
 
       <style jsx>{`
         @keyframes scroll-bg {
           from {
-            background-position: 0% center;
+            transform: translateX(0);
           }
           to {
-            background-position: 100% center;
+            transform: translateX(-50%);
           }
         }
       `}</style>
@@ -224,7 +309,8 @@ export function CinematicHero() {
                           src={img}
                           alt={`Student ${i}`}
                           className="w-full h-full object-cover"
-                          loading="lazy"
+                          loading={i < 3 ? "eager" : "lazy"}
+                          decoding="async"
                         />
                       </div>
 
@@ -281,7 +367,7 @@ export function CinematicHero() {
         {scene === 2 && (
           <motion.div
             key="scene2"
-            className="absolute inset-0 bg-white"
+            className="absolute inset-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -294,18 +380,19 @@ export function CinematicHero() {
                 animate={{ opacity: [0, 1, 1, 0] }}
                 transition={{ duration: 2, times: [0, 0.1, 0.9, 1] }}
               >
-                <div className="absolute inset-0 flex items-center justify-center bg-white">
+                <div className="absolute inset-0 flex items-center justify-center">
                   <video
                     autoPlay
                     muted
                     loop
                     playsInline
+                    preload="auto"
                     className="w-full h-full object-cover md:object-contain"
                   >
                     <source src="/videos/University_Choice_Background_Video.mp4" type="video/mp4" />
                   </video>
                 </div>
-                <div className="absolute inset-0 bg-black/30" />
+                <div className="absolute inset-0 bg-black/20" />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <motion.div
                     className="text-center px-6"
@@ -331,18 +418,19 @@ export function CinematicHero() {
               animate={{ opacity: [0, 0, 1, 1, 0] }}
               transition={{ duration: 4, times: [0, 0.5, 0.6, 0.9, 1] }}
             >
-              <div className="absolute inset-0 flex items-center justify-center bg-white">
+              <div className="absolute inset-0 flex items-center justify-center">
                 <video
                   autoPlay
                   muted
                   loop
                   playsInline
+                  preload="auto"
                   className="w-full h-full object-cover md:object-contain"
                 >
                   <source src="/videos/Website_Banner_Video_Creation.mp4" type="video/mp4" />
                 </video>
               </div>
-              <div className="absolute inset-0 bg-black/30" />
+              <div className="absolute inset-0 bg-black/20" />
               <div className="absolute inset-0 flex items-center justify-center">
                 <motion.div
                   className="text-center px-6"
@@ -367,18 +455,19 @@ export function CinematicHero() {
               animate={{ opacity: [0, 0, 0, 1, 1] }}
               transition={{ duration: 6, times: [0, 0.6, 0.7, 0.8, 1] }}
             >
-              <div className="absolute inset-0 flex items-center justify-center bg-white">
+              <div className="absolute inset-0 flex items-center justify-center">
                 <video
                   autoPlay
                   muted
                   loop
                   playsInline
+                  preload="auto"
                   className="w-full h-full object-cover md:object-contain"
                 >
                   <source src="/videos/Graduation_Video_for_Study_Abroad.mp4" type="video/mp4" />
                 </video>
               </div>
-              <div className="absolute inset-0 bg-black/30" />
+              <div className="absolute inset-0 bg-black/20" />
               <div className="absolute inset-0 flex items-center justify-center">
                 <motion.div
                   className="text-center px-6"

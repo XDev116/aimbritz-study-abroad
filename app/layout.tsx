@@ -46,6 +46,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable}>
+      <head>
+        {/* Preload critical resources */}
+        <link rel="preload" as="image" href="/images/students/student1.png" />
+        <link rel="preload" as="image" href="/images/students/student2.png" />
+        <link rel="preload" as="image" href="/images/students/student3.png" />
+        <link rel="preload" as="video" href="/videos/University_Choice_Background_Video.mp4" />
+        <link rel="dns-prefetch" href="https://upload.wikimedia.org" />
+        <link rel="preconnect" href="https://upload.wikimedia.org" crossOrigin="anonymous" />
+      </head>
       <body className="antialiased flex flex-col min-h-screen">
         <Header />
         <main className="flex-1">{children}</main>

@@ -810,6 +810,37 @@
   }
 
   /* ===== End 3D Character Animations ===== */
+
+  /* University Logo Scroll Animation */
+  @keyframes university-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .university-scroll {
+    animation: university-scroll 30s linear infinite;
+  }
+
+  .university-scroll:hover {
+    animation-play-state: paused;
+  }
+
+  /* University Logo Styling - Remove backgrounds */
+  .university-logo {
+    filter: grayscale(100%) contrast(1.2) brightness(1.1);
+    mix-blend-mode: multiply;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+  }
+
+  .university-logo:hover {
+    filter: grayscale(0%) contrast(1) brightness(1);
+    opacity: 1;
+  }
 }
 
 /* Custom scrollbar - Minimal black & white */
