@@ -58,3 +58,26 @@ DESIGN-GUIDE.md
 AIMI-CHARACTER-GUIDE.md
 STATUS.md
 QUICKSTART.md
+3D-CHARACTER-IMPLEMENTATION.md
+*.md.backup
+
+# Development scripts and tools
+/scripts/
+optimize-images.mjs
+compress-*.js
+
+# Development dependencies (already in node_modules, but being explicit)
+sharp
+@types/*
+
+# Original uncompressed images (keep only optimized .webp versions)
+/public/**/*.png
+/public/**/*.jpg
+/public/**/*.jpeg
+!/public/professor3d/*.png
+!/public/images/universties/*.png
+
+# Temporary files
+*.tmp
+*.temp
+.cache

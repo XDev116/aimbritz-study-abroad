@@ -867,9 +867,20 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Focus styles */
-button, a {
-  @apply focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2;
+/* Focus styles - Remove visible focus rings */
+button, a, input, select, textarea {
+  @apply focus:outline-none focus-visible:outline-none;
+}
+
+/* Remove all focus rings globally */
+*:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+*:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 /* Selection color */

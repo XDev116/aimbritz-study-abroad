@@ -152,6 +152,17 @@ export function Footer() {
                   2nd Floor, Seesa Arcade, Ramanchira, Thiruvalla, Kerala 689107
                 </p>
               </div>
+
+              {/* Trichy Branch */}
+              <div className="space-y-1">
+                <h4 className="font-medium text-sm flex items-center gap-2">
+                  <MapPin className="h-4 w-4 text-primary" />
+                  Trichy
+                </h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Tiruchirappalli, Tamil Nadu
+                </p>
+              </div>
             </div>
           </div>
         </div>

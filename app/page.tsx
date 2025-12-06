@@ -128,19 +128,17 @@ export default function HomePage() {
 
       {/* Our Services - Carousel Style */}
       <section className="bg-gradient-to-b from-gray-50 to-white py-12 border-t border-gray-100">
-        <div className="container mx-auto px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <p className="text-sm font-semibold text-indigo-600 mb-2">Our Services</p>
-            <h2 className="text-xl font-bold text-gray-900 mb-1">
-              Comprehensive Study Abroad Support
-            </h2>
-            <h3 className="text-2xl font-bold text-indigo-700">
-              Everything You Need for Success
-            </h3>
-          </div>
-
-          <ServicesCarousel services={services} />
+        <div className="text-center mb-8 px-6 lg:px-8">
+          <p className="text-sm font-semibold text-indigo-600 mb-2">Our Services</p>
+          <h2 className="text-xl font-bold text-gray-900 mb-1">
+            Comprehensive Study Abroad Support
+          </h2>
+          <h3 className="text-2xl font-bold text-indigo-700">
+            Everything You Need for Success
+          </h3>
         </div>
+
+        <ServicesCarousel services={services} />
       </section>
 
       {/* Compact Stats - Integrated */}
@@ -227,36 +225,33 @@ export default function HomePage() {
 
       {/* Popular Destinations - Carousel Style */}
       <section className="py-10 bg-white relative overflow-hidden">
-        <div className="container mx-auto px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <p className="text-sm font-semibold text-indigo-600 mb-2">Countries</p>
-            <h2 className="text-xl font-bold text-gray-900 mb-1">
-              Choose Your Country: Plan Your Study Abroad Journey
-            </h2>
-            <h3 className="text-2xl font-bold text-indigo-700">
-              Latest Featured Countries
-            </h3>
-          </div>
-
-          <CountriesCarousel countries={countries} />
+        <div className="text-center mb-8 px-6 lg:px-8">
+          <p className="text-sm font-semibold text-indigo-600 mb-2">Countries</p>
+          <h2 className="text-xl font-bold text-gray-900 mb-1">
+            Choose Your Country: Plan Your Study Abroad Journey
+          </h2>
+          <h3 className="text-2xl font-bold text-indigo-700">
+            Latest Featured Countries
+          </h3>
         </div>
+
+        <CountriesCarousel countries={countries} />
       </section>
 
       {/* Partnering Universities Section - Auto Scrolling */}
       <section className="py-8 bg-gradient-to-b from-gray-50 to-white border-t border-gray-100 overflow-hidden">
-        <div className="container mx-auto px-6 lg:px-8">
-          <div className="text-center mb-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-2">
-              Choose the Right University for a Better Future
-            </h2>
-            <h3 className="text-2xl font-bold text-indigo-700">
-              Our partnering universities
-            </h3>
-          </div>
+        <div className="text-center mb-6 px-6 lg:px-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-2">
+            Choose the Right University for a Better Future
+          </h2>
+          <h3 className="text-2xl font-bold text-indigo-700">
+            Our partnering universities
+          </h3>
+        </div>
 
-          {/* Auto-scrolling University Logos */}
-          <div className="relative">
-            <div className="flex overflow-hidden bg-white py-6">
+        {/* Auto-scrolling University Logos */}
+        <div className="relative">
+          <div className="flex overflow-hidden bg-white py-6">
               <div className="flex gap-16 items-center university-scroll">
                 {/* First set of logos */}
                 <div className="h-20 w-32 flex items-center justify-center flex-shrink-0">
@@ -312,7 +307,6 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-        </div>
       </section>
 
       {/* Success Story / Our Journey Section */}

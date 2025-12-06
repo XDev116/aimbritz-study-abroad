@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,15 +12,21 @@ export default function UniversitiesPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("All");
 
-  const countries = ["All", ...new Set(universities.map(uni => uni.country))];
+  const countries = useMemo(() =>
+    ["All", ...new Set(universities.map(uni => uni.country))],
+    []
+  );
 
-  const filteredUniversities = universities.filter(uni => {
-    const matchesSearch = uni.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      uni.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      uni.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCountry = selectedCountry === "All" || uni.country === selectedCountry;
-    return matchesSearch && matchesCountry;
-  });
+  const filteredUniversities = useMemo(() =>
+    universities.filter(uni => {
+      const matchesSearch = uni.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        uni.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        uni.description.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCountry = selectedCountry === "All" || uni.country === selectedCountry;
+      return matchesSearch && matchesCountry;
+    }),
+    [searchQuery, selectedCountry]
+  );
 
   return (
     <div className="container mx-auto px-6 py-12 lg:px-8">

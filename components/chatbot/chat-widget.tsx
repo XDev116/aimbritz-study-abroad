@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, memo, useCallback } from "react";
 import { X, Send, Minimize2, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ProfessorCharacter } from "./professor-character";
+import { Professor3D } from "./professor-3d";
 
 interface Message {
   id: string;
@@ -12,6 +12,49 @@ interface Message {
   sender: "user" | "bot";
   timestamp: Date;
 }
+
+// Memoized Message Component to prevent unnecessary re-renders
+const MessageBubble = memo(({ message }: { message: Message }) => (
+  <div
+    className={`flex gap-3 animate-slide-in ${
+      message.sender === "user" ? "justify-end" : "justify-start"
+    }`}
+  >
+    {message.sender === "bot" && (
+      <div className="w-8 h-8 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center flex-shrink-0 shadow-md overflow-hidden">
+        <img
+          src="/professor3d/professorAvatar.webp"
+          alt="Professor"
+          className="w-full h-full object-cover"
+        />
+      </div>
+    )}
+
+    <div
+      className={`max-w-[75%] rounded-2xl px-4 py-3 shadow-sm ${
+        message.sender === "user"
+          ? "bg-black text-white rounded-br-none border border-gray-800"
+          : "bg-white border border-gray-200 text-gray-900 rounded-bl-none"
+      }`}
+    >
+      <p className="text-sm whitespace-pre-line">{message.text}</p>
+      <span className="text-xs opacity-70 mt-1 block">
+        {message.timestamp.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        })}
+      </span>
+    </div>
+
+    {message.sender === "user" && (
+      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center flex-shrink-0 shadow-md">
+        <User className="h-4 w-4 text-white" />
+      </div>
+    )}
+  </div>
+));
+
+MessageBubble.displayName = "MessageBubble";
 
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,15 +71,37 @@ export function ChatWidget() {
   ]);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [isOnline, setIsOnline] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Limit messages to prevent memory bloat (keep last 50 messages)
+  const MAX_MESSAGES = 50;
+
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    // Use requestAnimationFrame for better performance
+    requestAnimationFrame(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    });
   };
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    // Only scroll if chat is open to save resources
+    if (isOpen && !isMinimized) {
+      scrollToBottom();
+    }
+  }, [messages, isOpen, isMinimized]);
+
+  // Clear old messages when chat is closed to free memory
+  useEffect(() => {
+    if (!isOpen) {
+      // Keep only the initial welcome message when chat is closed
+      const timer = setTimeout(() => {
+        setMessages((prev) => prev.slice(0, 1));
+      }, 5000); // Wait 5s before clearing to allow for smooth transitions
+
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
 
   // Walk-in animation on page load
   useEffect(() => {
@@ -55,7 +120,7 @@ export function ChatWidget() {
     return () => clearTimeout(walkInTimer);
   }, []);
 
-  const handleSendMessage = async () => {
+  const handleSendMessage = useCallback(async () => {
     if (!inputValue.trim()) return;
 
     const userMessage: Message = {
@@ -65,7 +130,11 @@ export function ChatWidget() {
       timestamp: new Date(),
     };
 
-    setMessages((prev) => [...prev, userMessage]);
+    setMessages((prev) => {
+      const updated = [...prev, userMessage];
+      // Keep only last MAX_MESSAGES to prevent memory bloat
+      return updated.length > MAX_MESSAGES ? updated.slice(-MAX_MESSAGES) : updated;
+    });
     const userQuestion = inputValue;
     setInputValue("");
     setIsTyping(true);
@@ -85,26 +154,36 @@ export function ChatWidget() {
       const data = await response.json();
 
       if (data.error) {
-        // Show error message
+        // Show error message and set offline
+        setIsOnline(false);
         const errorMessage: Message = {
           id: (Date.now() + 1).toString(),
           text: `⚠️ ${data.error}\n\nPlease contact support if this issue persists.`,
           sender: "bot",
           timestamp: new Date(),
         };
-        setMessages((prev) => [...prev, errorMessage]);
+        setMessages((prev) => {
+          const updated = [...prev, errorMessage];
+          return updated.length > MAX_MESSAGES ? updated.slice(-MAX_MESSAGES) : updated;
+        });
       } else {
-        // Show AI response
+        // Show AI response and set online
+        setIsOnline(true);
         const botMessage: Message = {
           id: (Date.now() + 1).toString(),
           text: data.message,
           sender: "bot",
           timestamp: new Date(),
         };
-        setMessages((prev) => [...prev, botMessage]);
+        setMessages((prev) => {
+          const updated = [...prev, botMessage];
+          return updated.length > MAX_MESSAGES ? updated.slice(-MAX_MESSAGES) : updated;
+        });
       }
     } catch (error) {
       console.error("Chat error:", error);
+      // Set offline status
+      setIsOnline(false);
       // Show fallback error message
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -112,11 +191,14 @@ export function ChatWidget() {
         sender: "bot",
         timestamp: new Date(),
       };
-      setMessages((prev) => [...prev, errorMessage]);
+      setMessages((prev) => {
+        const updated = [...prev, errorMessage];
+        return updated.length > MAX_MESSAGES ? updated.slice(-MAX_MESSAGES) : updated;
+      });
     } finally {
       setIsTyping(false);
     }
-  };
+  }, [inputValue, MAX_MESSAGES]);
 
   const quickActions = [
     { icon: "🇬🇧", text: "UK Universities", action: () => {
@@ -138,19 +220,26 @@ export function ChatWidget() {
     <>
       {/* Professional Business Character */}
       {!isOpen && (
-        <div className={`fixed bottom-6 right-6 z-50 ${!hasWalkedIn ? "translate-x-[200%]" : ""} transition-all duration-1000 ease-out`}>
-          {/* Greeting Speech Bubble */}
+        <div className={`fixed bottom-0 right-0 z-50 ${!hasWalkedIn ? "translate-x-[200%]" : ""} transition-all duration-1000 ease-out`}>
+          {/* Greeting Speech Bubble - Compact & Close to Professor */}
           {showGreeting && hasWalkedIn && (
-            <div className="absolute bottom-full right-0 mb-4 animate-slide-down">
-              <div className="relative bg-white rounded-2xl shadow-2xl px-5 py-4 border border-gray-200 max-w-[280px]">
-                <p className="text-base font-bold text-gray-900 mb-1">
-                  👋 How can I help you?
-                </p>
-                <p className="text-sm text-gray-600">
-                  I'm here to guide your study abroad journey
-                </p>
-                {/* Speech bubble tail */}
-                <div className="absolute -bottom-2 right-12 w-4 h-4 bg-white border-r border-b border-gray-200 transform rotate-45" />
+            <div className="absolute bottom-[300px] right-8 z-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <div className="relative bg-white rounded-xl shadow-xl px-3 py-2.5 border border-gray-200 max-w-[180px] hover:shadow-2xl transition-shadow">
+                {/* Subtle pulse effect */}
+                <div className="absolute inset-0 bg-blue-50 rounded-xl opacity-0 animate-pulse" />
+
+                <div className="relative z-10">
+                  <p className="text-xs font-bold text-gray-900 flex items-center gap-1">
+                    <span className="text-base">👋</span>
+                    Hi there!
+                  </p>
+                  <p className="text-[11px] text-gray-600 mt-0.5 leading-snug">
+                    Need help with study abroad?
+                  </p>
+                </div>
+
+                {/* Speech bubble tail - pointing to professor */}
+                <div className="absolute -bottom-1.5 right-12 w-2.5 h-2.5 bg-white border-r border-b border-gray-200 transform rotate-45" />
               </div>
             </div>
           )}
@@ -164,18 +253,9 @@ export function ChatWidget() {
             className="relative group focus:outline-none"
             aria-label="Chat with advisor"
           >
-            {/* Scalable Professor Character Component */}
-            <ProfessorCharacter
-              expression="happy"
-              pose="waving"
-              outfit="default"
-              size={200}
-              animate={true}
-            />
-
-            {/* Chat Notification Badge - Animated */}
-            <div className="absolute -top-2 -right-2 w-10 h-10 bg-gradient-to-br from-green-400 via-green-500 to-green-600 rounded-full border-4 border-white shadow-lg animate-bounce-notification flex items-center justify-center">
-              <span className="text-white text-base font-bold">💬</span>
+            {/* 3D Professor Character with Three.js */}
+            <div className="w-[280px] h-[320px] rounded-3xl overflow-hidden">
+              <Professor3D />
             </div>
 
             {/* Hover tooltip - Enhanced */}
@@ -196,31 +276,27 @@ export function ChatWidget() {
           } max-w-[calc(100vw-3rem)] max-h-[calc(100vh-3rem)]`}
         >
           <div className="glass-card rounded-3xl shadow-2xl h-full flex flex-col overflow-hidden border border-gray-200 animate-scale-in">
-            {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-600">
+            {/* Header - Black & White */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gradient-to-r from-black via-gray-900 to-black">
               <div className="flex items-center gap-3">
-                {/* Mini Avatar */}
-                <div className="relative w-12 h-12 rounded-full bg-white shadow-lg overflow-hidden border-2 border-white">
-                  <svg viewBox="0 0 100 100" className="w-full h-full">
-                    <rect width="100" height="100" fill="#f8fafc" />
-                    <ellipse cx="50" cy="40" rx="18" ry="20" fill="#fcd9b8" />
-                    <circle cx="45" cy="38" r="3" fill="#1e293b" />
-                    <circle cx="55" cy="38" r="3" fill="#1e293b" />
-                    <path d="M 42 48 Q 50 52 58 48" stroke="#dc2626" strokeWidth="2" fill="none" strokeLinecap="round" />
-                    <rect x="40" y="35" width="8" height="6" fill="none" stroke="#1e293b" strokeWidth="1.5" rx="1" />
-                    <rect x="52" y="35" width="8" height="6" fill="none" stroke="#1e293b" strokeWidth="1.5" rx="1" />
-                    <path d="M 35 28 Q 50 22 65 28 L 65 35 Q 50 32 35 35 Z" fill="#3b3228" />
-                    <rect x="30" y="55" width="40" height="30" fill="#3b82f6" />
-                    <rect x="47" y="55" width="6" height="15" fill="#dc2626" />
-                  </svg>
-                  <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse" />
+                {/* Mini Professor Avatar */}
+                <div className="relative w-12 h-12 rounded-full bg-white shadow-lg overflow-hidden border-2 border-gray-200">
+                  <img
+                    src="/professor3d/professorAvatar.webp"
+                    alt="Professor"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
 
                 <div>
                   <h3 className="font-bold text-white text-lg">Study Abroad Advisor</h3>
-                  <p className="text-xs text-blue-100 flex items-center gap-1">
-                    <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                    Online Now
+                  <p className="text-xs text-gray-300 flex items-center gap-1">
+                    <span className={`w-2 h-2 rounded-full ${
+                      isOnline
+                        ? "bg-green-400 animate-pulse"
+                        : "bg-red-500"
+                    }`} />
+                    {isOnline ? "Online Now" : "Offline"}
                   </p>
                 </div>
               </div>
@@ -248,56 +324,27 @@ export function ChatWidget() {
                 {/* Messages Area */}
                 <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-gray-50 to-white">
                   {messages.map((message) => (
-                    <div
-                      key={message.id}
-                      className={`flex gap-3 animate-slide-in ${
-                        message.sender === "user" ? "justify-end" : "justify-start"
-                      }`}
-                    >
-                      {message.sender === "bot" && (
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 border-2 border-blue-600 flex items-center justify-center flex-shrink-0 shadow-md">
-                          <span className="text-xs">👔</span>
-                        </div>
-                      )}
-
-                      <div
-                        className={`max-w-[75%] rounded-2xl px-4 py-3 shadow-sm ${
-                          message.sender === "user"
-                            ? "bg-blue-600 text-white rounded-br-none"
-                            : "bg-white border border-gray-200 text-gray-900 rounded-bl-none"
-                        }`}
-                      >
-                        <p className="text-sm whitespace-pre-line">{message.text}</p>
-                        <span className="text-xs opacity-70 mt-1 block">
-                          {message.timestamp.toLocaleTimeString([], {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })}
-                        </span>
-                      </div>
-
-                      {message.sender === "user" && (
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center flex-shrink-0 shadow-md">
-                          <User className="h-4 w-4 text-white" />
-                        </div>
-                      )}
-                    </div>
+                    <MessageBubble key={message.id} message={message} />
                   ))}
 
                   {isTyping && (
                     <div className="flex gap-3 animate-slide-in">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 border-2 border-blue-600 flex items-center justify-center shadow-md">
-                        <span className="text-xs">👔</span>
+                      <div className="w-8 h-8 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center shadow-md overflow-hidden">
+                        <img
+                          src="/professor3d/professorAvatar.webp"
+                          alt="Professor"
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                       <div className="bg-white border border-gray-200 rounded-2xl rounded-bl-none px-4 py-3 shadow-sm">
                         <div className="flex gap-1">
-                          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
+                          <div className="w-2 h-2 bg-gray-800 rounded-full animate-bounce" />
                           <div
-                            className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                            className="w-2 h-2 bg-gray-800 rounded-full animate-bounce"
                             style={{ animationDelay: "0.2s" }}
                           />
                           <div
-                            className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                            className="w-2 h-2 bg-gray-800 rounded-full animate-bounce"
                             style={{ animationDelay: "0.4s" }}
                           />
                         </div>
@@ -336,12 +383,12 @@ export function ChatWidget() {
                         }
                       }}
                       placeholder="Type your message..."
-                      className="flex-1 rounded-xl border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                      className="flex-1 rounded-xl border border-gray-300"
                     />
                     <Button
                       onClick={handleSendMessage}
                       disabled={!inputValue.trim()}
-                      className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-6 shadow-md"
+                      className="bg-black hover:bg-gray-800 text-white rounded-xl px-6 shadow-md disabled:bg-gray-400"
                     >
                       <Send className="h-4 w-4" />
                     </Button>

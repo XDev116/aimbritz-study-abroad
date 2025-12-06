@@ -4,32 +4,17 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import NextImage from "next/image";
 
 // ========== EDITABLE DATA ==========
 const PLACEHOLDER_IMAGES = {
   students: [
-    "/images/students/student1.png",
-    "/images/students/student2.png",
-    "/images/students/student3.png",
-    "/images/students/student4.png",
-    "/images/students/student5.png",
-    "/images/students/student6.png",
-    "/images/students/student7.png",
-    "/images/students/student8.png",
-    "/images/students/student9.png",
-    "/images/students/student10.png",
-    "/images/students/student11.png",
-    "/images/students/student12.png",
-    "/images/students/student13.png",
-  ],
-  hero: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1920&q=80",
-  grid: [
-    "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920&q=80", // UK landmarks
-    "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1920&q=80", // University campus
-    "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1920&q=80", // Students studying
-    "https://images.unsplash.com/photo-1523287562758-66c7fc58967f?w=1920&q=80", // Students jumping in graduation
-    "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1920&q=80",
-    "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1920&q=80",
+    "/images/students/student1.webp",
+    "/images/students/student2.webp",
+    "/images/students/student3.webp",
+    "/images/students/student4.webp",
+    "/images/students/student5.webp",
+    "/images/students/student6.webp",
   ],
 };
 
@@ -61,66 +46,20 @@ export function CinematicHero() {
   const [count, setCount] = useState(0);
   const [questionWordIndex, setQuestionWordIndex] = useState(0);
   const [showMainText, setShowMainText] = useState(false);
-  const [imagesLoaded, setImagesLoaded] = useState(false);
-  const [videosLoaded, setVideosLoaded] = useState(false);
 
-  // Preload critical images on mount
+  // Minimal preload for memory optimization (reduced to 3 images)
   useEffect(() => {
     const imagesToPreload = [
-      ...PLACEHOLDER_IMAGES.students.slice(0, 8),
-      "/team/team1.png",
-      "/team/team2.png",
-      "/team/team3.png",
-      "/team/team4.png",
-      "/team/team5.png",
-      "/team/team6.png",
+      ...PLACEHOLDER_IMAGES.students.slice(0, 3), // Only first 3 students (reduced from 6)
     ];
 
-    let loadedCount = 0;
-    const totalImages = imagesToPreload.length;
-
+    // Preload only visible images
     imagesToPreload.forEach((src) => {
       const img = new Image();
       img.src = src;
-      img.onload = () => {
-        loadedCount++;
-        if (loadedCount === totalImages) {
-          setImagesLoaded(true);
-        }
-      };
-      img.onerror = () => {
-        loadedCount++;
-        if (loadedCount === totalImages) {
-          setImagesLoaded(true);
-        }
-      };
     });
 
-    // Preload videos
-    const videos = [
-      "/videos/University_Choice_Background_Video.mp4",
-      "/videos/Website_Banner_Video_Creation.mp4",
-      "/videos/Graduation_Video_for_Study_Abroad.mp4",
-    ];
-
-    let videosLoadedCount = 0;
-    videos.forEach((src) => {
-      const video = document.createElement("video");
-      video.preload = "auto";
-      video.src = src;
-      video.onloadeddata = () => {
-        videosLoadedCount++;
-        if (videosLoadedCount === videos.length) {
-          setVideosLoaded(true);
-        }
-      };
-      video.onerror = () => {
-        videosLoadedCount++;
-        if (videosLoadedCount === videos.length) {
-          setVideosLoaded(true);
-        }
-      };
-    });
+    // No video preloading - videos load on-demand to save ~50MB memory
   }, []);
 
   // Question word animation for Scene 0
@@ -173,20 +112,6 @@ export function CinematicHero() {
 
   return (
     <div className="relative w-full h-[90vh] min-h-[600px] overflow-hidden bg-white">
-      {/* Loading Screen */}
-      {(!imagesLoaded || !videosLoaded) && (
-        <div className="absolute inset-0 bg-white z-50 flex items-center justify-center">
-          <div className="text-center">
-            <div className="w-16 h-16 border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-lg font-semibold text-gray-700">Loading Experience...</p>
-            <p className="text-sm text-gray-500 mt-2">
-              {!imagesLoaded && !videosLoaded ? "Loading images and videos" :
-               !imagesLoaded ? "Loading images" : "Loading videos"}
-            </p>
-          </div>
-        </div>
-      )}
-
       {/* Animated World Map Background - Your Custom SVG */}
       <div
         className="absolute inset-0 opacity-15 pointer-events-none z-0 overflow-hidden"
@@ -291,26 +216,28 @@ export function CinematicHero() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            {/* Scrolling Cards - Optimized - Only show first 8 cards */}
+            {/* Scrolling Cards - Show all 8 students */}
             <div className="absolute inset-0 flex items-center overflow-hidden py-8">
               <motion.div
                 className="flex gap-8"
                 animate={{ x: [0, -2560] }}
                 transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
               >
-                {PLACEHOLDER_IMAGES.students.slice(0, 8).map((img, i) => {
+                {PLACEHOLDER_IMAGES.students.map((img, i) => {
                   const statIndex = i % STATS_INFO.length;
                   const stat = STATS_INFO[statIndex];
                   return (
                     <div key={i} className="flex-shrink-0 w-80">
-                      {/* Image - Optimized */}
+                      {/* Image - High quality */}
                       <div className="h-[480px] overflow-hidden relative rounded-2xl shadow-2xl mb-6">
-                        <img
+                        <NextImage
                           src={img}
                           alt={`Student ${i}`}
-                          className="w-full h-full object-cover"
-                          loading={i < 3 ? "eager" : "lazy"}
-                          decoding="async"
+                          fill
+                          className="object-cover"
+                          priority={i < 3}
+                          sizes="320px"
+                          quality={90}
                         />
                       </div>
 
@@ -504,7 +431,7 @@ export function CinematicHero() {
               transition={{ duration: 6, times: [0, 0.1, 0.3, 0.35] }}
             >
               <div className="relative rounded-3xl overflow-hidden shadow-2xl w-full md:w-[54%] max-w-2xl h-[40vh] md:h-[70vh]">
-                <img src="/team/team1.png" alt="Team Member" className="w-full h-full object-cover" loading="lazy" />
+                <img src="/team/team1.webp" alt="Team Member" className="w-full h-full object-cover" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-6 md:bottom-8 left-4 md:left-6 right-4 md:right-6">
                   <p className="text-xl md:text-2xl lg:text-3xl font-black text-white drop-shadow-lg">Guiding Your Dreams</p>
@@ -512,7 +439,7 @@ export function CinematicHero() {
                 </div>
               </div>
               <div className="relative rounded-3xl overflow-hidden shadow-2xl w-full md:w-[36%] max-w-md h-[40vh] md:h-[70vh]">
-                <img src="/team/team2.png" alt="Team Member" className="w-full h-full object-cover" loading="lazy" />
+                <img src="/team/team2.webp" alt="Team Member" className="w-full h-full object-cover" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-6 md:bottom-8 left-4 md:left-6 right-4 md:right-6">
                   <p className="text-lg md:text-xl lg:text-2xl font-black text-white drop-shadow-lg">Supporting Your Journey</p>
@@ -529,7 +456,7 @@ export function CinematicHero() {
               transition={{ duration: 6, times: [0, 0.33, 0.4, 0.63, 0.68] }}
             >
               <div className="relative rounded-3xl overflow-hidden shadow-2xl w-full md:w-[36%] max-w-md h-[40vh] md:h-[70vh]">
-                <img src="/team/team3.png" alt="Team Member" className="w-full h-full object-cover" loading="lazy" />
+                <img src="/team/team3.webp" alt="Team Member" className="w-full h-full object-cover" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-6 md:bottom-8 left-4 md:left-6 right-4 md:right-6">
                   <p className="text-lg md:text-xl lg:text-2xl font-black text-white drop-shadow-lg">Building Your Future</p>
@@ -537,7 +464,7 @@ export function CinematicHero() {
                 </div>
               </div>
               <div className="relative rounded-3xl overflow-hidden shadow-2xl w-full md:w-[54%] max-w-2xl h-[40vh] md:h-[70vh]">
-                <img src="/team/team4.png" alt="Team Member" className="w-full h-full object-cover" loading="lazy" />
+                <img src="/team/team4.webp" alt="Team Member" className="w-full h-full object-cover" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-6 md:bottom-8 left-4 md:left-6 right-4 md:right-6">
                   <p className="text-xl md:text-2xl lg:text-3xl font-black text-white drop-shadow-lg">Empowering Success</p>
@@ -554,7 +481,7 @@ export function CinematicHero() {
               transition={{ duration: 6, times: [0, 0.66, 0.73, 0.8, 1] }}
             >
               <div className="relative rounded-3xl overflow-hidden shadow-2xl w-full md:w-[54%] max-w-2xl h-[40vh] md:h-[70vh]">
-                <img src="/team/team5.png" alt="Team Member" className="w-full h-full object-cover" loading="lazy" />
+                <img src="/team/team5.webp" alt="Team Member" className="w-full h-full object-cover" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-6 md:bottom-8 left-4 md:left-6 right-4 md:right-6">
                   <p className="text-xl md:text-2xl lg:text-3xl font-black text-white drop-shadow-lg">Achieving Together</p>
@@ -562,7 +489,7 @@ export function CinematicHero() {
                 </div>
               </div>
               <div className="relative rounded-3xl overflow-hidden shadow-2xl w-full md:w-[36%] max-w-md h-[40vh] md:h-[70vh]">
-                <img src="/team/team6.png" alt="Team Member" className="w-full h-full object-cover" loading="lazy" />
+                <img src="/team/team6.webp" alt="Team Member" className="w-full h-full object-cover" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-6 md:bottom-8 left-4 md:left-6 right-4 md:right-6">
                   <p className="text-lg md:text-xl lg:text-2xl font-black text-white drop-shadow-lg">Your Success Partners</p>
