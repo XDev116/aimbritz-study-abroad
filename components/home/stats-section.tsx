@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { GraduationCap, Globe, School, Users } from "lucide-react";
+import { GraduationCap, Globe, School, Users, LucideIcon } from "lucide-react";
 
 interface Stat {
   id: string;
   name: string;
   value: number;
   suffix: string;
-  icon: React.ElementType;
+  icon: LucideIcon;
 }
 
 const stats: Stat[] = [
