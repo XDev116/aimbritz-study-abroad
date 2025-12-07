@@ -69,28 +69,25 @@ export function CountriesCarousel({ countries }: CountriesCarouselProps) {
   const isAtEnd = scrollPosition >= maxScroll - 5;
 
   return (
-    <div className="relative max-w-6xl mx-auto">
-      {/* Left Arrow */}
-      <button
-        onClick={() => scroll("left")}
-        disabled={isAtStart}
-        className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center transition-all ${
-          isAtStart
-            ? 'opacity-30 cursor-not-allowed'
-            : 'hover:bg-gray-50 hover:shadow-xl'
-        }`}
-        aria-label="Previous countries"
-      >
-        <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
+    <div className="relative">
+      {/* Left Arrow - At container edge */}
+      {!isAtStart && (
+        <button
+          onClick={() => scroll("left")}
+          className="flex absolute left-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white shadow-xl items-center justify-center hover:bg-gray-50 transition-all"
+          aria-label="Previous countries"
+        >
+          <svg className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+      )}
 
       {/* Countries Carousel */}
       <div
         ref={carouselRef}
         onScroll={handleScroll}
-        className="overflow-x-auto overflow-y-hidden scrollbar-hide"
+        className="overflow-x-auto overflow-y-hidden scrollbar-hide px-4 sm:px-6 lg:px-8"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         <div className="flex gap-6 pb-2">
@@ -130,21 +127,18 @@ export function CountriesCarousel({ countries }: CountriesCarouselProps) {
         </div>
       </div>
 
-      {/* Right Arrow */}
-      <button
-        onClick={() => scroll("right")}
-        disabled={isAtEnd}
-        className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center transition-all ${
-          isAtEnd
-            ? 'opacity-30 cursor-not-allowed'
-            : 'hover:bg-gray-50 hover:shadow-xl'
-        }`}
-        aria-label="Next countries"
-      >
-        <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
+      {/* Right Arrow - At container edge */}
+      {!isAtEnd && (
+        <button
+          onClick={() => scroll("right")}
+          className="flex absolute right-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white shadow-xl items-center justify-center hover:bg-gray-50 transition-all"
+          aria-label="Next countries"
+        >
+          <svg className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      )}
 
       <style jsx>{`
         .scrollbar-hide::-webkit-scrollbar {

@@ -45,7 +45,7 @@ export function ServicesCarousel({ services }: ServicesCarouselProps) {
   const scroll = (direction: "left" | "right") => {
     if (!carouselRef.current) return;
 
-    const scrollAmount = 380; // Card width (352px) + gap (32px)
+    const scrollAmount = 400; // Card width (352px) + gap (48px)
     const currentScroll = carouselRef.current.scrollLeft;
     const newPosition = direction === "left"
       ? currentScroll - scrollAmount
@@ -69,31 +69,28 @@ export function ServicesCarousel({ services }: ServicesCarouselProps) {
   const isAtEnd = scrollPosition >= maxScroll - 5;
 
   return (
-    <div className="relative max-w-7xl mx-auto">
-      {/* Left Arrow */}
-      <button
-        onClick={() => scroll("left")}
-        disabled={isAtStart}
-        className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center transition-all ${
-          isAtStart
-            ? 'opacity-30 cursor-not-allowed'
-            : 'hover:bg-gray-50 hover:shadow-xl'
-        }`}
-        aria-label="Previous services"
-      >
-        <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
+    <div className="relative">
+      {/* Left Arrow - At container edge */}
+      {!isAtStart && (
+        <button
+          onClick={() => scroll("left")}
+          className="flex absolute left-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white shadow-xl items-center justify-center hover:bg-gray-50 transition-all"
+          aria-label="Previous services"
+        >
+          <svg className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+      )}
 
       {/* Services Carousel */}
       <div
         ref={carouselRef}
         onScroll={handleScroll}
-        className="overflow-x-auto overflow-y-hidden scrollbar-hide"
+        className="overflow-x-auto overflow-y-hidden scrollbar-hide px-4 sm:px-6 lg:px-8"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
-        <div className="flex gap-8 pb-2">
+        <div className="flex gap-6 pb-2">
           {services.map((service) => {
             return (
               <div key={service.title} className="flex-shrink-0 w-[352px]">
@@ -143,21 +140,18 @@ export function ServicesCarousel({ services }: ServicesCarouselProps) {
         </div>
       </div>
 
-      {/* Right Arrow */}
-      <button
-        onClick={() => scroll("right")}
-        disabled={isAtEnd}
-        className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center transition-all ${
-          isAtEnd
-            ? 'opacity-30 cursor-not-allowed'
-            : 'hover:bg-gray-50 hover:shadow-xl'
-        }`}
-        aria-label="Next services"
-      >
-        <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
+      {/* Right Arrow - At container edge */}
+      {!isAtEnd && (
+        <button
+          onClick={() => scroll("right")}
+          className="flex absolute right-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white shadow-xl items-center justify-center hover:bg-gray-50 transition-all"
+          aria-label="Next services"
+        >
+          <svg className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      )}
 
       <style jsx>{`
         .scrollbar-hide::-webkit-scrollbar {

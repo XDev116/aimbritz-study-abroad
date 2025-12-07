@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { GraduationCap, Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import Image from "next/image";
+import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 
 const navigation = {
   main: [
@@ -29,9 +30,14 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">
           {/* Brand and Social */}
           <div className="space-y-3">
-            <Link href="/" className="flex items-center gap-2">
-              <GraduationCap className="h-7 w-7 text-primary" />
-              <span className="text-xl font-bold">AimBritz</span>
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/logo/aimbritz-logo-sm.webp"
+                alt="AimBritz - Study Abroad Consultancy"
+                width={150}
+                height={40}
+                className="h-10 w-auto object-contain"
+              />
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Your gateway to global education. Expert guidance for studying abroad.
