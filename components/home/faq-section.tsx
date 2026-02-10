@@ -99,7 +99,7 @@ export function FAQSection() {
         <div className="mt-12 text-center">
           <p className="text-gray-600 mb-4">Still have questions?</p>
           <a
-            href="tel:+1234567890"
+            href="tel:+919747277233"
             className="inline-flex items-center gap-2 px-8 py-4 bg-black text-white rounded-xl hover:bg-gray-900 transition-colors shadow-lg font-semibold"
           >
             Talk to Our Experts

@@ -22,7 +22,7 @@ export function Header() {
   return (
     <>
       <header className="sticky top-0 z-40 w-full border-b border-black/10 glass-card backdrop-blur-xl">
-        <nav className="container mx-auto flex items-center justify-between p-4 lg:px-8" aria-label="Global">
+        <nav className="container mx-auto flex items-center justify-between py-2 px-4 lg:px-8" aria-label="Global">
           {/* Desktop Logo */}
           <div className="flex lg:flex-1">
             <div className="hidden sm:block">
@@ -35,7 +35,18 @@ export function Header() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="flex lg:hidden">
+          <div className="flex lg:hidden items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              className="border-black text-black hover:bg-black hover:text-white rounded-xl text-xs px-3 py-1 h-8"
+              asChild
+            >
+              <a href="tel:+919747277233" className="flex items-center gap-1">
+                <Phone className="h-3 w-3" />
+                Talk to Expert
+              </a>
+            </Button>
             <button
               type="button"
               className="-m-2.5 inline-flex items-center justify-center rounded-xl p-2.5 hover:bg-black/5 transition-colors"
@@ -67,7 +78,7 @@ export function Header() {
               className="border-black text-black hover:bg-black hover:text-white rounded-xl transition-colors"
               asChild
             >
-              <a href="tel:+1234567890" className="flex items-center gap-2">
+              <a href="tel:+919747277233" className="flex items-center gap-2">
                 <Phone className="h-4 w-4" />
                 Talk to Expert
               </a>
@@ -123,7 +134,7 @@ export function Header() {
                   className="w-full border-black text-black hover:bg-black hover:text-white rounded-xl py-6"
                   asChild
                 >
-                  <a href="tel:+1234567890" className="flex items-center justify-center gap-2">
+                  <a href="tel:+919747277233" className="flex items-center justify-center gap-2">
                     <Phone className="h-5 w-5" />
                     Talk to Expert
                   </a>

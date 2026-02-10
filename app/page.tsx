@@ -8,46 +8,76 @@ import { ServicesCarousel } from "@/components/home/services-carousel";
 
 const countries = [
   {
-    name: "United States",
-    flag: "🇺🇸",
-    universities: "200+",
-    description: "World-class education with diverse opportunities",
-    href: "/countries/usa"
-  },
-  {
     name: "United Kingdom",
     flag: "🇬🇧",
-    universities: "150+",
     description: "Historic institutions and cutting-edge research",
     href: "/countries/uk"
   },
   {
-    name: "Canada",
-    flag: "🇨🇦",
-    universities: "100+",
-    description: "Quality education with post-study work options",
-    href: "/countries/canada"
-  },
-  {
     name: "Australia",
     flag: "🇦🇺",
-    universities: "80+",
     description: "Innovative programs in a vibrant lifestyle",
     href: "/countries/australia"
   },
   {
-    name: "Germany",
-    flag: "🇩🇪",
-    universities: "90+",
-    description: "Affordable quality education and research excellence",
-    href: "/countries/germany"
+    name: "New Zealand",
+    flag: "🇳🇿",
+    description: "World-class education in stunning landscapes",
+    href: "/countries/new-zealand"
   },
   {
     name: "Ireland",
     flag: "🇮🇪",
-    universities: "40+",
     description: "Friendly environment with global connections",
     href: "/countries/ireland"
+  },
+  {
+    name: "United States",
+    flag: "🇺🇸",
+    description: "World-class education with diverse opportunities",
+    href: "/countries/usa"
+  },
+  {
+    name: "Canada",
+    flag: "🇨🇦",
+    description: "Quality education with post-study work options",
+    href: "/countries/canada"
+  },
+  {
+    name: "Germany",
+    flag: "🇩🇪",
+    description: "Affordable quality education and research excellence",
+    href: "/countries/germany"
+  },
+  {
+    name: "France",
+    flag: "🇫🇷",
+    description: "Rich culture and prestigious academic institutions",
+    href: "/countries/france"
+  },
+  {
+    name: "Dubai",
+    flag: "🇦🇪",
+    description: "Modern education hub with global opportunities",
+    href: "/countries/dubai"
+  },
+  {
+    name: "Malaysia",
+    flag: "🇲🇾",
+    description: "Affordable education with multicultural experience",
+    href: "/countries/malaysia"
+  },
+  {
+    name: "Singapore",
+    flag: "🇸🇬",
+    description: "World-class education in Asia's education hub",
+    href: "/countries/singapore"
+  },
+  {
+    name: "Mauritius",
+    flag: "🇲🇺",
+    description: "Emerging education destination with tropical charm",
+    href: "/countries/mauritius"
   },
 ];
 

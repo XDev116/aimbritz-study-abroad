@@ -213,7 +213,7 @@ export function SuccessStorySection() {
                 📞 Book Free Consultation
               </a>
               <a
-                href="tel:+1234567890"
+                href="tel:+919747277233"
                 className="inline-flex items-center justify-center px-8 py-4 bg-transparent text-white border-2 border-white rounded-xl hover:bg-white hover:text-indigo-600 transition-all font-bold text-lg hover:scale-105"
               >
                 ☎️ Call Now

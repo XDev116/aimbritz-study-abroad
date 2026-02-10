@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Youtube, Mail, Phone, MapPin } from "lucide-react";
 
 const navigation = {
   main: [
@@ -32,29 +32,29 @@ export function Footer() {
           <div className="space-y-3">
             <Link href="/" className="flex items-center">
               <Image
-                src="/logo/aimbritz-logo-sm.webp"
+                src="/logo/aimbritz-logo-transparent.png"
                 alt="AimBritz - Study Abroad Consultancy"
-                width={150}
-                height={40}
-                className="h-10 w-auto object-contain"
+                width={500}
+                height={100}
+                className="h-16 w-auto object-contain"
               />
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Your gateway to global education. Expert guidance for studying abroad.
             </p>
             <div className="flex gap-3">
-              <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                <Facebook className="h-5 w-5" />
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                <Twitter className="h-5 w-5" />
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="https://www.instagram.com/aimbritz" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
                 <Instagram className="h-5 w-5" />
-              </Link>
-              <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              </a>
+              <a href="https://www.facebook.com/AimBritzOverseas/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+                <Facebook className="h-5 w-5" />
+              </a>
+              <a href="https://www.linkedin.com/company/aim-britz-study-abroad/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
                 <Linkedin className="h-5 w-5" />
-              </Link>
+              </a>
+              <a href="https://www.youtube.com/channel/UCE43z8Dh4RYSxyTfk_8bF4g" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+                <Youtube className="h-5 w-5" />
+              </a>
             </div>
           </div>
 
@@ -144,7 +144,7 @@ export function Footer() {
                   Trivandrum
                 </h4>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  323 Anna's Arcade, Trivandrum, 695001
+                  Mahatma Gandhi Rd, Puthenchanthai, Santhi Nagar, Pulimoodu, Thiruvananthapuram, Kerala 695001
                 </p>
               </div>
 

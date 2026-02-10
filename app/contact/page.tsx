@@ -108,7 +108,7 @@ export default function ContactPage() {
                         id="phone"
                         name="phone"
                         type="tel"
-                        placeholder="+1 (555) 123-4567"
+                        placeholder="+91 9747 277233"
                         value={formData.phone}
                         onChange={handleChange}
                         required
@@ -186,21 +186,9 @@ export default function ContactPage() {
                 <Phone className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                 <div>
                   <div className="font-semibold text-sm mb-1">Phone</div>
-                  <a href="tel:+15551234567" className="text-sm text-muted-foreground hover:text-primary">
-                    +1 (555) 123-4567
+                  <a href="tel:+919747277233" className="text-sm text-muted-foreground hover:text-primary">
+                    +91 9747 277233
                   </a>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                <div>
-                  <div className="font-semibold text-sm mb-1">Address</div>
-                  <p className="text-sm text-muted-foreground">
-                    123 Education Street<br />
-                    Learning City, ED 12345<br />
-                    United States
-                  </p>
                 </div>
               </div>
 
@@ -225,55 +213,93 @@ export default function ContactPage() {
             </CardHeader>
             <CardContent className="space-y-3 text-sm">
               <div>
-                <div className="font-semibold mb-1">USA Office</div>
-                <p className="text-muted-foreground">
-                  123 Education St, Learning City, ED 12345
-                </p>
-              </div>
-              <div>
                 <div className="font-semibold mb-1">UK Office</div>
                 <p className="text-muted-foreground">
-                  456 Study Lane, London, UK EC1A 1BB
+                  42 Montcalm House, Westferry, London, E14 3SD
                 </p>
               </div>
               <div>
-                <div className="font-semibold mb-1">India Office</div>
+                <div className="font-semibold mb-1">Trivandrum Office</div>
                 <p className="text-muted-foreground">
-                  789 Global Plaza, Mumbai, MH 400001
+                  Mahatma Gandhi Rd, Puthenchanthai, Santhi Nagar, Pulimoodu, Thiruvananthapuram, Kerala 695001
+                </p>
+              </div>
+              <div>
+                <div className="font-semibold mb-1">Kochi Office</div>
+                <p className="text-muted-foreground">
+                  3rd Floor, Koonamthai, Edappally, Kochi, Kerala 682024
                 </p>
               </div>
             </CardContent>
           </Card>
 
-          {/* FAQ Link */}
-          <Card className="bg-secondary/30">
-            <CardHeader>
-              <CardTitle>Quick Questions?</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">
-                Check out our blog for answers to commonly asked questions about studying abroad.
-              </p>
-              <Button variant="outline" className="w-full" asChild>
-                <a href="/blog">Visit Blog</a>
-              </Button>
-            </CardContent>
-          </Card>
         </div>
       </div>
 
-      {/* Map Placeholder */}
+      {/* Interactive Maps */}
       <div className="mt-16">
-        <Card>
-          <CardContent className="p-0">
-            <div className="w-full h-96 bg-secondary/20 rounded-lg flex items-center justify-center">
-              <div className="text-center text-muted-foreground">
-                <MapPin className="h-12 w-12 mx-auto mb-4" />
-                <p>Interactive Map Coming Soon</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <h2 className="text-2xl font-bold text-center mb-8">Our Locations</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Trivandrum Map */}
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <MapPin className="h-5 w-5 text-primary" />
+                Trivandrum Office
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-0">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.8!2d76.9447!3d8.5241!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b05bb0652f0d0c1%3A0x9d4b8c2d8c8b8a8a!2sAnna%27s%20Arcade!5e0!3m2!1sen!2sin!4v1699999999999!5m2!1sen!2sin"
+                width="100%"
+                height="300"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="rounded-b-lg"
+              />
+              <a
+                href="https://maps.app.goo.gl/sBV3RMdJSagWFkJM8"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-center text-sm text-primary hover:underline py-2"
+              >
+                Open in Google Maps
+              </a>
+            </CardContent>
+          </Card>
+
+          {/* Kochi Map */}
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <MapPin className="h-5 w-5 text-primary" />
+                Kochi (Ernakulam) Office
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-0">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.0!2d76.3!3d10.0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080d514abec6bf%3A0xbd582caa5f3f59d!2sEdappally%2C%20Kochi%2C%20Kerala!5e0!3m2!1sen!2sin!4v1699999999999!5m2!1sen!2sin"
+                width="100%"
+                height="300"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="rounded-b-lg"
+              />
+              <a
+                href="https://maps.app.goo.gl/Sg8s2243q7guw5FW6"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-center text-sm text-primary hover:underline py-2"
+              >
+                Open in Google Maps
+              </a>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );

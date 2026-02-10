@@ -3,13 +3,13 @@ import Image from "next/image";
 
 export function Logo() {
   return (
-    <Link href="/" className="flex items-center group -my-2">
+    <Link href="/" className="flex items-center group">
       {/* AimBritz Logo Image - Transparent */}
       <Image
         src="/logo/aimbritz-logo-transparent.png"
         alt="AimBritz - Study Abroad Consultancy"
-        width={350}
-        height={70}
+        width={1000}
+        height={200}
         className="h-20 w-auto object-contain group-hover:scale-105 transition-transform"
         priority
         quality={100}
@@ -38,13 +38,13 @@ export function LogoMinimal() {
 // Icon only version (for mobile menu or favicon)
 export function LogoIcon() {
   return (
-    <Link href="/" className="group">
+    <Link href="/" className="flex items-center group">
       <Image
         src="/logo/aimbritz-logo-transparent.png"
         alt="AimBritz"
-        width={180}
-        height={36}
-        className="h-14 w-auto object-contain group-hover:scale-105 transition-transform"
+        width={500}
+        height={60}
+        className="h-16 w-auto object-contain group-hover:scale-105 transition-transform"
         priority
         quality={100}
       />

@@ -16,13 +16,18 @@ interface CountriesCarouselProps {
 
 // Country image mapping
 const countryImages: Record<string, string> = {
-  "United States": "https://images.unsplash.com/photo-1485738422979-f5c462d49f74?w=800&q=80",
   "United Kingdom": "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&q=80",
-  "Canada": "https://images.unsplash.com/photo-1503614472-8c93d56e92ce?w=800&q=80",
   "Australia": "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=800&q=80",
-  "Germany": "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=800&q=80",
+  "New Zealand": "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&q=80",
   "Ireland": "https://images.unsplash.com/photo-1590089415225-401ed6f9db8e?w=800&q=80",
-  "New Zealand": "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&q=80"
+  "United States": "https://images.unsplash.com/photo-1485738422979-f5c462d49f74?w=800&q=80",
+  "Canada": "https://images.unsplash.com/photo-1503614472-8c93d56e92ce?w=800&q=80",
+  "Germany": "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=800&q=80",
+  "France": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&q=80",
+  "Dubai": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&q=80",
+  "Malaysia": "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=800&q=80",
+  "Singapore": "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=800&q=80",
+  "Mauritius": "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=800&q=80"
 };
 
 export function CountriesCarousel({ countries }: CountriesCarouselProps) {
