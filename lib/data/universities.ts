@@ -34,323 +34,785 @@ export interface University {
 export const universities: University[] = [
   {
     id: "1",
-    name: "Massachusetts Institute of Technology",
-    slug: "mit",
-    country: "United States",
-    countryCode: "US",
-    city: "Cambridge, MA",
-    description: "MIT is a world-renowned research university with a strong emphasis on scientific and technological education. Known for its innovation and entrepreneurial spirit, MIT has been at the forefront of groundbreaking research and has produced numerous Nobel laureates and innovators.",
+    name: "University of Liverpool",
+    slug: "liverpool",
+    country: "United Kingdom",
+    countryCode: "GB",
+    city: "Liverpool",
+    description: "The University of Liverpool is a prestigious Russell Group university with a rich history of academic excellence and groundbreaking research. Founded in 1881, it was the first university to establish departments in oceanography, civic design, architecture, and biochemistry. Liverpool offers world-class facilities and strong industry connections.",
     logo: "🏛️",
-    ranking: 1,
-    website: "https://mit.edu",
-    established: 1861,
-    type: "Private",
+    ranking: 176,
+    website: "https://www.liverpool.ac.uk",
+    established: 1881,
+    type: "Public",
     courses: [
       {
-        id: "mit-1",
-        name: "Computer Science and Engineering",
-        degree: "Master",
-        duration: "2 years",
-        tuitionFee: 55878,
-        currency: "USD",
-        intakeDates: ["Fall (September)"]
+        id: "liverpool-1",
+        name: "Computer Science",
+        degree: "Bachelor",
+        duration: "3 years",
+        tuitionFee: 24500,
+        currency: "GBP",
+        intakeDates: ["September"]
       },
       {
-        id: "mit-2",
-        name: "Electrical Engineering and Computer Science",
-        degree: "PhD",
-        duration: "4-6 years",
-        tuitionFee: 55878,
-        currency: "USD",
-        intakeDates: ["Fall (September)"]
+        id: "liverpool-2",
+        name: "Business Management",
+        degree: "Master",
+        duration: "1 year",
+        tuitionFee: 23000,
+        currency: "GBP",
+        intakeDates: ["September", "January"]
       },
       {
-        id: "mit-3",
-        name: "Mechanical Engineering",
-        degree: "Master",
-        duration: "2 years",
-        tuitionFee: 55878,
-        currency: "USD",
-        intakeDates: ["Fall (September)", "Spring (January)"]
+        id: "liverpool-3",
+        name: "Engineering",
+        degree: "Bachelor",
+        duration: "3-4 years",
+        tuitionFee: 26600,
+        currency: "GBP",
+        intakeDates: ["September"]
       }
     ],
     admissionRequirements: {
       bachelor: [
-        "High school diploma with excellent grades",
-        "SAT/ACT scores",
-        "TOEFL (90+) or IELTS (7.0+) for international students",
-        "Strong mathematics and science background",
-        "Extracurricular activities and achievements",
-        "Letters of recommendation"
+        "A-Levels: AAB-BBB or equivalent qualifications",
+        "IELTS: 6.0-6.5 overall (minimum 5.5 in each component)",
+        "High school diploma with strong grades",
+        "Personal statement",
+        "Academic reference letter",
+        "Subject-specific prerequisites"
       ],
       master: [
-        "Bachelor's degree in relevant field with strong GPA (3.5+)",
-        "GRE scores (recommended)",
-        "TOEFL (100+) or IELTS (7.5+)",
+        "Bachelor's degree with 2:1 (Upper Second Class) or equivalent",
+        "IELTS: 6.5 overall (minimum 6.0 in each component)",
         "Statement of purpose",
-        "3 letters of recommendation",
-        "Research experience preferred"
+        "Two academic references",
+        "CV/Resume",
+        "Work experience (for some programs)"
       ],
       phd: [
-        "Master's degree or exceptional bachelor's degree",
-        "Strong research background and publications",
-        "GRE scores (recommended)",
-        "TOEFL (100+) or IELTS (7.5+)",
+        "Master's degree or First Class Honours bachelor's",
         "Research proposal",
-        "3-4 letters of recommendation"
+        "IELTS: 6.5-7.0 overall",
+        "Academic references",
+        "Supervisor agreement",
+        "Interview may be required"
       ]
     },
-    campusLife: "MIT's campus life is vibrant and diverse, with over 500 student organizations, world-class facilities, and a strong focus on innovation and entrepreneurship. The campus features state-of-the-art laboratories, maker spaces, and collaborative work environments.",
+    campusLife: "Liverpool's campus is located in the vibrant city center with excellent facilities including modern libraries, sports centers, and student accommodation. The city offers a rich cultural scene, famous for The Beatles, football, and nightlife. Strong student community with 200+ societies.",
     scholarships: [
-      "MIT Scholarship (need-based)",
-      "MISTI Global Seed Funds",
-      "External fellowships (Fulbright, Rhodes, etc.)",
-      "Research assistantships",
-      "Teaching assistantships"
+      "Vice-Chancellor's International Attainment Scholarship",
+      "Liverpool International College Progression Scholarship",
+      "Subject-specific scholarships",
+      "Postgraduate taught scholarships",
+      "Research scholarships"
     ]
   },
   {
     id: "2",
-    name: "Stanford University",
-    slug: "stanford",
-    country: "United States",
-    countryCode: "US",
-    city: "Stanford, CA",
-    description: "Stanford University is a leading research university located in Silicon Valley. Known for its entrepreneurial culture and innovation, Stanford has produced numerous tech leaders and successful startups. The university excels in engineering, business, and sciences.",
-    logo: "🌲",
-    ranking: 3,
-    website: "https://stanford.edu",
-    established: 1885,
-    type: "Private",
+    name: "Queen's University Belfast",
+    slug: "queens-belfast",
+    country: "United Kingdom",
+    countryCode: "GB",
+    city: "Belfast",
+    description: "Queen's University Belfast is a member of the prestigious Russell Group and one of the UK's leading research-intensive universities. Founded in 1845, it combines world-class research with outstanding teaching quality. The university is known for its welcoming atmosphere and excellent value for money.",
+    logo: "👑",
+    ranking: 202,
+    website: "https://www.qub.ac.uk",
+    established: 1845,
+    type: "Public",
     courses: [
       {
-        id: "stanford-1",
-        name: "Computer Science",
-        degree: "Master",
-        duration: "2 years",
-        tuitionFee: 58746,
-        currency: "USD",
-        intakeDates: ["Fall (September)"]
+        id: "queens-1",
+        name: "Law",
+        degree: "Bachelor",
+        duration: "3 years",
+        tuitionFee: 18900,
+        currency: "GBP",
+        intakeDates: ["September"]
       },
       {
-        id: "stanford-2",
-        name: "MBA",
+        id: "queens-2",
+        name: "Software Engineering",
         degree: "Master",
-        duration: "2 years",
-        tuitionFee: 76950,
-        currency: "USD",
-        intakeDates: ["Fall (September)"]
+        duration: "1 year",
+        tuitionFee: 23100,
+        currency: "GBP",
+        intakeDates: ["September"]
       },
       {
-        id: "stanford-3",
-        name: "Artificial Intelligence",
-        degree: "PhD",
-        duration: "4-6 years",
-        tuitionFee: 58746,
-        currency: "USD",
-        intakeDates: ["Fall (September)"]
+        id: "queens-3",
+        name: "Business for International Students",
+        degree: "Master",
+        duration: "1 year",
+        tuitionFee: 23100,
+        currency: "GBP",
+        intakeDates: ["September", "January"]
       }
     ],
     admissionRequirements: {
       bachelor: [
-        "High school diploma with outstanding grades",
-        "SAT/ACT scores",
-        "TOEFL (100+) or IELTS (7.5+)",
-        "Strong academic record",
-        "Leadership and extracurricular achievements",
-        "Essays and letters of recommendation"
+        "A-Levels: AAA-BBB depending on program",
+        "IELTS: 6.0-6.5 overall",
+        "Equivalent international qualifications accepted",
+        "Personal statement",
+        "Academic reference",
+        "Subject prerequisites for specific courses"
       ],
       master: [
-        "Bachelor's degree with excellent GPA (3.7+)",
-        "GRE/GMAT scores (program dependent)",
-        "TOEFL (100+) or IELTS (7.5+)",
-        "Statement of purpose",
-        "3 letters of recommendation",
-        "Relevant work or research experience"
+        "2:1 Honours degree or international equivalent",
+        "IELTS: 6.5 overall (minimum 5.5-6.0 in each skill)",
+        "Two references",
+        "Personal statement",
+        "CV",
+        "Relevant work experience for some programs"
       ],
       phd: [
-        "Master's degree or exceptional bachelor's degree",
-        "Outstanding research potential",
-        "GRE scores",
-        "TOEFL (100+) or IELTS (7.5+)",
-        "Research proposal",
-        "Strong letters of recommendation"
+        "Master's degree with Merit or Distinction",
+        "Strong research proposal",
+        "IELTS: 6.5 overall",
+        "Academic references",
+        "Agreement from potential supervisor",
+        "Interview"
       ]
     },
-    campusLife: "Stanford offers a beautiful campus with world-class facilities, 600+ student organizations, Division I athletics, and proximity to Silicon Valley tech companies. The campus culture emphasizes innovation, collaboration, and entrepreneurship.",
+    campusLife: "Queen's has a beautiful historic campus in the heart of Belfast, one of the UK's most affordable and friendly cities. The Students' Union is one of the best in the UK with 200+ clubs and societies. Belfast offers excellent nightlife, culture, and easy access to stunning natural scenery.",
     scholarships: [
-      "Stanford Fellowship",
-      "Knight-Hennessy Scholars",
-      "Research assistantships",
-      "Teaching assistantships",
-      "External scholarships"
+      "International Office Scholarship",
+      "Vice-Chancellor's International Scholarship",
+      "Early Bird Discount",
+      "Partner scholarships",
+      "Postgraduate research awards"
     ]
   },
   {
     id: "3",
-    name: "University of Oxford",
-    slug: "oxford",
+    name: "University of Leicester",
+    slug: "leicester",
     country: "United Kingdom",
     countryCode: "GB",
-    city: "Oxford",
-    description: "The University of Oxford is one of the oldest and most prestigious universities in the world. Known for its tutorial system, world-class faculty, and beautiful historic colleges, Oxford offers an unparalleled academic experience across all disciplines.",
+    city: "Leicester",
+    description: "The University of Leicester is a leading UK university with a strong reputation for research excellence. Famous for pioneering DNA fingerprinting and discovering Richard III, Leicester combines innovative research with excellent teaching. The university has a strong focus on student experience and employability.",
     logo: "🎓",
-    ranking: 4,
-    website: "https://ox.ac.uk",
-    established: 1096,
+    ranking: 272,
+    website: "https://www.le.ac.uk",
+    established: 1921,
     type: "Public",
     courses: [
       {
-        id: "oxford-1",
-        name: "Computer Science",
+        id: "leicester-1",
+        name: "Media and Communication",
         degree: "Bachelor",
         duration: "3 years",
-        tuitionFee: 37760,
-        currency: "GBP",
-        intakeDates: ["October"]
-      },
-      {
-        id: "oxford-2",
-        name: "Business Administration (MBA)",
-        degree: "Master",
-        duration: "1 year",
-        tuitionFee: 74100,
+        tuitionFee: 21250,
         currency: "GBP",
         intakeDates: ["September"]
       },
       {
-        id: "oxford-3",
-        name: "Law",
+        id: "leicester-2",
+        name: "Business Analysis and Finance",
         degree: "Master",
         duration: "1 year",
-        tuitionFee: 32740,
+        tuitionFee: 21500,
         currency: "GBP",
-        intakeDates: ["October"]
+        intakeDates: ["September", "January"]
+      },
+      {
+        id: "leicester-3",
+        name: "Computer Science",
+        degree: "Master",
+        duration: "1 year",
+        tuitionFee: 23500,
+        currency: "GBP",
+        intakeDates: ["September"]
       }
     ],
     admissionRequirements: {
       bachelor: [
-        "Exceptional A-level or equivalent qualifications",
-        "IELTS (7.5+ with 7.0 in each component) or TOEFL (110+)",
-        "Admissions test (depends on course)",
+        "A-Levels: ABB-BBC or equivalent",
+        "IELTS: 6.0-6.5 overall",
+        "International Baccalaureate: 30-32 points",
         "Personal statement",
-        "Academic reference",
-        "Interview (for shortlisted candidates)"
+        "Reference letter",
+        "Subject-specific requirements"
       ],
       master: [
-        "First-class or strong upper-second class undergraduate degree",
-        "IELTS (7.5+) or TOEFL (110+)",
-        "Personal statement",
-        "2-3 academic references",
-        "Research proposal (for research courses)",
-        "GMAT/GRE (for certain courses)"
+        "2:2 or 2:1 Honours degree depending on program",
+        "IELTS: 6.0-6.5 overall",
+        "Statement of purpose",
+        "Two references",
+        "CV",
+        "Interview for some programs"
       ],
       phd: [
-        "Master's degree with distinction",
-        "Strong research proposal",
-        "IELTS (7.5+) or TOEFL (110+)",
+        "Master's degree or strong bachelor's degree",
+        "Research proposal",
+        "IELTS: 6.5 overall",
         "Academic references",
-        "Potential supervisor agreement",
+        "Supervisor identification",
         "Interview"
       ]
     },
-    campusLife: "Oxford's collegiate system creates a close-knit community within the larger university. Students enjoy access to historic libraries, beautiful gardens, hundreds of societies, and a rich cultural scene. The tutorial system ensures personalized attention.",
+    campusLife: "Leicester's compact campus is a short walk from the city center. The university offers excellent sports facilities, a vibrant Students' Union, and 150+ societies. Leicester is one of the UK's most multicultural cities with great food, festivals, and affordable living costs.",
     scholarships: [
-      "Clarendon Scholarship",
-      "Rhodes Scholarship",
-      "Reach Oxford Scholarship",
-      "Oxford-Weidenfeld and Hoffmann Scholarships",
-      "College-specific scholarships"
+      "Undergraduate Excellence Scholarship",
+      "Global Study Award",
+      "Chancellor's International Scholarship",
+      "Postgraduate taught scholarships",
+      "PhD studentships"
     ]
   },
   {
     id: "4",
-    name: "University of Toronto",
-    slug: "toronto",
-    country: "Canada",
-    countryCode: "CA",
-    city: "Toronto, ON",
-    description: "The University of Toronto is Canada's leading research university and consistently ranks among the world's top institutions. Known for groundbreaking research, diverse programs, and strong industry connections, U of T offers excellent opportunities in a vibrant, multicultural city.",
-    logo: "🍁",
-    ranking: 21,
-    website: "https://utoronto.ca",
-    established: 1827,
+    name: "Aston University",
+    slug: "aston",
+    country: "United Kingdom",
+    countryCode: "GB",
+    city: "Birmingham",
+    description: "Aston University is a leading university located in the heart of Birmingham, known for its strong links with industry and excellent graduate employment rates. With a focus on business, engineering, and health sciences, Aston provides career-focused education with integrated placement opportunities.",
+    logo: "🔬",
+    ranking: 446,
+    website: "https://www.aston.ac.uk",
+    established: 1895,
     type: "Public",
     courses: [
       {
-        id: "toronto-1",
-        name: "Computer Science",
+        id: "aston-1",
+        name: "Business and Management",
         degree: "Bachelor",
-        duration: "4 years",
-        tuitionFee: 59320,
-        currency: "CAD",
+        duration: "3-4 years",
+        tuitionFee: 18700,
+        currency: "GBP",
         intakeDates: ["September"]
       },
       {
-        id: "toronto-2",
-        name: "Data Science",
+        id: "aston-2",
+        name: "International Business",
         degree: "Master",
         duration: "1 year",
-        tuitionFee: 48200,
-        currency: "CAD",
-        intakeDates: ["September"]
+        tuitionFee: 21000,
+        currency: "GBP",
+        intakeDates: ["September", "January"]
       },
       {
-        id: "toronto-3",
-        name: "Engineering",
-        degree: "Bachelor",
-        duration: "4 years",
-        tuitionFee: 61850,
-        currency: "CAD",
+        id: "aston-3",
+        name: "Computer Science",
+        degree: "Master",
+        duration: "1 year",
+        tuitionFee: 21500,
+        currency: "GBP",
         intakeDates: ["September"]
       }
     ],
     admissionRequirements: {
       bachelor: [
-        "High school diploma with strong grades (85%+ average)",
-        "English proficiency: IELTS (6.5+) or TOEFL (100+)",
-        "Prerequisites vary by program",
-        "Supplemental application for certain programs",
-        "Extracurricular activities",
-        "Letters of recommendation (program dependent)"
+        "A-Levels: AAB-BBC depending on program",
+        "IELTS: 6.0-6.5 overall (5.5 minimum per component)",
+        "BTEC and Access courses accepted",
+        "Personal statement",
+        "Reference",
+        "Interview for some programs"
       ],
       master: [
-        "Bachelor's degree with B+ average or higher",
-        "IELTS (7.0+) or TOEFL (93+)",
-        "GRE/GMAT (program dependent)",
-        "Statement of interest",
-        "2-3 references",
-        "CV/Resume"
+        "2:2 or 2:1 Honours degree",
+        "IELTS: 6.5 overall (6.0 in each skill)",
+        "Personal statement",
+        "Two references",
+        "CV",
+        "Work experience valued"
       ],
       phd: [
-        "Master's degree with strong academic record",
+        "Master's degree with Merit or Distinction",
         "Research proposal",
-        "IELTS (7.0+) or TOEFL (93+)",
+        "IELTS: 6.5-7.0 overall",
         "Academic references",
-        "Publications or research experience",
-        "Supervisor agreement"
+        "Supervisor agreement",
+        "Interview"
       ]
     },
-    campusLife: "U of T offers three campuses with diverse student communities, 800+ student organizations, state-of-the-art facilities, and location in downtown Toronto. Students enjoy access to world-class museums, libraries, and the vibrant cultural life of Canada's largest city.",
+    campusLife: "Aston's modern campus is in central Birmingham, the UK's second-largest city. Students enjoy excellent facilities including a newly refurbished library, sports center, and on-campus accommodation. Birmingham offers world-class shopping, dining, and entertainment.",
     scholarships: [
-      "Lester B. Pearson International Scholarship",
-      "University of Toronto Excellence Award",
-      "Ontario Graduate Scholarship",
-      "Faculty-specific scholarships",
-      "Research assistantships"
+      "Aston Excellence Scholarship",
+      "International Scholarship",
+      "Ferguson Scholarship for exceptional students",
+      "Postgraduate scholarships",
+      "Alumni discount"
     ]
   },
   {
     id: "5",
+    name: "University of Huddersfield",
+    slug: "huddersfield",
+    country: "United Kingdom",
+    countryCode: "GB",
+    city: "Huddersfield",
+    description: "The University of Huddersfield is known for its strong focus on employability and practical learning. With excellent industry links and high-quality teaching, Huddersfield prepares students for successful careers. The university has invested heavily in state-of-the-art facilities and offers exceptional value for money.",
+    logo: "🎯",
+    ranking: 651,
+    website: "https://www.hud.ac.uk",
+    established: 1841,
+    type: "Public",
+    courses: [
+      {
+        id: "huddersfield-1",
+        name: "Business Management",
+        degree: "Bachelor",
+        duration: "3-4 years",
+        tuitionFee: 17600,
+        currency: "GBP",
+        intakeDates: ["September", "January"]
+      },
+      {
+        id: "huddersfield-2",
+        name: "Engineering",
+        degree: "Master",
+        duration: "1 year",
+        tuitionFee: 18000,
+        currency: "GBP",
+        intakeDates: ["September", "January"]
+      },
+      {
+        id: "huddersfield-3",
+        name: "Computing",
+        degree: "Bachelor",
+        duration: "3-4 years",
+        tuitionFee: 17600,
+        currency: "GBP",
+        intakeDates: ["September"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "A-Levels: BBC-CCC or equivalent",
+        "IELTS: 6.0 overall (minimum 5.5 in each skill)",
+        "BTEC and vocational qualifications accepted",
+        "Personal statement",
+        "Reference",
+        "Portfolio for creative courses"
+      ],
+      master: [
+        "Bachelor's degree (2:2 or above)",
+        "IELTS: 6.0-6.5 overall",
+        "Statement of purpose",
+        "References",
+        "CV",
+        "Work experience for some programs"
+      ],
+      phd: [
+        "Master's degree or strong Honours degree",
+        "Research proposal",
+        "IELTS: 6.5 overall",
+        "References",
+        "Supervisor agreement",
+        "Interview"
+      ]
+    },
+    campusLife: "Huddersfield's award-winning campus offers modern facilities, affordable living, and a friendly community. The town has excellent transport links to Leeds and Manchester. Students enjoy a supportive environment with over 100 societies and excellent sports facilities.",
+    scholarships: [
+      "International Scholarship",
+      "Vice-Chancellor's Scholarship",
+      "Excellence Scholarship",
+      "Postgraduate scholarship",
+      "Alumni discount"
+    ]
+  },
+  {
+    id: "6",
+    name: "Coventry University",
+    slug: "coventry",
+    country: "United Kingdom",
+    countryCode: "GB",
+    city: "Coventry",
+    description: "Coventry University is a forward-looking, modern university with a proud tradition of innovation and industry engagement. Known for excellent student satisfaction and employability outcomes, Coventry has invested over £500 million in new facilities. The university is one of the fastest-rising in UK rankings.",
+    logo: "🚀",
+    ranking: 571,
+    website: "https://www.coventry.ac.uk",
+    established: 1843,
+    type: "Public",
+    courses: [
+      {
+        id: "coventry-1",
+        name: "International Business",
+        degree: "Bachelor",
+        duration: "3-4 years",
+        tuitionFee: 16800,
+        currency: "GBP",
+        intakeDates: ["September", "January", "May"]
+      },
+      {
+        id: "coventry-2",
+        name: "Engineering Management",
+        degree: "Master",
+        duration: "1 year",
+        tuitionFee: 18600,
+        currency: "GBP",
+        intakeDates: ["September", "January", "May"]
+      },
+      {
+        id: "coventry-3",
+        name: "Data Science",
+        degree: "Master",
+        duration: "1 year",
+        tuitionFee: 18600,
+        currency: "GBP",
+        intakeDates: ["September", "January"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "A-Levels: BCC-CCC or equivalent",
+        "IELTS: 6.0 overall (minimum 5.5 in each skill)",
+        "Foundation programs available",
+        "Personal statement",
+        "Reference",
+        "Interview for some courses"
+      ],
+      master: [
+        "Bachelor's degree (2:2 or above for most programs)",
+        "IELTS: 6.5 overall",
+        "Statement of purpose",
+        "Two references",
+        "CV",
+        "Work experience valued"
+      ],
+      phd: [
+        "Master's degree with Merit",
+        "Research proposal",
+        "IELTS: 6.5-7.0 overall",
+        "Academic references",
+        "Supervisor agreement",
+        "Interview"
+      ]
+    },
+    campusLife: "Coventry's modern city-center campus features state-of-the-art buildings, a new science and health building, and excellent sports facilities. The city is centrally located in England with easy access to London, Birmingham, and other major cities. Over 200 clubs and societies available.",
+    scholarships: [
+      "International Scholarship",
+      "Future Global Leaders Award",
+      "Sports Scholarship",
+      "Alumni Scholarship",
+      "Postgraduate scholarships"
+    ]
+  },
+  {
+    id: "7",
+    name: "California State University",
+    slug: "cal-state",
+    country: "United States",
+    countryCode: "US",
+    city: "Multiple Campuses, California",
+    description: "The California State University system is the largest four-year public university system in the United States with 23 campuses. CSU offers high-quality, affordable education with strong connections to California's diverse industries including tech, entertainment, and agriculture. Known for practical, career-focused programs.",
+    logo: "🌴",
+    ranking: 400,
+    website: "https://www.calstate.edu",
+    established: 1857,
+    type: "Public",
+    courses: [
+      {
+        id: "calstate-1",
+        name: "Business Administration",
+        degree: "Bachelor",
+        duration: "4 years",
+        tuitionFee: 19500,
+        currency: "USD",
+        intakeDates: ["Fall (August)", "Spring (January)"]
+      },
+      {
+        id: "calstate-2",
+        name: "Computer Science",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 21000,
+        currency: "USD",
+        intakeDates: ["Fall (August)", "Spring (January)"]
+      },
+      {
+        id: "calstate-3",
+        name: "Engineering",
+        degree: "Bachelor",
+        duration: "4 years",
+        tuitionFee: 20500,
+        currency: "USD",
+        intakeDates: ["Fall (August)"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "High school diploma with minimum 2.5 GPA",
+        "SAT or ACT scores (test-optional for many campuses)",
+        "TOEFL: 61+ or IELTS: 6.0+",
+        "A-G course requirements completion",
+        "Personal statement",
+        "Application through Cal State Apply"
+      ],
+      master: [
+        "Bachelor's degree with minimum 2.5-3.0 GPA",
+        "TOEFL: 80+ or IELTS: 6.5+",
+        "GRE/GMAT (program dependent)",
+        "Statement of purpose",
+        "Two letters of recommendation",
+        "Resume/CV"
+      ],
+      phd: [
+        "Master's degree in related field",
+        "Strong GPA (3.0+)",
+        "TOEFL: 80+ or IELTS: 6.5+",
+        "Research experience",
+        "Statement of purpose",
+        "Three letters of recommendation"
+      ]
+    },
+    campusLife: "CSU campuses offer diverse environments from beach locations to urban centers. Students enjoy California's sunny climate, access to major tech companies, entertainment industry, and outdoor activities. Each campus has unique character with hundreds of student organizations and sports programs.",
+    scholarships: [
+      "CSU Trustees' Award for Outstanding Achievement",
+      "Cal Grant",
+      "International Student Scholarships",
+      "Department-specific scholarships",
+      "Work-study programs"
+    ]
+  },
+  {
+    id: "8",
+    name: "University of Arizona",
+    slug: "arizona",
+    country: "United States",
+    countryCode: "US",
+    city: "Tucson, Arizona",
+    description: "The University of Arizona is a top-ranked public research university known for excellence in space sciences, optics, and entrepreneurship. Located in sunny Tucson, UArizona offers world-class research opportunities, diverse programs, and a welcoming environment for international students with strong support services.",
+    logo: "🌵",
+    ranking: 98,
+    website: "https://www.arizona.edu",
+    established: 1885,
+    type: "Public",
+    courses: [
+      {
+        id: "arizona-1",
+        name: "Computer Science",
+        degree: "Bachelor",
+        duration: "4 years",
+        tuitionFee: 36386,
+        currency: "USD",
+        intakeDates: ["Fall (August)", "Spring (January)"]
+      },
+      {
+        id: "arizona-2",
+        name: "Business Administration (MBA)",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 32000,
+        currency: "USD",
+        intakeDates: ["Fall (August)"]
+      },
+      {
+        id: "arizona-3",
+        name: "Engineering",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 35000,
+        currency: "USD",
+        intakeDates: ["Fall (August)", "Spring (January)"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "High school diploma with minimum 3.0 GPA",
+        "SAT: 1120+ or ACT: 22+ (test-flexible)",
+        "TOEFL: 70+ or IELTS: 6.0+",
+        "Core academic courses",
+        "Personal statement",
+        "Counselor recommendation"
+      ],
+      master: [
+        "Bachelor's degree with minimum 3.0 GPA",
+        "TOEFL: 79+ or IELTS: 7.0+",
+        "GRE/GMAT (program dependent)",
+        "Statement of purpose",
+        "Three letters of recommendation",
+        "Resume/CV"
+      ],
+      phd: [
+        "Master's degree (or exceptional bachelor's)",
+        "Strong academic record (3.2+ GPA)",
+        "TOEFL: 79+ or IELTS: 7.0+",
+        "GRE scores",
+        "Research proposal",
+        "Three letters of recommendation"
+      ]
+    },
+    campusLife: "UArizona's beautiful desert campus offers 300+ days of sunshine, world-class facilities, and a vibrant student life with 600+ clubs and organizations. Tucson offers affordable living, rich culture, and outdoor adventures. Strong athletics program (PAC-12) and active Greek life.",
+    scholarships: [
+      "Wildcat Excellence Award",
+      "International Tuition Award",
+      "Global Wildcat Award",
+      "Department scholarships",
+      "Graduate assistantships"
+    ]
+  },
+  {
+    id: "9",
+    name: "Texas State University",
+    slug: "texas-state",
+    country: "United States",
+    countryCode: "US",
+    city: "San Marcos, Texas",
+    description: "Texas State University is a comprehensive public university known for its beautiful campus along the San Marcos River. With strong programs in business, education, health sciences, and creative arts, Texas State offers quality education at an affordable price. The university is one of the largest in Texas with a diverse student body.",
+    logo: "⭐",
+    ranking: 550,
+    website: "https://www.txstate.edu",
+    established: 1899,
+    type: "Public",
+    courses: [
+      {
+        id: "txstate-1",
+        name: "Business Administration",
+        degree: "Bachelor",
+        duration: "4 years",
+        tuitionFee: 24000,
+        currency: "USD",
+        intakeDates: ["Fall (August)", "Spring (January)"]
+      },
+      {
+        id: "txstate-2",
+        name: "Computer Science",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 22000,
+        currency: "USD",
+        intakeDates: ["Fall (August)", "Spring (January)"]
+      },
+      {
+        id: "txstate-3",
+        name: "Health Sciences",
+        degree: "Bachelor",
+        duration: "4 years",
+        tuitionFee: 24000,
+        currency: "USD",
+        intakeDates: ["Fall (August)"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "High school diploma with minimum 2.5 GPA",
+        "SAT or ACT scores (test-optional)",
+        "TOEFL: 78+ or IELTS: 6.5+",
+        "Core curriculum completion",
+        "Application essay",
+        "Official transcripts"
+      ],
+      master: [
+        "Bachelor's degree from accredited institution",
+        "Minimum 2.75 GPA (last 60 hours)",
+        "TOEFL: 78+ or IELTS: 6.5+",
+        "GRE/GMAT (program dependent)",
+        "Statement of purpose",
+        "Two letters of recommendation"
+      ],
+      phd: [
+        "Master's degree in related field",
+        "Strong academic record",
+        "TOEFL: 78+ or IELTS: 6.5+",
+        "GRE scores",
+        "Research interests statement",
+        "Three letters of recommendation"
+      ]
+    },
+    campusLife: "Texas State's stunning campus features the beautiful San Marcos River, offering tubing, kayaking, and swimming. Located between Austin and San Antonio, students enjoy access to two major cities. Over 400 student organizations, Division I athletics, and vibrant campus events.",
+    scholarships: [
+      "Presidential Scholarship",
+      "International Student Scholarship",
+      "Departmental scholarships",
+      "Transfer scholarships",
+      "Graduate assistantships"
+    ]
+  },
+  {
+    id: "10",
+    name: "Colorado State University",
+    slug: "colorado-state",
+    country: "United States",
+    countryCode: "US",
+    city: "Fort Collins, Colorado",
+    description: "Colorado State University is a premier research university known for excellence in agriculture, engineering, veterinary medicine, and sustainability. Located in Fort Collins, consistently ranked among America's best places to live, CSU offers world-class education with outstanding research opportunities and beautiful mountain scenery.",
+    logo: "🏔️",
+    ranking: 442,
+    website: "https://www.colostate.edu",
+    established: 1870,
+    type: "Public",
+    courses: [
+      {
+        id: "csu-1",
+        name: "Business Administration",
+        degree: "Bachelor",
+        duration: "4 years",
+        tuitionFee: 32000,
+        currency: "USD",
+        intakeDates: ["Fall (August)", "Spring (January)"]
+      },
+      {
+        id: "csu-2",
+        name: "Computer Science",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 28000,
+        currency: "USD",
+        intakeDates: ["Fall (August)", "Spring (January)"]
+      },
+      {
+        id: "csu-3",
+        name: "Engineering",
+        degree: "Bachelor",
+        duration: "4 years",
+        tuitionFee: 34000,
+        currency: "USD",
+        intakeDates: ["Fall (August)"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "High school diploma with minimum 3.0 GPA",
+        "SAT: 1100+ or ACT: 22+ (test-optional)",
+        "TOEFL: 71+ or IELTS: 6.5+",
+        "Core academic requirements",
+        "Personal statement",
+        "Official transcripts"
+      ],
+      master: [
+        "Bachelor's degree with minimum 3.0 GPA",
+        "TOEFL: 80+ or IELTS: 6.5+",
+        "GRE (program dependent)",
+        "Statement of purpose",
+        "Three letters of recommendation",
+        "Resume/CV"
+      ],
+      phd: [
+        "Master's degree or exceptional bachelor's",
+        "Strong academic record (3.25+ GPA)",
+        "TOEFL: 80+ or IELTS: 6.5+",
+        "GRE scores",
+        "Research statement",
+        "Three letters of recommendation"
+      ]
+    },
+    campusLife: "Fort Collins offers the perfect blend of college town charm and outdoor adventure. Students enjoy skiing, hiking, and biking in the Rocky Mountains. The campus features modern facilities, 500+ student organizations, Division I athletics, and a thriving craft beer scene downtown.",
+    scholarships: [
+      "Ram Welcome Grant",
+      "International Student Scholarship",
+      "President's Scholarship",
+      "Department scholarships",
+      "Graduate teaching assistantships"
+    ]
+  },
+  {
+    id: "11",
     name: "University of Melbourne",
     slug: "melbourne",
     country: "Australia",
     countryCode: "AU",
     city: "Melbourne, VIC",
-    description: "The University of Melbourne is Australia's leading university, consistently ranking among the world's best. Known for research excellence, innovative teaching, and strong alumni network, it offers a comprehensive range of programs in a vibrant, liveable city.",
+    description: "The University of Melbourne is Australia's leading university and consistently ranks among the world's top 40 institutions. Known for research excellence, innovative teaching, and strong alumni network, Melbourne offers a comprehensive range of programs in one of the world's most liveable cities.",
     logo: "🦘",
     ranking: 33,
-    website: "https://unimelb.edu.au",
+    website: "https://www.unimelb.edu.au",
     established: 1853,
     type: "Public",
     courses: [
@@ -385,30 +847,30 @@ export const universities: University[] = [
     admissionRequirements: {
       bachelor: [
         "Completion of Australian Year 12 or equivalent",
-        "IELTS (6.5+ with no band below 6.0) or TOEFL (79+)",
+        "IELTS: 6.5 overall (no band below 6.0)",
+        "TOEFL: 79+ (writing 21, speaking 18, reading/listening 13)",
         "Subject prerequisites vary by program",
         "ATAR or equivalent score",
-        "Personal statement (some programs)",
-        "Portfolio (for creative programs)"
+        "Personal statement for some programs"
       ],
       master: [
-        "Bachelor's degree with minimum GPA requirement (varies)",
-        "IELTS (6.5-7.0+) or TOEFL (79-94+)",
-        "GRE/GMAT (for some programs)",
-        "Work experience (for MBA and some courses)",
+        "Bachelor's degree with strong GPA (varies by program)",
+        "IELTS: 6.5-7.0 overall or TOEFL: 79-94+",
+        "GRE/GMAT for some programs",
+        "Work experience for MBA and some courses",
         "Statement of purpose",
-        "2 references"
+        "Two references"
       ],
       phd: [
         "Master's degree or bachelor's with honours",
         "Research proposal (2,000-3,000 words)",
-        "IELTS (7.0+) or TOEFL (94+)",
+        "IELTS: 7.0 overall or TOEFL: 94+",
         "Academic references",
         "Supervisor agreement",
-        "Publications or research experience preferred"
+        "Publications preferred"
       ]
     },
-    campusLife: "Melbourne's parkland campus is located in the heart of one of the world's most liveable cities. Students enjoy access to world-class facilities, 200+ clubs and societies, excellent sports facilities, and Melbourne's famous coffee culture and arts scene.",
+    campusLife: "Melbourne's beautiful parkland campus is in the heart of one of the world's most liveable cities. Students enjoy world-class facilities, 200+ clubs and societies, excellent sports facilities, and Melbourne's famous coffee culture, arts scene, and diverse food options.",
     scholarships: [
       "Melbourne Graduate Scholarship",
       "Research Training Program",
@@ -418,170 +880,93 @@ export const universities: University[] = [
     ]
   },
   {
-    id: "6",
-    name: "Technical University of Munich",
-    slug: "tum",
-    country: "Germany",
-    countryCode: "DE",
-    city: "Munich",
-    description: "TUM is one of Europe's leading universities, excelling in engineering, technology, and natural sciences. With strong industry partnerships and a focus on innovation, TUM offers world-class education with minimal tuition fees at its public institution.",
-    logo: "⚙️",
-    ranking: 49,
-    website: "https://tum.de",
-    established: 1868,
+    id: "12",
+    name: "University of Western Australia",
+    slug: "uwa",
+    country: "Australia",
+    countryCode: "AU",
+    city: "Perth, WA",
+    description: "The University of Western Australia is one of Australia's leading research universities and a member of the prestigious Group of Eight. Located on a beautiful riverside campus in Perth, UWA offers world-class education with strong connections to Asia-Pacific and global industries, particularly in mining, energy, and marine sciences.",
+    logo: "🌊",
+    ranking: 72,
+    website: "https://www.uwa.edu.au",
+    established: 1911,
     type: "Public",
     courses: [
       {
-        id: "tum-1",
-        name: "Automotive Engineering",
-        degree: "Master",
-        duration: "2 years",
-        tuitionFee: 0,
-        currency: "EUR",
-        intakeDates: ["October", "April"]
-      },
-      {
-        id: "tum-2",
-        name: "Computer Science",
-        degree: "Master",
-        duration: "2 years",
-        tuitionFee: 0,
-        currency: "EUR",
-        intakeDates: ["October"]
-      },
-      {
-        id: "tum-3",
-        name: "Management & Technology",
-        degree: "Master",
-        duration: "2 years",
-        tuitionFee: 0,
-        currency: "EUR",
-        intakeDates: ["October"]
-      }
-    ],
-    admissionRequirements: {
-      bachelor: [
-        "Abitur or equivalent qualification",
-        "German proficiency: DSH-2 or TestDaF 4 (for German-taught programs)",
-        "English proficiency: IELTS (6.5+) or TOEFL (88+) for English programs",
-        "Subject-specific prerequisites",
-        "Entrance examination (some programs)",
-        "Motivation letter"
-      ],
-      master: [
-        "Bachelor's degree in relevant field (minimum 2.5 GPA German system)",
-        "German or English proficiency (program dependent)",
-        "IELTS (6.5+) or TOEFL (88+) for English programs",
-        "Statement of purpose",
-        "CV",
-        "2 letters of recommendation"
-      ],
-      phd: [
-        "Master's degree or equivalent",
-        "Research proposal",
-        "German or English proficiency",
-        "Contact with potential supervisor required",
-        "Academic references",
-        "Strong academic record"
-      ]
-    },
-    campusLife: "TUM's modern campus offers excellent facilities including research labs, maker spaces, and sports centers. Munich provides high quality of life, rich culture, proximity to the Alps, and numerous tech company headquarters. Student semester ticket provides unlimited public transport.",
-    scholarships: [
-      "DAAD Scholarships",
-      "Deutschlandstipendium",
-      "TUM University Foundation Fellowships",
-      "Konrad Adenauer Foundation",
-      "Research assistantships"
-    ]
-  },
-  {
-    id: "7",
-    name: "Trinity College Dublin",
-    slug: "trinity-dublin",
-    country: "Ireland",
-    countryCode: "IE",
-    city: "Dublin",
-    description: "Trinity College Dublin is Ireland's oldest and most prestigious university. Located in the heart of Dublin and surrounded by leading tech companies, TCD offers world-class education with strong industry connections and a vibrant campus life.",
-    logo: "☘️",
-    ranking: 98,
-    website: "https://tcd.ie",
-    established: 1592,
-    type: "Public",
-    courses: [
-      {
-        id: "trinity-1",
-        name: "Computer Science",
-        degree: "Master",
-        duration: "1 year",
-        tuitionFee: 24800,
-        currency: "EUR",
-        intakeDates: ["September"]
-      },
-      {
-        id: "trinity-2",
+        id: "uwa-1",
         name: "Data Science",
         degree: "Master",
-        duration: "1 year",
-        tuitionFee: 24800,
-        currency: "EUR",
-        intakeDates: ["September"]
+        duration: "1.5-2 years",
+        tuitionFee: 42100,
+        currency: "AUD",
+        intakeDates: ["February", "July"]
       },
       {
-        id: "trinity-3",
-        name: "Business",
+        id: "uwa-2",
+        name: "Business Administration (MBA)",
+        degree: "Master",
+        duration: "1.5 years",
+        tuitionFee: 45000,
+        currency: "AUD",
+        intakeDates: ["February", "July"]
+      },
+      {
+        id: "uwa-3",
+        name: "Engineering",
         degree: "Bachelor",
         duration: "4 years",
-        tuitionFee: 21350,
-        currency: "EUR",
-        intakeDates: ["September"]
+        tuitionFee: 44000,
+        currency: "AUD",
+        intakeDates: ["February", "July"]
       }
     ],
     admissionRequirements: {
       bachelor: [
-        "Leaving Certificate or equivalent with strong grades",
-        "English proficiency: IELTS (6.5+) or TOEFL (90+)",
-        "Subject-specific requirements",
-        "Personal statement",
-        "Reference letter",
-        "Interview (for some programs)"
+        "Australian Year 12 or equivalent qualification",
+        "IELTS: 6.5 overall (no band below 6.0)",
+        "ATAR or equivalent score",
+        "Subject prerequisites for specific programs",
+        "English language proficiency",
+        "Portfolio for some creative programs"
       ],
       master: [
-        "Upper second-class honours degree (2:1) or equivalent",
-        "IELTS (6.5+) or TOEFL (88+)",
+        "Bachelor's degree from recognized institution",
+        "IELTS: 6.5-7.0 overall",
+        "GRE/GMAT for some programs",
         "Statement of purpose",
-        "2 academic references",
-        "CV",
-        "Work experience (for some programs)"
+        "CV/Resume",
+        "Two references"
       ],
       phd: [
-        "Master's degree or first-class honours bachelor's",
+        "Master's degree or Honours degree (First Class/2A)",
         "Research proposal",
-        "IELTS (6.5+) or TOEFL (88+)",
+        "IELTS: 7.0 overall",
         "Academic references",
         "Supervisor agreement",
-        "Interview"
+        "Research experience preferred"
       ]
     },
-    campusLife: "Trinity's historic campus in central Dublin offers a unique blend of tradition and innovation. Students enjoy access to the famous Long Room Library, 180+ societies and sports clubs, and Dublin's vibrant tech and cultural scene including Google, Facebook, and LinkedIn offices nearby.",
+    campusLife: "UWA's stunning riverfront campus is one of Australia's most beautiful. Perth offers an excellent lifestyle with beaches, sunshine, and outdoor activities. Students enjoy modern facilities, 150+ clubs, strong sports culture, and easy access to Asia-Pacific for travel and career opportunities.",
     scholarships: [
-      "Trinity International Scholarship",
-      "Provost's PhD Awards",
-      "Trinity Access Programme",
-      "Country-specific scholarships",
-      "Research scholarships"
+      "Global Excellence Scholarship",
+      "International Student Award",
+      "Research Training Program Scholarship",
+      "Faculty scholarships",
+      "Destination Australia Scholarship"
     ]
   },
   {
-    id: "8",
+    id: "13",
     name: "University of Auckland",
     slug: "auckland",
     country: "New Zealand",
     countryCode: "NZ",
     city: "Auckland",
-    description: "The University of Auckland is New Zealand's leading university, offering world-class education in a stunning natural environment. Known for research excellence and innovation, it provides excellent opportunities in New Zealand's largest and most diverse city.",
+    description: "The University of Auckland is New Zealand's largest and highest-ranked university, consistently placing in the top 100 globally. Known for research excellence, innovative teaching, and strong industry connections, Auckland offers world-class education in a stunning natural environment with excellent quality of life.",
     logo: "🥝",
-    ranking: 87,
-    website: "https://auckland.ac.nz",
+    ranking: 68,
+    website: "https://www.auckland.ac.nz",
     established: 1883,
     type: "Public",
     courses: [
@@ -590,9 +975,9 @@ export const universities: University[] = [
         name: "Engineering",
         degree: "Bachelor",
         duration: "4 years",
-        tuitionFee: 43766,
+        tuitionFee: 45000,
         currency: "NZD",
-        intakeDates: ["March", "July"]
+        intakeDates: ["February", "July"]
       },
       {
         id: "auckland-2",
@@ -601,51 +986,359 @@ export const universities: University[] = [
         duration: "15 months",
         tuitionFee: 51450,
         currency: "NZD",
-        intakeDates: ["March", "July"]
+        intakeDates: ["February", "July"]
       },
       {
         id: "auckland-3",
         name: "Computer Science",
         degree: "Master",
-        duration: "1 year",
+        duration: "1-2 years",
         tuitionFee: 42046,
         currency: "NZD",
-        intakeDates: ["March", "July"]
+        intakeDates: ["February", "July"]
       }
     ],
     admissionRequirements: {
       bachelor: [
         "NCEA Level 3 or equivalent qualification",
-        "IELTS (6.0+ with no band below 5.5) or TOEFL (80+)",
+        "IELTS: 6.0 overall (no band below 5.5)",
         "Subject prerequisites vary by program",
         "Good academic record",
-        "Personal statement (some programs)",
-        "Portfolio (for creative programs)"
+        "Personal statement for some programs",
+        "Portfolio for creative programs"
       ],
       master: [
         "Bachelor's degree with B average or higher",
-        "IELTS (6.5+ with no band below 6.0) or TOEFL (90+)",
+        "IELTS: 6.5 overall (no band below 6.0)",
         "Statement of purpose",
-        "2 references",
+        "Two references",
         "CV",
-        "Work experience (for some programs)"
+        "Work experience for some programs"
       ],
       phd: [
-        "Master's degree or bachelor's with first-class honours",
+        "Master's degree or bachelor's with First Class Honours",
         "Research proposal",
-        "IELTS (6.5+) or TOEFL (90+)",
+        "IELTS: 6.5 overall",
         "Academic references",
         "Supervisor agreement",
         "Strong research background"
       ]
     },
-    campusLife: "Auckland's beautiful campus is located minutes from the city center and harbors. Students enjoy access to modern facilities, 200+ clubs, excellent sports facilities, and Auckland's diverse culture. The city offers easy access to beaches, islands, and outdoor adventures.",
+    campusLife: "Auckland's campus is minutes from the city center and beautiful harbors. Students enjoy modern facilities, 200+ clubs, excellent sports facilities, and New Zealand's largest city. Auckland offers diverse culture, easy access to beaches, islands, and world-class outdoor adventures.",
     scholarships: [
       "University of Auckland International Student Excellence Scholarship",
       "Doctoral Scholarship",
       "Faculty-specific scholarships",
       "New Zealand Government Scholarship",
       "Research scholarships"
+    ]
+  },
+  {
+    id: "14",
+    name: "University of Canterbury",
+    slug: "canterbury",
+    country: "New Zealand",
+    countryCode: "NZ",
+    city: "Christchurch",
+    description: "The University of Canterbury is one of New Zealand's oldest and most prestigious universities, known for engineering, sciences, and research excellence. Located in Christchurch, the 'Garden City,' Canterbury offers a supportive environment with world-class facilities and strong connections to industry.",
+    logo: "🏔️",
+    ranking: 256,
+    website: "https://www.canterbury.ac.nz",
+    established: 1873,
+    type: "Public",
+    courses: [
+      {
+        id: "canterbury-1",
+        name: "Engineering",
+        degree: "Bachelor",
+        duration: "4 years",
+        tuitionFee: 42000,
+        currency: "NZD",
+        intakeDates: ["February", "July"]
+      },
+      {
+        id: "canterbury-2",
+        name: "Applied Data Science",
+        degree: "Master",
+        duration: "1 year",
+        tuitionFee: 38000,
+        currency: "NZD",
+        intakeDates: ["February", "July"]
+      },
+      {
+        id: "canterbury-3",
+        name: "Business",
+        degree: "Bachelor",
+        duration: "3 years",
+        tuitionFee: 28000,
+        currency: "NZD",
+        intakeDates: ["February", "July"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "NCEA Level 3 or equivalent",
+        "IELTS: 6.0 overall (no band below 5.5)",
+        "University Entrance requirements",
+        "Subject prerequisites for specific programs",
+        "Personal statement",
+        "Academic transcripts"
+      ],
+      master: [
+        "Bachelor's degree with B average",
+        "IELTS: 6.5 overall (no band below 6.0)",
+        "Statement of purpose",
+        "Two references",
+        "CV/Resume",
+        "Work experience for some programs"
+      ],
+      phd: [
+        "Master's degree with strong grades",
+        "Research proposal",
+        "IELTS: 6.5 overall",
+        "Academic references",
+        "Supervisor agreement",
+        "Research experience"
+      ]
+    },
+    campusLife: "Canterbury's park-like campus offers modern facilities including new engineering and science buildings. Christchurch provides easy access to skiing, hiking, and outdoor adventures. Students enjoy a supportive community, 140+ clubs, excellent sports facilities, and affordable living costs.",
+    scholarships: [
+      "UC International First Year Scholarship",
+      "Go Canterbury Scholarship",
+      "Doctoral Scholarship",
+      "Faculty scholarships",
+      "New Zealand Excellence Awards"
+    ]
+  },
+  {
+    id: "15",
+    name: "Dublin City University",
+    slug: "dcu",
+    country: "Ireland",
+    countryCode: "IE",
+    city: "Dublin",
+    description: "Dublin City University is Ireland's University of Enterprise, known for innovation, industry partnerships, and graduate employability. Located in Dublin's northside, DCU offers cutting-edge programs with strong tech and business connections, reflecting Ireland's position as a European tech hub.",
+    logo: "☘️",
+    ranking: 436,
+    website: "https://www.dcu.ie",
+    established: 1980,
+    type: "Public",
+    courses: [
+      {
+        id: "dcu-1",
+        name: "Computing",
+        degree: "Bachelor",
+        duration: "4 years",
+        tuitionFee: 15920,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "dcu-2",
+        name: "Data Analytics",
+        degree: "Master",
+        duration: "1 year",
+        tuitionFee: 17500,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "dcu-3",
+        name: "Business Management",
+        degree: "Master",
+        duration: "1 year",
+        tuitionFee: 16500,
+        currency: "EUR",
+        intakeDates: ["September", "January"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "Leaving Certificate or equivalent (IB, A-Levels)",
+        "IELTS: 6.0-6.5 overall",
+        "Subject-specific requirements",
+        "Personal statement",
+        "Reference letter",
+        "Application through CAO"
+      ],
+      master: [
+        "Bachelor's degree with 2.1 (Second Class Honours, Upper Division)",
+        "IELTS: 6.5 overall",
+        "Statement of purpose",
+        "Two references",
+        "CV",
+        "Work experience for some programs"
+      ],
+      phd: [
+        "Master's degree or First Class Honours",
+        "Research proposal",
+        "IELTS: 6.5 overall",
+        "Academic references",
+        "Supervisor agreement",
+        "Interview"
+      ]
+    },
+    campusLife: "DCU's modern campus features state-of-the-art facilities, including a new student center and sports complex. Located near Dublin's tech hub, students have access to major employers like Google, Facebook, and LinkedIn. Over 120 clubs and societies, active student community.",
+    scholarships: [
+      "DCU International Scholarship",
+      "Sports Scholarship",
+      "Faculty scholarships",
+      "Postgraduate research awards",
+      "Government of Ireland scholarships"
+    ]
+  },
+  {
+    id: "16",
+    name: "University of Europe for Applied Sciences",
+    slug: "ue-germany",
+    country: "Germany",
+    countryCode: "DE",
+    city: "Berlin, Hamburg, Iserlohn",
+    description: "The University of Europe for Applied Sciences (UE) is a private, state-accredited university offering practice-oriented programs taught entirely in English. With campuses in Berlin, Hamburg, and Iserlohn, UE focuses on business, design, technology, and sports, preparing students for global careers.",
+    logo: "🇪🇺",
+    ranking: 0,
+    website: "https://www.ue-germany.com",
+    established: 2017,
+    type: "Private",
+    courses: [
+      {
+        id: "ue-1",
+        name: "Business and Management Studies",
+        degree: "Bachelor",
+        duration: "3 years",
+        tuitionFee: 9750,
+        currency: "EUR",
+        intakeDates: ["September", "March"]
+      },
+      {
+        id: "ue-2",
+        name: "Data Science",
+        degree: "Master",
+        duration: "1.5 years",
+        tuitionFee: 10800,
+        currency: "EUR",
+        intakeDates: ["September", "March"]
+      },
+      {
+        id: "ue-3",
+        name: "Software Engineering",
+        degree: "Bachelor",
+        duration: "3 years",
+        tuitionFee: 9750,
+        currency: "EUR",
+        intakeDates: ["September", "March"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "High school diploma or equivalent",
+        "English proficiency: IELTS 5.5+ or equivalent",
+        "No German required (all programs in English)",
+        "Motivation letter",
+        "CV",
+        "Interview may be required"
+      ],
+      master: [
+        "Bachelor's degree in related field",
+        "English proficiency: IELTS 6.0+ or equivalent",
+        "Statement of purpose",
+        "CV/Resume",
+        "Work experience valued",
+        "Interview"
+      ],
+      phd: [
+        "Master's degree",
+        "Research proposal",
+        "English proficiency",
+        "Academic references",
+        "Interview",
+        "Strong academic record"
+      ]
+    },
+    campusLife: "UE campuses are in Germany's most vibrant cities. Berlin offers startup culture and nightlife, Hamburg has maritime charm, and Iserlohn provides a traditional setting. Small class sizes, international student body, practical projects, and strong industry connections define the experience.",
+    scholarships: [
+      "UE Excellence Scholarship (up to 50%)",
+      "Early Bird Discount",
+      "Sibling Discount",
+      "Partner university scholarships",
+      "Need-based financial aid"
+    ]
+  },
+  {
+    id: "17",
+    name: "Sorbonne University",
+    slug: "sorbonne",
+    country: "France",
+    countryCode: "FR",
+    city: "Paris",
+    description: "Sorbonne University is one of the world's most prestigious universities, formed by the merger of Paris-Sorbonne and Pierre and Marie Curie universities. Located in the heart of Paris, Sorbonne excels in arts, humanities, sciences, and medicine, offering world-class education in an iconic setting.",
+    logo: "🗼",
+    ranking: 59,
+    website: "https://www.sorbonne-universite.fr",
+    established: 1257,
+    type: "Public",
+    courses: [
+      {
+        id: "sorbonne-1",
+        name: "Computer Science",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 3770,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "sorbonne-2",
+        name: "Management",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 3770,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "sorbonne-3",
+        name: "Literature and Humanities",
+        degree: "Bachelor",
+        duration: "3 years",
+        tuitionFee: 2770,
+        currency: "EUR",
+        intakeDates: ["September"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "Baccalauréat or equivalent",
+        "French proficiency: DELF B2/C1 or TCF",
+        "Application through Parcoursup (French students) or direct application",
+        "Academic transcripts",
+        "Motivation letter",
+        "CV"
+      ],
+      master: [
+        "Bachelor's degree (Licence) with strong grades",
+        "French or English proficiency depending on program",
+        "IELTS 6.5+ for English-taught programs",
+        "Statement of purpose",
+        "Two references",
+        "CV"
+      ],
+      phd: [
+        "Master's degree with excellent grades",
+        "Research proposal",
+        "French or English proficiency",
+        "Academic references",
+        "Supervisor agreement",
+        "Interview"
+      ]
+    },
+    campusLife: "Sorbonne's historic campus in Paris's Latin Quarter offers unmatched cultural immersion. Students enjoy world-class museums, cafés, and Parisian lifestyle. The university provides modern facilities, extensive libraries, student associations, and access to Paris's vibrant academic and cultural life.",
+    scholarships: [
+      "Eiffel Excellence Scholarship",
+      "Sorbonne University Scholarships",
+      "French Government Scholarships",
+      "Erasmus+ for European students",
+      "Research funding opportunities"
     ]
   }
 ];
