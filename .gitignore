@@ -76,6 +76,7 @@ sharp
 /public/**/*.jpeg
 !/public/professor3d/*.png
 !/public/images/universties/*.png
+!/public/logo/*.png
 
 # Temporary files
 *.tmp
