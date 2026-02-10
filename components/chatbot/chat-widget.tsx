@@ -223,7 +223,7 @@ export function ChatWidget() {
         <div className={`fixed bottom-0 right-0 z-50 ${!hasWalkedIn ? "translate-x-[200%]" : ""} transition-all duration-1000 ease-out`}>
           {/* Greeting Speech Bubble - Compact & Close to Professor */}
           {showGreeting && hasWalkedIn && (
-            <div className="absolute bottom-[300px] right-8 z-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="absolute bottom-[460px] right-8 z-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <div className="relative bg-white rounded-xl shadow-xl px-3 py-2.5 border border-gray-200 max-w-[180px] hover:shadow-2xl transition-shadow">
                 {/* Subtle pulse effect */}
                 <div className="absolute inset-0 bg-blue-50 rounded-xl opacity-0 animate-pulse" />
@@ -254,7 +254,7 @@ export function ChatWidget() {
             aria-label="Chat with advisor"
           >
             {/* 3D Professor Character with Three.js */}
-            <div className="w-[280px] h-[320px] rounded-3xl overflow-hidden">
+            <div className="w-[400px] h-[480px] rounded-3xl overflow-hidden -mr-32">
               <Professor3D />
             </div>
 

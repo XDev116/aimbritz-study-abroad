@@ -152,7 +152,7 @@ function ProfessorModel() {
   }, [actions, names, currentAnimation]);
 
   return (
-    <group ref={group} dispose={null} scale={2} position={[0, -0.4, 0]}>
+    <group ref={group} dispose={null} scale={2.2} position={[0, -1.5, 0]}>
       <primitive object={scene} />
     </group>
   );
@@ -163,7 +163,7 @@ useGLTF.preload("/professor3d/Professor_Complete.glb");
 
 export function Professor3D() {
   return (
-    <div className="w-full h-full" style={{ position: 'relative', minHeight: '500px' }}>
+    <div className="w-full h-full" style={{ position: 'relative' }}>
       <Canvas
         shadows={false}
         camera={{ position: [0, 0.5, 4], fov: 50 }}
