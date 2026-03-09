@@ -83,8 +83,10 @@ useGLTF.preload("/professor3d/ceo_combined.glb");
 
 export function Professor3D() {
   return (
-    <div className="w-full h-full" style={{ position: 'relative' }}>
+    <div className="w-full h-full" style={{ position: 'relative', touchAction: 'pan-y' }}>
       <Canvas
+        onPointerDown={(e) => e.stopPropagation()}
+        style={{ touchAction: 'pan-y' }}
         shadows={false}
         camera={{ position: [0, 0.5, 4], fov: 50 }}
         gl={{
