@@ -176,7 +176,10 @@ export default function ContactPage() {
                 <Mail className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                 <div>
                   <div className="font-semibold text-sm mb-1">Email</div>
-                  <a href="mailto:info@aimbritz.com" className="text-sm text-muted-foreground hover:text-primary">
+                  <a href="mailto:ceo@aimbritz.com" className="text-sm text-muted-foreground hover:text-primary block">
+                    ceo@aimbritz.com
+                  </a>
+                  <a href="mailto:info@aimbritz.com" className="text-sm text-muted-foreground hover:text-primary block">
                     info@aimbritz.com
                   </a>
                 </div>

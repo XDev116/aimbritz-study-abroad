@@ -23,7 +23,7 @@ const MessageBubble = memo(({ message }: { message: Message }) => (
     {message.sender === "bot" && (
       <div className="w-8 h-8 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center flex-shrink-0 shadow-md overflow-hidden">
         <img
-          src="/professor3d/professorAvatar.webp"
+          src="/images/team/alameen.png"
           alt="Professor"
           className="w-full h-full object-cover"
         />
@@ -282,7 +282,7 @@ export function ChatWidget() {
                 {/* Mini Professor Avatar */}
                 <div className="relative w-12 h-12 rounded-full bg-white shadow-lg overflow-hidden border-2 border-gray-200">
                   <img
-                    src="/professor3d/professorAvatar.webp"
+                    src="/images/team/alameen.png"
                     alt="Professor"
                     className="w-full h-full object-cover"
                   />
@@ -331,7 +331,7 @@ export function ChatWidget() {
                     <div className="flex gap-3 animate-slide-in">
                       <div className="w-8 h-8 rounded-full bg-white border-2 border-gray-300 flex items-center justify-center shadow-md overflow-hidden">
                         <img
-                          src="/professor3d/professorAvatar.webp"
+                          src="/images/team/alameen.png"
                           alt="Professor"
                           className="w-full h-full object-cover"
                         />

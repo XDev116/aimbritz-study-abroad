@@ -1,68 +1,87 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowRight, Target, Eye, Heart, Users } from "lucide-react";
+import { ArrowRight, Target, Eye, Heart, Users, Globe, Shield, Lightbulb } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "About Us",
-  description: "Learn about AimBritz - your trusted partner for study abroad consultancy. Our mission, vision, and commitment to helping students achieve their dreams.",
+  description: "Learn about AimBritz - your trusted partner for study abroad consultancy. Founded in 2018, recognized by Asia Book of Records & India Book of Records.",
 };
 
 const values = [
   {
+    icon: Shield,
+    title: "Integrity & Transparency",
+    description: "Honest and transparent guidance in every student interaction, always prioritizing student success."
+  },
+  {
     icon: Heart,
-    title: "Student-First Approach",
+    title: "Student-Centric Decisions",
     description: "Every decision we make is centered around what's best for our students and their future."
   },
   {
-    icon: Target,
-    title: "Excellence",
-    description: "We strive for excellence in every aspect of our service, from counseling to visa support."
+    icon: Globe,
+    title: "Global Perspective",
+    description: "Combining global expertise with deep local knowledge to deliver the best guidance."
   },
   {
-    icon: Users,
-    title: "Integrity",
-    description: "We provide honest, transparent guidance, always prioritizing student success over profits."
-  },
-  {
-    icon: Eye,
-    title: "Innovation",
-    description: "We continuously improve our services and adopt new technologies to serve students better."
+    icon: Lightbulb,
+    title: "Professional Excellence",
+    description: "Continuous improvement and innovation in our services to deliver the highest standards."
   }
 ];
 
 const stats = [
-  { value: "10,000+", label: "Students Placed" },
+  { value: "2018", label: "Founded" },
   { value: "500+", label: "Partner Universities" },
-  { value: "50+", label: "Countries" },
-  { value: "95%", label: "Success Rate" },
+  { value: "14+", label: "Countries" },
+  { value: "5000+", label: "Students Placed" },
 ];
 
 const team = [
   {
-    name: "Dr. Priya Sharma",
+    name: "Al Ameen Mohammed Ali",
     role: "Founder & CEO",
-    bio: "15+ years of experience in international education with a PhD in Educational Leadership.",
-    initial: "PS"
+    bio: "Experienced international student in the UK, Al Ameen founded AimBritz to help fellow aspirants pursue their studies without the struggles he faced abroad.",
+    initial: "AA",
+    image: "/images/team/alameen.png"
   },
   {
-    name: "Raj Malhotra",
-    role: "Head of Counseling",
-    bio: "Former university admissions officer with expertise in USA and UK applications.",
-    initial: "RM"
+    name: "Akshay B Darsan",
+    role: "Co-Founder",
+    bio: "Co-founder driving AimBritz's vision for ethical, structured, and career-focused international education solutions.",
+    initial: "AB",
+    image: "/images/team/akshay.png"
   },
   {
-    name: "Sarah Johnson",
-    role: "Visa Expert",
-    bio: "Immigration consultant with 10+ years of experience in student visa processing.",
-    initial: "SJ"
+    name: "Amal DS",
+    role: "Co-Founder",
+    bio: "Co-founder committed to building transparent and results-driven overseas education guidance for students.",
+    initial: "AD",
+    image: "/images/team/amal.png"
   },
   {
-    name: "Michael Chen",
-    role: "Test Prep Director",
-    bio: "Specialized in IELTS, TOEFL, GRE, and GMAT preparation with proven results.",
-    initial: "MC"
+    name: "Ansab Muhammed",
+    role: "Managing Partner – Ernakulam",
+    bio: "Heading AimBritz's Ernakulam operations, connecting students across Kochi and surrounding regions with global education opportunities.",
+    initial: "AM",
+    image: "/images/team/ansab.png"
+  },
+  {
+    name: "Adv. Reshma Salim",
+    role: "Chief Operating Officer",
+    bio: "Leading operations with a focus on compliance, student success, and delivering seamless educational journeys.",
+    initial: "RS",
+    image: "/images/team/reshma.png"
+  },
+  {
+    name: "Raju Muthuswamy",
+    role: "Managing Partner – Tamil Nadu",
+    bio: "Driving AimBritz's expansion in Tamil Nadu, helping students across the region access world-class international education.",
+    initial: "RM",
+    image: "/images/team/raju.png"
   }
 ];
 
@@ -75,9 +94,17 @@ export default function AboutPage() {
           About AimBritz
         </h1>
         <p className="text-xl text-muted-foreground leading-relaxed">
-          We're more than just a consultancy – we're your partners in achieving global education dreams.
-          With over a decade of experience, we've helped thousands of students transform their aspirations into reality.
+          Building Global Futures Since 2020. A dynamic global education consultancy connecting ambitious students
+          with internationally recognized academic opportunities.
         </p>
+        <div className="mt-6 flex items-center justify-center gap-6 flex-wrap">
+          <div className="relative w-20 h-20 rounded-full overflow-hidden">
+            <Image src="/png/Asia.png" alt="Asia Book of Records" fill className="object-cover object-center" />
+          </div>
+          <div className="relative w-20 h-20 rounded-full overflow-hidden">
+            <Image src="/png/india.png" alt="India Book of Records" fill className="object-cover object-center" />
+          </div>
+        </div>
       </div>
 
       {/* Stats */}
@@ -97,25 +124,27 @@ export default function AboutPage() {
             <h2 className="text-3xl font-bold mb-6">Our Story</h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
-                AimBritz was founded in 2013 with a simple yet powerful mission: to make quality international
-                education accessible to deserving students, regardless of their background.
+                AimBritz was founded in 2018 and formally registered in 2020, evolving into a dynamic global
+                education consultancy headquartered in Trivandrum, Kerala, with operational presence in India
+                and the United Kingdom.
               </p>
               <p>
-                Our founder, Dr. Priya Sharma, experienced firsthand the challenges of studying abroad. The
-                confusing application processes, unclear visa requirements, and lack of reliable guidance inspired
-                her to create a consultancy that would simplify this journey for others.
+                Our Founder & CEO, Al Ameen Mohammed Ali, experienced firsthand the challenges of being an
+                international student in Britain. That experience became the foundation of AimBritz — a promise
+                to help every student pursue their studies without the pain and struggle he once faced.
               </p>
               <p>
-                What started as a small office helping 20 students has grown into a leading consultancy with
-                thousands of success stories. But our core values remain unchanged: integrity, excellence,
-                and a genuine commitment to student success.
+                Built by a team of globally experienced professionals — many with firsthand international
+                academic exposure — AimBritz combines industry expertise with personalized mentorship. Today,
+                we are a trusted partner for students, universities, and institutions seeking reliable,
+                transparent, and results-driven international education guidance.
               </p>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <Card className="bg-primary/5">
               <CardHeader>
-                <CardTitle className="text-3xl font-bold text-primary">2013</CardTitle>
+                <CardTitle className="text-3xl font-bold text-primary">2018</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm">Founded</p>
@@ -123,7 +152,7 @@ export default function AboutPage() {
             </Card>
             <Card className="bg-primary/5">
               <CardHeader>
-                <CardTitle className="text-3xl font-bold text-primary">10K+</CardTitle>
+                <CardTitle className="text-3xl font-bold text-primary">5K+</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm">Students</p>
@@ -131,7 +160,7 @@ export default function AboutPage() {
             </Card>
             <Card className="bg-primary/5">
               <CardHeader>
-                <CardTitle className="text-3xl font-bold text-primary">50+</CardTitle>
+                <CardTitle className="text-3xl font-bold text-primary">14+</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm">Countries</p>
@@ -139,10 +168,10 @@ export default function AboutPage() {
             </Card>
             <Card className="bg-primary/5">
               <CardHeader>
-                <CardTitle className="text-3xl font-bold text-primary">95%</CardTitle>
+                <CardTitle className="text-3xl font-bold text-primary">500+</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm">Success Rate</p>
+                <p className="text-sm">Universities</p>
               </CardContent>
             </Card>
           </div>
@@ -159,8 +188,11 @@ export default function AboutPage() {
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground">
-                To empower students with world-class education opportunities by providing expert guidance,
-                transparent counseling, and comprehensive support throughout their study abroad journey.
+                AimBritz is committed to delivering personalized, transparent, and professionally guided
+                overseas education services that align students' ambitions with evolving global industry
+                demands. Through expert counselling, international partnerships, and end-to-end support
+                systems, AimBritz strives to create seamless educational journeys that extend beyond
+                admissions into long-term career success.
               </p>
             </CardContent>
           </Card>
@@ -171,8 +203,9 @@ export default function AboutPage() {
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground">
-                To be the most trusted and student-centric study abroad consultancy, recognized globally for
-                our integrity, expertise, and commitment to transforming lives through education.
+                To become a globally recognized leader in international education consultancy, enabling
+                students from diverse backgrounds to access world-class academic opportunities through
+                ethical practices, strategic innovation, and lifelong career support.
               </p>
             </CardContent>
           </Card>
@@ -182,9 +215,9 @@ export default function AboutPage() {
       {/* Values */}
       <section className="mb-20">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Our Values</h2>
+          <h2 className="text-3xl font-bold mb-4">Our Core Values</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            These core values guide every decision we make and every interaction we have with students.
+            These values guide every decision we make and every interaction we have with students.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -202,28 +235,96 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Achievements */}
+      <section className="mb-20">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold mb-4">Our Achievements</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card className="text-center bg-gradient-to-br from-yellow-50 to-amber-50 border-amber-200">
+            <CardHeader>
+              <div className="flex items-center justify-center gap-3 mb-3">
+                <div className="relative w-14 h-14 rounded-full overflow-hidden">
+                  <Image src="/png/Asia.png" alt="Asia Book of Records" fill className="object-cover object-center" />
+                </div>
+                <div className="relative w-14 h-14 rounded-full overflow-hidden">
+                  <Image src="/png/india.png" alt="India Book of Records" fill className="object-cover object-center" />
+                </div>
+              </div>
+              <CardTitle className="text-lg">Asia & India Book of Records</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Recognized for hosting the largest overseas education seminar in the region.
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="text-center">
+            <CardHeader>
+              <Users className="h-10 w-10 text-primary mx-auto mb-3" />
+              <CardTitle className="text-lg">British Council Certified</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Our counsellors are British Council certified, ensuring expert and internationally recognized guidance.
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="text-center">
+            <CardHeader>
+              <Globe className="h-10 w-10 text-primary mx-auto mb-3" />
+              <CardTitle className="text-lg">Global Scholarship Placements</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Successful scholarship placements through government-funded initiatives across multiple countries.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
       {/* Team */}
       <section className="mb-20">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Meet Our Team</h2>
+          <h2 className="text-3xl font-bold mb-4">Our Leadership Team</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Our team of experienced counselors, visa experts, and education specialists are dedicated to your success.
+            Globally experienced professionals dedicated to your study abroad success.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {team.map((member) => (
-            <Card key={member.name}>
-              <CardHeader className="text-center">
-                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
-                  {member.initial}
+            <div key={member.name} className="group relative overflow-hidden rounded-3xl bg-gradient-to-b from-slate-900 to-slate-800 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+              {/* Full portrait photo with 4:5 ratio */}
+              <div className="relative w-full aspect-[4/5] overflow-hidden">
+                {member.image ? (
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/80 to-accent/80">
+                    <span className="text-white text-8xl font-bold opacity-30">{member.initial}</span>
+                  </div>
+                )}
+                {/* Thin gradient only at very bottom for text legibility */}
+                <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-slate-900 to-transparent" />
+                {/* Name + role over photo */}
+                <div className="absolute bottom-0 left-0 right-0 p-5">
+                  <span className="inline-block bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full mb-2">
+                    {member.role}
+                  </span>
+                  <h3 className="text-white font-bold text-xl leading-tight">{member.name}</h3>
                 </div>
-                <CardTitle className="text-lg">{member.name}</CardTitle>
-                <p className="text-sm text-primary">{member.role}</p>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground text-center">{member.bio}</p>
-              </CardContent>
-            </Card>
+              </div>
+              {/* Bio */}
+              <div className="px-5 py-4 border-t border-white/10">
+                <p className="text-slate-300 text-sm leading-relaxed">{member.bio}</p>
+              </div>
+            </div>
           ))}
         </div>
       </section>
@@ -240,17 +341,7 @@ export default function AboutPage() {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                One-on-one counseling tailored to your unique profile, goals, and preferences.
-              </p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Proven Track Record</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                95% visa success rate and 10,000+ students placed in top universities worldwide.
+                Strategic career counselling tailored to your academic profile, career ambitions, and global market trends.
               </p>
             </CardContent>
           </Card>
@@ -260,7 +351,17 @@ export default function AboutPage() {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                From university selection to post-landing support, we're with you every step.
+                From university selection and visa processing to pre-departure and post-arrival support — we're with you every step.
+              </p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Ethical & Transparent</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Responsible counselling with honest guidance. We are proudly rated 5 stars on Google for trusted guidance and outstanding student success.
               </p>
             </CardContent>
           </Card>

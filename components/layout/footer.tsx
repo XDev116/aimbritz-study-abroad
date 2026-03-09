@@ -40,7 +40,7 @@ export function Footer() {
               />
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Your gateway to global education. Expert guidance for studying abroad.
+              Building Global Futures Since 2020. Recognized by Asia Book of Records & India Book of Records.
             </p>
             <div className="flex gap-3">
               <a href="https://www.instagram.com/aimbritz" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
@@ -89,7 +89,7 @@ export function Footer() {
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-primary shrink-0" />
-                <span>info@aimbritz.com</span>
+                <span>ceo@aimbritz.com</span>
               </div>
             </div>
           </div>

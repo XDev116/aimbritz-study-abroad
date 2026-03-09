@@ -188,7 +188,7 @@ export default function HomePage() {
                 </svg>
               </div>
               <div className="text-left">
-                <div className="text-2xl font-black text-indigo-600">10+</div>
+                <div className="text-2xl font-black text-indigo-600">7+</div>
                 <p className="text-xs text-gray-600 leading-tight">Years of<br/>Experience</p>
               </div>
             </div>
@@ -207,7 +207,7 @@ export default function HomePage() {
                 </svg>
               </div>
               <div className="text-left">
-                <div className="text-2xl font-black text-green-600">30+</div>
+                <div className="text-2xl font-black text-green-600">14+</div>
                 <p className="text-xs text-gray-600 leading-tight">Countries</p>
               </div>
             </div>
