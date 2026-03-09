@@ -254,7 +254,16 @@ export function ChatWidget() {
             aria-label="Chat with advisor"
           >
             {/* 3D Professor Character with Three.js */}
-            <div className="w-[320px] h-[380px] sm:w-[320px] sm:h-[380px] md:w-[400px] md:h-[480px] rounded-3xl overflow-hidden -mr-24 sm:-mr-24 md:-mr-24">
+            <div
+              className="w-[320px] h-[380px] sm:w-[320px] sm:h-[380px] md:w-[400px] md:h-[480px] rounded-3xl overflow-hidden -mr-24 sm:-mr-24 md:-mr-24"
+              onTouchStart={(e) => { (e.currentTarget as any)._touchY = e.touches[0].clientY; }}
+              onTouchMove={(e) => {
+                const prev = (e.currentTarget as any)._touchY ?? e.touches[0].clientY;
+                const delta = prev - e.touches[0].clientY;
+                (e.currentTarget as any)._touchY = e.touches[0].clientY;
+                window.scrollBy(0, delta);
+              }}
+            >
               <Professor3D />
             </div>
 
