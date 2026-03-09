@@ -107,14 +107,10 @@ export function ChatWidget() {
   useEffect(() => {
     const walkInTimer = setTimeout(() => {
       setHasWalkedIn(true);
-      // Show greeting after walk-in
+      // Show greeting only after idle starts (2s walk-in + 5.8s intro + 5.2s wave = ~13s)
       setTimeout(() => {
         setShowGreeting(true);
-        // Auto-hide greeting after 8 seconds
-        setTimeout(() => {
-          setShowGreeting(false);
-        }, 8000);
-      }, 500);
+      }, 13000);
     }, 1000);
 
     return () => clearTimeout(walkInTimer);
@@ -221,28 +217,6 @@ export function ChatWidget() {
       {/* Professional Business Character */}
       {!isOpen && (
         <div className={`fixed bottom-0 right-0 z-50 pointer-events-none ${!hasWalkedIn ? "translate-x-[200%]" : ""} transition-all duration-1000 ease-out`}>
-          {/* Greeting Speech Bubble - Compact & Close to Professor */}
-          {showGreeting && hasWalkedIn && (
-            <div className="absolute bottom-[360px] sm:bottom-[360px] md:bottom-[460px] right-4 sm:right-8 z-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <div className="relative bg-white rounded-xl shadow-xl px-3 py-2.5 border border-gray-200 max-w-[180px] hover:shadow-2xl transition-shadow">
-                {/* Subtle pulse effect */}
-                <div className="absolute inset-0 bg-blue-50 rounded-xl opacity-0 animate-pulse" />
-
-                <div className="relative z-10">
-                  <p className="text-xs font-bold text-gray-900 flex items-center gap-1">
-                    <span className="text-base">👋</span>
-                    Hi there!
-                  </p>
-                  <p className="text-[11px] text-gray-600 mt-0.5 leading-snug">
-                    Need help with study abroad?
-                  </p>
-                </div>
-
-                {/* Speech bubble tail - pointing to professor */}
-                <div className="absolute -bottom-1.5 right-12 w-2.5 h-2.5 bg-white border-r border-b border-gray-200 transform rotate-45" />
-              </div>
-            </div>
-          )}
 
           {/* Professional 3D Character */}
           <button
@@ -255,7 +229,7 @@ export function ChatWidget() {
           >
             {/* 3D Professor Character with Three.js */}
             <div
-              className="w-[320px] h-[380px] sm:w-[320px] sm:h-[380px] md:w-[400px] md:h-[480px] rounded-3xl overflow-hidden -mr-24 sm:-mr-24 md:-mr-24"
+              className="w-[220px] h-[380px] sm:w-[240px] sm:h-[380px] md:w-[280px] md:h-[480px] rounded-3xl overflow-hidden -mr-8 sm:-mr-8 md:-mr-12"
               onTouchStart={(e) => { (e.currentTarget as any)._touchY = e.touches[0].clientY; }}
               onTouchMove={(e) => {
                 const prev = (e.currentTarget as any)._touchY ?? e.touches[0].clientY;
@@ -266,6 +240,31 @@ export function ChatWidget() {
             >
               <Professor3D />
             </div>
+
+            {/* Cloud speech bubble — above head */}
+            {showGreeting && hasWalkedIn && (
+              <div className="absolute top-24 right-0 z-20 animate-in fade-in zoom-in-95 duration-300 pointer-events-none">
+                <div className="relative bg-white rounded-2xl shadow-lg px-3 py-2 border border-gray-100" style={{ borderRadius: '18px' }}>
+                  <p className="text-[11px] font-semibold text-gray-800 leading-snug whitespace-nowrap">✈️ Study abroad?<br/><span className="font-normal text-gray-500 text-[10px]">Let&apos;s find your uni!</span></p>
+                  {/* Cloud tail — bottom left pointing down to head */}
+                  <div className="absolute -bottom-[9px] left-4 w-0 h-0"
+                    style={{
+                      borderLeft: '6px solid transparent',
+                      borderRight: '6px solid transparent',
+                      borderTop: '9px solid white',
+                    }}
+                  />
+                  {/* Border for tail */}
+                  <div className="absolute -bottom-[11px] left-[14px] w-0 h-0 -z-10"
+                    style={{
+                      borderLeft: '7px solid transparent',
+                      borderRight: '7px solid transparent',
+                      borderTop: '10px solid #f3f4f6',
+                    }}
+                  />
+                </div>
+              </div>
+            )}
 
             {/* Hover tooltip - Enhanced */}
             <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
