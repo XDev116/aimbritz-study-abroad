@@ -107,10 +107,10 @@ export function ChatWidget() {
   useEffect(() => {
     const walkInTimer = setTimeout(() => {
       setHasWalkedIn(true);
-      // Show greeting only after idle starts (2s walk-in + 5.8s intro + 5.2s wave = ~13s)
+      // Show greeting only after idle starts (2s walk-in + 2.867s intro + 5.133s wave = ~10s)
       setTimeout(() => {
         setShowGreeting(true);
-      }, 13000);
+      }, 10000);
     }, 1000);
 
     return () => clearTimeout(walkInTimer);

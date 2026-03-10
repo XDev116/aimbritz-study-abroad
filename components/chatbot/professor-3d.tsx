@@ -61,10 +61,10 @@ function CEOModel() {
           idle.reset().play();
           wave.fadeOut(0.5);
           idle.fadeIn(0.5);
-        }, 5208);
+        }, 5133);
 
         return () => clearTimeout(idleTimer);
-      }, 5833);
+      }, 2867);
 
       return () => clearTimeout(waveTimer);
     }, 2000);
