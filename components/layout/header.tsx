@@ -158,7 +158,12 @@ export function Header() {
             {drawer === "explore" && (
               <>
                 <div className="col-span-4">
-                  <span className="t-eyebrow text-ember">Destinations · 14</span>
+                  <span
+                    className="inline-flex items-center px-3 py-1.5 rounded-full font-mono text-[10px] tracking-[0.22em] uppercase font-bold"
+                    style={{ background: "var(--ember)", color: "var(--ink)" }}
+                  >
+                    Destinations · 14
+                  </span>
                   <h3 className="mt-4 font-serif italic text-4xl leading-tight">Where will the next<br />year take you?</h3>
                 </div>
                 <div className="col-span-8 grid grid-cols-3 gap-x-8 gap-y-3">
@@ -174,7 +179,12 @@ export function Header() {
             {drawer === "services" && (
               <>
                 <div className="col-span-4">
-                  <span className="t-eyebrow text-ember">What we do · 6</span>
+                  <span
+                    className="inline-flex items-center px-3 py-1.5 rounded-full font-mono text-[10px] tracking-[0.22em] uppercase font-bold"
+                    style={{ background: "var(--ember)", color: "var(--ink)" }}
+                  >
+                    What we do · 6
+                  </span>
                   <h3 className="mt-4 font-serif italic text-4xl leading-tight">Full-stack guidance,<br />end to end.</h3>
                 </div>
                 <div className="col-span-8 grid grid-cols-2 gap-x-8 gap-y-4">

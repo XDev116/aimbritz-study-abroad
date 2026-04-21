@@ -356,8 +356,8 @@ interface BtnGhostProps {
 export function BtnGhost({ children, href = "#" }: BtnGhostProps) {
   const isInternal = href.startsWith("/") || href.startsWith("#");
   const cls =
-    "inline-flex items-center gap-2 rounded-full border px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.1em] hover:bg-paper-3 transition-colors";
-  const style: CSSProperties = { borderColor: "rgba(17,17,19,0.4)" };
+    "inline-flex items-center gap-2 rounded-full border-2 px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.1em] hover:bg-paper-3 transition-colors";
+  const style: CSSProperties = { borderColor: "#0a0a0a", color: "#0a0a0a" };
 
   if (isInternal) {
     return (

@@ -1,13 +1,7 @@
 "use client";
 
-import React, {
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { gsap } from "gsap";
 import { FlipText, BtnPrimary, BtnGhost } from "@/components/ui/primitives";
 import { FlowLines } from "@/components/ui/flow-lines";
 
@@ -52,49 +46,19 @@ export function MastheadHero() {
     return () => clearInterval(id);
   }, [hoverIdx]);
 
-  /* Hero intro animation */
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(".h-frame", { opacity: 0, duration: 1.2, ease: "expo.out" });
-      gsap.from(".h-line", {
-        y: 80,
-        opacity: 0,
-        stagger: 0.12,
-        duration: 1.2,
-        ease: "expo.out",
-        delay: 0.2,
-      });
-      gsap.from(".h-meta", {
-        y: 14,
-        opacity: 0,
-        stagger: 0.06,
-        duration: 0.8,
-        ease: "expo.out",
-        delay: 1.0,
-      });
-      gsap.from(".h-port", {
-        y: 30,
-        opacity: 0,
-        stagger: 0.05,
-        duration: 1.0,
-        ease: "expo.out",
-        delay: 0.5,
-      });
-      gsap.from(".h-film", { scale: 1.15, duration: 2.4, ease: "expo.out" });
-    }, heroRef);
-    return () => ctx.revert();
-  }, []);
+  /* No intro animation — the parent BrandPromise handles hero enter/exit.
+     Internal gsap.from tweens leave stale inline styles that don't revert
+     cleanly on scroll-back (causes photo scale + meta opacity to get stuck). */
 
   const p = PLACEMENTS[hoverIdx ?? active];
 
   return (
     <section
       ref={heroRef}
-      className="relative w-full overflow-hidden"
+      className="relative w-full h-full overflow-hidden"
       style={{
         paddingTop: "clamp(108px,13vh,128px)",
         paddingBottom: "clamp(28px,4vh,56px)",
-        minHeight: "min(100vh, 960px)",
       }}
     >
       <FlowLines />
@@ -103,7 +67,7 @@ export function MastheadHero() {
 
       <div className="relative z-10 px-5 md:px-10 lg:px-14 grid grid-cols-12 gap-6 lg:gap-8">
         {/* LEFT column -- rotating headline */}
-        <div className="col-span-12 lg:col-span-7 flex flex-col justify-between lg:min-h-[calc(100vh-11rem)] lg:max-h-[calc(100vh-9rem)]">
+        <div className="col-span-12 lg:col-span-7 flex flex-col justify-between">
           <div>
             {/* Top eyebrow row */}
             <div className="flex items-center gap-4 mb-5">
@@ -224,7 +188,7 @@ export function MastheadHero() {
         </div>
 
         {/* RIGHT column -- cinematic portrait + mini grid */}
-        <div className="col-span-12 lg:col-span-5 relative flex flex-col lg:min-h-[calc(100vh-11rem)] lg:max-h-[calc(100vh-9rem)]">
+        <div className="col-span-12 lg:col-span-5 relative flex flex-col">
           {/* Big portrait / film frame */}
           <div
             className="h-frame relative overflow-hidden lg:flex-1 lg:min-h-0"
@@ -280,10 +244,19 @@ export function MastheadHero() {
                 }}
               >
                 <div>
-                  <p className="t-eyebrow text-ember">
-                    {p.flag} &middot; {p.country}
-                  </p>
-                  <p className="font-sans font-black text-[22px] tracking-[-0.02em] mt-1.5 uppercase">
+                  <span
+                    className="inline-flex items-center gap-2 px-3 py-1 rounded-full font-mono text-[10px] tracking-[0.22em] uppercase font-bold"
+                    style={{ background: "var(--ember)", color: "var(--ink)" }}
+                  >
+                    <span
+                      className="font-mono font-bold text-[9px] tracking-[0.18em] px-1 py-0.5 rounded"
+                      style={{ background: "var(--ink)", color: "var(--ember)" }}
+                    >
+                      {p.flag}
+                    </span>
+                    {p.country}
+                  </span>
+                  <p className="font-sans font-black text-[22px] tracking-[-0.02em] mt-2 uppercase">
                     {p.name}
                   </p>
                   <p className="text-[12px] text-ink-3 mt-0.5">
@@ -360,18 +333,6 @@ export function MastheadHero() {
         </div>
       </div>
 
-      {/* Scroll hint -- small, bottom center, no overlap */}
-      <div className="hidden lg:flex absolute bottom-3 left-0 right-0 z-10 justify-center items-center gap-2">
-        <svg width="14" height="22" viewBox="0 0 14 22" fill="none">
-          <rect x="0.75" y="0.75" width="12.5" height="20.5" rx="6.25" stroke="var(--ink-4)" strokeWidth="1" />
-          <line x1="7" y1="5" x2="7" y2="9" stroke="var(--ink-4)" strokeWidth="1" strokeLinecap="round">
-            <animate attributeName="opacity" values="1;0.2;1" dur="1.6s" repeatCount="indefinite" />
-          </line>
-        </svg>
-        <span className="font-mono text-[8px] tracking-[0.3em] uppercase text-ink-4">
-          Scroll
-        </span>
-      </div>
     </section>
   );
 }

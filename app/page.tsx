@@ -1,4 +1,3 @@
-import { MastheadHero } from "@/components/home/masthead-hero";
 import { BrandPromise } from "@/components/home/brand-promise";
 import { Destinations } from "@/components/home/destinations";
 import { FeaturedUniversities } from "@/components/home/featured-universities";
@@ -11,7 +10,7 @@ import { CtaBold } from "@/components/home/cta-bold";
 export default function HomePage() {
   return (
     <>
-      <MastheadHero />
+      {/* Combined Hero → Promise: hero shrinks into card, fades, signature takes over */}
       <BrandPromise />
       <Destinations />
       <FeaturedUniversities />
