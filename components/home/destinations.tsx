@@ -28,7 +28,7 @@ const COUNTRIES: Country[] = [
   { code: "FR", name: "France",          unis: 41,  topCourse: "MSc Business",         cost: "€12k / yr",  intake: "Sept",   hero: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1200&q=80", shape: "half",  w: 340 },
   { code: "US", name: "United States",   unis: 182, topCourse: "MS Engineering",       cost: "$42k / yr",  intake: "Fall",   hero: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1600&q=80", shape: "tall",  w: 540 },
   { code: "IE", name: "Ireland",         unis: 24,  topCourse: "MSc Pharma",           cost: "€18k / yr",  intake: "Sept",   hero: "https://images.unsplash.com/photo-1590089415225-401ed6f9db8e?w=1200&q=80", shape: "half",  w: 380 },
-  { code: "NL", name: "Netherlands",     unis: 28,  topCourse: "MSc Econ",             cost: "€16k / yr",  intake: "Sept",   hero: "https://images.unsplash.com/photo-1534351590666-13e3e96c5017?w=1200&q=80", shape: "half",  w: 380 },
+  { code: "NL", name: "Netherlands",     unis: 28,  topCourse: "MSc Econ",             cost: "€16k / yr",  intake: "Sept",   hero: "https://images.unsplash.com/photo-1576924542622-772579d7fdbe?w=1200&q=80", shape: "half",  w: 380 },
   { code: "CA", name: "Canada",          unis: 96,  topCourse: "MS Data Science",      cost: "C$28k / yr", intake: "Sept",   hero: "https://images.unsplash.com/photo-1517935706615-2717063c2225?w=1600&q=80", shape: "tall",  w: 480 },
   { code: "AU", name: "Australia",       unis: 68,  topCourse: "BArch",                cost: "A$34k / yr", intake: "Feb",    hero: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=1600&q=80", shape: "tall",  w: 420 },
 ];
@@ -67,8 +67,9 @@ export function Destinations() {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
+      // Desktop: pinned horizontal scroll driven by vertical page scroll
       mm.add("(min-width: 1024px)", () => {
-        const dist = track.scrollWidth - window.innerWidth + 120;
+        const dist = track.scrollWidth - window.innerWidth + 60;
         gsap.to(track, {
           x: -dist,
           ease: "none",
@@ -81,6 +82,7 @@ export function Destinations() {
           },
         });
       });
+      // Mobile: no hijack — native touch swipe on the track below
     }, outer);
 
     return () => ctx.revert();
@@ -89,20 +91,21 @@ export function Destinations() {
   const columns = buildColumns(COUNTRIES);
 
   return (
-    <div ref={outerRef} className="relative" style={{ height: "300vh" }}>
+    <div ref={outerRef} className="relative lg:h-[300vh]">
+      {/* ───────────────────────────────────────────────────────────── */}
+      {/* DESKTOP LAYOUT — pinned horizontal scroll                     */}
+      {/* ───────────────────────────────────────────────────────────── */}
       <section
         id="countries"
-        className="sticky top-0 h-screen w-full overflow-hidden flex items-center"
+        className="hidden lg:flex sticky top-0 h-screen w-full overflow-hidden items-center"
         style={{ background: "transparent" }}
       >
-        {/* HORIZONTAL TRACK — header panel first, then mixed-pattern cards */}
         <div
           ref={trackRef}
-          className="flex gap-5 pl-6 md:pl-10 pr-[50vw] will-change-transform"
-          style={{ width: "max-content" }}
+          className="flex gap-5 pl-10 pr-[50vw] will-change-transform w-max"
         >
-          {/* Header panel — first item in track */}
-          <div className="flex-col justify-center shrink-0 w-[clamp(320px,34vw,520px)] pr-8 hidden lg:flex">
+          {/* Header panel — first in track */}
+          <div className="flex flex-col justify-center shrink-0 w-[clamp(320px,34vw,520px)] pr-8">
             <Eyebrow>Departures &middot; {COUNTRIES.length} countries</Eyebrow>
             <h2
               className="t-display mt-5"
@@ -129,7 +132,7 @@ export function Destinations() {
           {columns.map((col, ci) => (
             <div
               key={ci}
-              className="flex flex-col gap-5 shrink-0"
+              className="flex flex-col gap-5 shrink-0 snap-center lg:snap-align-none"
               style={{ width: `${col[0].w ?? 420}px` }}
             >
               {col.map((co, i) => (
@@ -169,20 +172,119 @@ export function Destinations() {
             </div>
           </div>
         </div>
+      </section>
 
-        {/* MOBILE HEADER */}
-        <div className="lg:hidden max-w-[1400px] mx-auto px-6 absolute top-6 left-0 right-0 pointer-events-none">
+      {/* ───────────────────────────────────────────────────────────── */}
+      {/* MOBILE LAYOUT — editorial staggered vertical grid             */}
+      {/* ───────────────────────────────────────────────────────────── */}
+      <section
+        className="lg:hidden relative py-[clamp(80px,14vw,140px)] px-5"
+        style={{ background: "transparent" }}
+      >
+        {/* Mobile header */}
+        <div className="mb-12">
           <Eyebrow>Departures &middot; {COUNTRIES.length} countries</Eyebrow>
-          <h2 className="t-display mt-4" style={{ fontSize: "clamp(2rem, 6vw, 4rem)" }}>
+          <h2
+            className="t-display mt-5"
+            style={{ fontSize: "clamp(2.25rem, 9vw, 3.5rem)" }}
+          >
             Where will
             <br />
             <span className="t-display-serif" style={{ color: "var(--ember)" }}>
-              you land?
+              you land
             </span>
+            <br />
+            next fall?
           </h2>
+          <p className="mt-5 text-[14px] text-ink-2 leading-relaxed">
+            {COUNTRIES.length} countries, 500+ universities, every tier and
+            budget. A campus in every climate.
+          </p>
+        </div>
+
+        {/* Staggered editorial grid — countries alternate left/right, varied sizes */}
+        <div className="flex flex-col gap-10">
+          {COUNTRIES.map((co, i) => {
+            // Alternating layout pattern: odd indexes push right with smaller width
+            const alignLeft = i % 2 === 0;
+            const isFeature = co.shape === "tall";
+            const widthClass = alignLeft
+              ? isFeature
+                ? "w-[78%] mr-auto"
+                : "w-[62%] mr-auto"
+              : isFeature
+                ? "w-[82%] ml-auto"
+                : "w-[58%] ml-auto";
+
+            return (
+              <div key={co.code} className={widthClass}>
+                <MobileCountryCard country={co} index={i} />
+              </div>
+            );
+          })}
+        </div>
+
+        {/* End block — CTA */}
+        <div className="mt-16 pt-10 border-t border-hairline">
+          <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-ember">
+            &mdash; End of board
+          </span>
+          <h3
+            className="t-display mt-5"
+            style={{ fontSize: "clamp(1.6rem, 7vw, 2.4rem)" }}
+          >
+            Pick yours.{" "}
+            <span className="t-display-serif" style={{ color: "var(--ember)" }}>
+              We&apos;ll take you there.
+            </span>
+          </h3>
+          <a
+            href="/countries"
+            className="mt-8 inline-flex items-center gap-2 rounded-full px-6 py-3 text-[12px] font-bold uppercase tracking-[0.1em]"
+            style={{ background: "var(--ink)", color: "var(--paper)" }}
+          >
+            Browse all {COUNTRIES.length}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M7 17L17 7M17 7H8M17 7V16" />
+            </svg>
+          </a>
         </div>
       </section>
     </div>
+  );
+}
+
+/* Mobile card — full-width within its sized container, label ABOVE the image */
+function MobileCountryCard({ country, index }: { country: Country; index: number }) {
+  return (
+    <a href="#" className="block">
+      {/* Label above the image — Lando-style */}
+      <div className="flex items-center gap-3 mb-3 font-mono text-[10px] tracking-[0.25em] uppercase">
+        <FlagChip code={country.code} />
+        <span className="text-ink-3">
+          {country.name}
+          {country.intake ? `, ${country.intake}` : ""}
+        </span>
+        <span className="ml-auto text-ink-4">{String(index + 1).padStart(2, "0")}</span>
+      </div>
+
+      {/* Image card */}
+      <div
+        className="relative overflow-hidden w-full"
+        style={{
+          aspectRatio: country.shape === "tall" ? "3/4" : "4/5",
+          background: "var(--paper-3)",
+          border: "1px solid var(--hairline)",
+        }}
+      >
+        <img
+          src={country.hero}
+          alt={country.name}
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ filter: "grayscale(0.2) contrast(1.05)" }}
+        />
+      </div>
+    </a>
   );
 }
 

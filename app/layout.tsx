@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Fraunces, Inter_Tight, JetBrains_Mono, Great_Vibes } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
-import { ChatWidget } from "@/components/chatbot/chat-widget-loader";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll-provider";
 import { PageFrame } from "@/components/layout/page-frame";
 
@@ -81,7 +80,6 @@ export default function RootLayout({
             <Header />
             <main className="flex-1 relative">{children}</main>
           </PageFrame>
-          <ChatWidget />
         </SmoothScrollProvider>
       </body>
     </html>

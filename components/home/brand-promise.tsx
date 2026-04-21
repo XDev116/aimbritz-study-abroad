@@ -147,7 +147,7 @@ export function BrandPromise() {
   }, []);
 
   return (
-    <section ref={outerRef} className="relative" style={{ height: "500vh" }}>
+    <section ref={outerRef} className="relative h-[250vh] lg:h-[500vh]">
       <div
         ref={stickyRef}
         className="sticky top-0 h-screen w-full overflow-hidden"
@@ -162,7 +162,7 @@ export function BrandPromise() {
             ref={svgRef}
             viewBox="100 80 440 240"
             style={{
-              width: "clamp(360px, 55vw, 760px)",
+              width: "clamp(220px, 65vw, 760px)",
               height: "auto",
               display: "block",
               overflow: "visible",

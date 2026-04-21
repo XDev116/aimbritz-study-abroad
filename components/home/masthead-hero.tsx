@@ -193,8 +193,8 @@ export function MastheadHero() {
               </span>
             </p>
 
-            {/* CTAs */}
-            <div className="mt-6 flex flex-wrap items-center gap-3">
+            {/* CTAs — hidden on mobile to save vertical space */}
+            <div className="mt-6 hidden lg:flex flex-wrap items-center gap-3">
               <BtnPrimary href="/contact">Be the next one</BtnPrimary>
               <BtnGhost href="#story">See how we did it</BtnGhost>
             </div>
@@ -227,9 +227,9 @@ export function MastheadHero() {
         <div className="col-span-12 lg:col-span-5 relative flex flex-col lg:min-h-[calc(100vh-11rem)] lg:max-h-[calc(100vh-9rem)]">
           {/* Big portrait / film frame */}
           <div
-            className="h-frame relative overflow-hidden flex-1 min-h-0"
+            className="h-frame relative overflow-hidden lg:flex-1 lg:min-h-0"
             style={{
-              aspectRatio: "3/4",
+              aspectRatio: "4/3",
               background: "var(--paper-3)",
               border: "1px solid var(--hairline)",
             }}
