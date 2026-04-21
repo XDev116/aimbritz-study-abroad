@@ -67,8 +67,9 @@ export function BrandPromise() {
       gsap.set(".bp-line", { y: 60, opacity: 0 });
       gsap.set(".bp-eyebrow", { y: 30, opacity: 0 });
       gsap.set(".bp-meta", { y: 20, opacity: 0 });
-      sticky.style.setProperty("--bp-bg", "rgba(242,242,239,0)");
-      sticky.style.setProperty("--bp-fg", "#0a0a0a");
+      // Start with the dark background visible immediately — no blank gap
+      sticky.style.setProperty("--bp-bg", "rgba(40,44,32,0.92)");
+      sticky.style.setProperty("--bp-fg", "#fcfcfa");
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -80,16 +81,10 @@ export function BrandPromise() {
         },
       });
 
-      // PHASE 1 (0 → 0.08): background darkens
-      tl.to(sticky, {
-        "--bp-bg": "rgba(40,44,32,0.92)",
-        "--bp-fg": "#fcfcfa",
-        duration: 0.08,
-        ease: "none",
-      } as gsap.TweenVars, 0);
+      // PHASE 1: (bg already dark from initial state — no tween needed)
 
-      // PHASE 2 (0.05 → 0.40): strokes draw one by one (pen writing)
-      const STROKE_START = 0.05;
+      // PHASE 2 (0 → 0.35): strokes draw one by one (pen writing) — starts immediately
+      const STROKE_START = 0;
       const STROKE_SPAN = 0.35;
       const perStroke = STROKE_SPAN / paths.length;
       paths.forEach((p, i) => {
@@ -152,8 +147,8 @@ export function BrandPromise() {
         ref={stickyRef}
         className="sticky top-0 h-screen w-full overflow-hidden"
         style={{
-          background: "var(--bp-bg, rgba(242,242,239,0))",
-          color: "var(--bp-fg, #0a0a0a)",
+          background: "var(--bp-bg, rgba(40,44,32,0.92))",
+          color: "var(--bp-fg, #fcfcfa)",
         }}
       >
         {/* SVG signature — loaded from public/signature.svg content */}
