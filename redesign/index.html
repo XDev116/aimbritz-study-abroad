@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Aimbritz — Redesign Prototype</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter+Tight:wght@300..900&family=JetBrains+Mono:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script
+      src="https://unpkg.com/react@18.3.1/umd/react.development.js"
+      integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"
+      integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"
+      integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      :root {
+        --paper: #fcfcfa;
+        --paper-2: #f2f2ef;
+        --paper-3: #ffffff;
+        --ink: #0a0a0a;
+        --ink-2: #282828;
+        --ink-3: #666660;
+        --ink-4: #b0b0a8;
+        --hairline: rgba(10, 10, 10, 0.1);
+        --ember: #c4f542;
+        --ember-2: #d6ff5e;
+        --accent-warm: #d97a3c;
+        --accent-ink-blue: #1a2847;
+      }
+      html,
+      body {
+        background: var(--paper);
+        color: var(--ink);
+        font-family: "Inter Tight", system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        font-feature-settings: "ss01" 1, "calt" 1;
+      }
+      .font-serif {
+        font-family: "Fraunces", "Iowan Old Style", serif;
+        font-variation-settings: "opsz" 72, "SOFT" 60;
+      }
+      .font-mono {
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+      }
+      .font-sans {
+        font-family: "Inter Tight", system-ui, sans-serif;
+      }
+      ::selection {
+        background: var(--ink);
+        color: var(--paper);
+      }
+      /* Type */
+      .t-eyebrow {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+      .t-caps {
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-weight: 700;
+      }
+      .t-display {
+        font-family: "Inter Tight", sans-serif;
+        font-weight: 900;
+        line-height: 0.85;
+        letter-spacing: -0.04em;
+        text-transform: uppercase;
+      }
+      .t-display-serif {
+        font-family: "Fraunces", serif;
+        font-weight: 800;
+        font-style: italic;
+        line-height: 0.9;
+        letter-spacing: -0.025em;
+      }
+      /* Utility surfaces */
+      .bg-paper { background: var(--paper); }
+      .bg-paper-2 { background: var(--paper-2); }
+      .bg-paper-3 { background: var(--paper-3); }
+      .bg-ink { background: var(--ink); }
+      .bg-ember { background: var(--ember); }
+      .text-paper { color: var(--paper); }
+      .text-ink { color: var(--ink); }
+      .text-ink-2 { color: var(--ink-2); }
+      .text-ink-3 { color: var(--ink-3); }
+      .text-ink-4 { color: var(--ink-4); }
+      .text-ember { color: var(--ember); }
+      .border-hairline { border-color: var(--hairline); }
+      .border-ember { border-color: var(--ember); }
+      .border-ink { border-color: var(--ink); }
+      /* Hairline separators */
+      .ruler {
+        height: 1px;
+        background: var(--hairline);
+        width: 100%;
+      }
+      /* Grain */
+      .grain::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0.05;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+        mix-blend-mode: multiply;
+      }
+      /* Marquee */
+      @keyframes marquee {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
+      }
+      .marquee-track { animation: marquee 40s linear infinite; display: inline-flex; white-space: nowrap; }
+      .marquee-track.rev { animation-direction: reverse; }
+      .marquee-mask {
+        -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+        mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+      }
+      /* Flip board */
+      .flip-cell {
+        display: inline-block;
+        width: 0.62em;
+        overflow: hidden;
+        height: 0.95em;
+        vertical-align: baseline;
+        position: relative;
+      }
+      .flip-inner {
+        display: block;
+        transition: transform 420ms cubic-bezier(0.65, 0.05, 0, 1);
+      }
+      /* Custom cursor */
+      .cursor-dot {
+        position: fixed;
+        z-index: 200;
+        pointer-events: none;
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--ink);
+        top: 0;
+        left: 0;
+        transition: transform 200ms ease, width 200ms ease, height 200ms ease;
+        mix-blend-mode: difference;
+      }
+      /* Scrubbed video canvas */
+      .scrub-canvas {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      /* Smooth */
+      html { scroll-behavior: smooth; }
+      /* Palette themes applied to root */
+      body[data-theme="ember"] { --accent: var(--ember); }
+      body[data-theme="warm"] {
+        --ember: #ff6b1a;
+        --ember-2: #ffb27a;
+      }
+      body[data-theme="olive"] {
+        --ember: #5a9a1a;
+        --ember-2: #8ac84a;
+      }
+      body[data-theme="bluebook"] {
+        --ember: #2040cc;
+        --ember-2: #4d6dff;
+      }
+      /* Flow lines */
+      .flow-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+      .flow-bg svg { width: 100%; height: 100%; display: block; }
+      .flow-path { fill: none; stroke: var(--ink); stroke-width: 1.2; opacity: 0.1; stroke-linecap: round; }
+      .flow-path.fat { stroke-width: 2; opacity: 0.07; }
+      @keyframes flowFloat {
+        0%,100% { transform: translate(0,0) rotate(0deg); }
+        33% { transform: translate(-1%,-0.8%) rotate(0.3deg); }
+        66% { transform: translate(1%,0.5%) rotate(-0.2deg); }
+      }
+      /* Scrollbar */
+      ::-webkit-scrollbar { width: 6px; height: 6px; }
+      ::-webkit-scrollbar-track { background: var(--paper-2); }
+      ::-webkit-scrollbar-thumb { background: var(--ink-4); border-radius: 3px; }
+      /* Reveal lines */
+      .mask-reveal {
+        display: inline-block;
+        overflow: hidden;
+        vertical-align: top;
+      }
+      .mask-reveal > span { display: inline-block; }
+      /* Magnetic button default */
+      button, a { cursor: pointer; }
+      /* Sticky chapter label */
+      .chapter-chip {
+        position: fixed;
+        left: 24px;
+        bottom: 24px;
+        z-index: 30;
+        mix-blend-mode: difference;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body class="grain bg-paper text-ink" data-theme="ember">
+    <div id="root"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+
+    <!-- EDITMODE -->
+    <script>
+      const TWEAKS = /*EDITMODE-BEGIN*/{
+        "palette": "ember",
+        "heroVariant": "cinematic",
+        "motionLevel": 10,
+        "showGrain": true
+      }/*EDITMODE-END*/;
+      window.__TWEAKS = TWEAKS;
+    </script>
+
+    <script type="text/babel" data-presets="react" src="./src/tokens.jsx"></script>
+    <script type="text/babel" data-presets="react" src="./src/primitives.jsx"></script>
+    <script type="text/babel" data-presets="react" src="./src/flow-lines.jsx"></script>
+    <script type="text/babel" data-presets="react" src="./src/nav.jsx"></script>
+    <script type="text/babel" data-presets="react" src="./src/hero.jsx"></script>
+    <script type="text/babel" data-presets="react" src="./src/brand-promise.jsx"></script>
+    <script type="text/babel" data-presets="react" src="./src/success-story.jsx"></script>
+    <script type="text/babel" data-presets="react" src="./src/destinations.jsx"></script>
+    <script type="text/babel" data-presets="react" src="./src/universities.jsx"></script>
+    <script type="text/babel" data-presets="react" src="./src/journey.jsx"></script>
+    <script type="text/babel" data-presets="react" src="./src/stats.jsx"></script>
+    <script type="text/babel" data-presets="react" src="./src/reels.jsx"></script>
+    <script type="text/babel" data-presets="react" src="./src/ceo.jsx"></script>
+    <script type="text/babel" data-presets="react" src="./src/cta-footer.jsx"></script>
+    <script type="text/babel" data-presets="react" src="./src/tweaks.jsx"></script>
+    <script type="text/babel" data-presets="react" src="./src/app.jsx"></script>
+  </body>
+</html>

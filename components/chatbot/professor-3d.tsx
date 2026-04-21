@@ -14,9 +14,21 @@ function Loader() {
   const { progress } = useProgress();
   return (
     <Html center>
-      <div style={{ color: 'black', fontSize: '14px', textAlign: 'center', background: 'rgba(255,255,255,0.8)', padding: '10px', borderRadius: '8px' }}>
-        <div>Loading...</div>
-        <div>{progress.toFixed(0)}%</div>
+      <div
+        style={{
+          color: '#0E0E10',
+          fontFamily: 'var(--font-jetbrains-mono), monospace',
+          fontSize: '11px',
+          letterSpacing: '0.18em',
+          textTransform: 'uppercase',
+          textAlign: 'center',
+          background: 'rgba(246,242,234,0.85)',
+          padding: '10px 14px',
+          borderRadius: '999px',
+          border: '1px solid rgba(14,14,16,0.08)',
+        }}
+      >
+        {progress.toFixed(0)}%
       </div>
     </Html>
   );
@@ -97,8 +109,10 @@ export function Professor3D() {
         }}
         performance={{ min: 0.5 }}
       >
-        <ambientLight intensity={3} />
-        <directionalLight position={[2, 5, 2]} intensity={2} />
+        {/* Warm ivory light — 5200K directional keys a natural complexion on paper */}
+        <ambientLight intensity={1.5} color="#fff4e0" />
+        <directionalLight position={[3, 4, 3]} intensity={1.4} color="#fff4e0" />
+        <directionalLight position={[-2, 2, -1]} intensity={0.35} color="#ffe2c7" />
         <Suspense fallback={<Loader />}>
           <CEOModel />
         </Suspense>
