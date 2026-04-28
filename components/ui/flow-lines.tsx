@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const PATHS = [
   // large sweeping loops
@@ -21,6 +21,9 @@ export function FlowLines() {
   const ref = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
+    // SVG stroke animation triggers paint every frame — too heavy on mobile CPUs
+    if (window.innerWidth < 1024) return;
+
     const svg = ref.current;
     if (!svg) return;
     const paths = svg.querySelectorAll<SVGPathElement>(".flow-path");
