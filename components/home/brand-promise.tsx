@@ -192,18 +192,18 @@ export function BrandPromise() {
         style={{
           background: "var(--bp-bg, transparent)",
           color: "var(--bp-fg, #0a0a0a)",
+          isolation: "isolate",
         }}
       >
-        {/* HERO LAYER — shrinks + fades; transparent so body paper + curls show through.
-            Explicit ink color so it doesn't inherit the sticky's --bp-fg (which animates
-            to light during promise phase → would make hero text white-on-white). */}
-        {/* Dark bg overlay — opacity-animated instead of CSS var tween (composited) */}
+        {/* Dark bg overlay — starts invisible, fades in via opacity (GPU composited).
+            Sits below both layers initially; hero fades out on top of it. */}
         <div
           ref={darkBgRef}
           className="absolute inset-0 pointer-events-none"
-          style={{ background: "rgba(40,44,32,0.92)", zIndex: 0 }}
+          style={{ background: "rgba(40,44,32,0.92)", zIndex: 0, opacity: 0 }}
         />
 
+        {/* HERO LAYER — sits above darkBg; fades out to reveal darkBg beneath */}
         <div
           ref={heroLayerRef}
           className="absolute inset-0 will-change-[transform,opacity] overflow-hidden"
