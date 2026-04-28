@@ -51,8 +51,83 @@ export function BrandPromise() {
     const paths = Array.from(svg.querySelectorAll<SVGPathElement>("path"));
     if (!paths.length) return;
 
+    const isMobile = window.innerWidth < 1024;
+
     const ctx = gsap.context(() => {
-      // INITIAL STATE
+      // Flow color override (both mobile + desktop)
+      ScrollTrigger.create({
+        trigger: outer,
+        start: "top 80%",
+        end: "bottom 20%",
+        onEnter: () =>
+          document.documentElement.style.setProperty("--flow-color", "rgba(252,252,250,0.35)"),
+        onEnterBack: () =>
+          document.documentElement.style.setProperty("--flow-color", "rgba(252,252,250,0.35)"),
+        onLeave: () =>
+          document.documentElement.style.removeProperty("--flow-color"),
+        onLeaveBack: () =>
+          document.documentElement.style.removeProperty("--flow-color"),
+      });
+
+      if (isMobile) {
+        // ── MOBILE: no scrub, no SVG stroke paint, no scale tweens ──────────
+        // Show hero immediately; crossfade into promise on scroll-enter.
+        // All animated props are opacity-only (GPU composited, no paint).
+        gsap.set(heroLayer, { scale: 1, opacity: 1 });
+        gsap.set(promiseLayer, { opacity: 0 });
+        gsap.set(sigContainer, {
+          position: "absolute",
+          top: "42%",
+          left: "50%",
+          xPercent: -50,
+          yPercent: -50,
+          scale: 0.6,
+          opacity: 0,
+        });
+        // Signature: show fully drawn (no stroke animation — avoids per-frame paint)
+        paths.forEach((p) => {
+          gsap.set(p, { strokeDasharray: "none", strokeDashoffset: 0, fillOpacity: 1 });
+        });
+        sticky.style.setProperty("--bp-bg", "transparent");
+        sticky.style.setProperty("--bp-fg", "#0a0a0a");
+
+        // Simple 2-beat scrubless timeline: hero out → promise in
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: outer,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: true, // true = instant (no lag), no smoothing math
+            invalidateOnRefresh: true,
+          },
+        });
+
+        // Beat 1 (0 → 0.35): hero fades out (opacity only — composited)
+        tl.to(heroLayer, { opacity: 0, duration: 0.35, ease: "power1.in" }, 0);
+
+        // Beat 2 (0.25 → 0.55): bg + promise fade in
+        tl.to(sticky, {
+          "--bp-bg": "rgba(40,44,32,0.92)",
+          "--bp-fg": "#fcfcfa",
+          duration: 0.3,
+          ease: "none",
+        } as gsap.TweenVars, 0.25);
+        tl.to(promiseLayer, { opacity: 1, duration: 0.25, ease: "power1.out" }, 0.3);
+
+        // Beat 3 (0.45 → 0.65): signature fades in (already fully drawn)
+        tl.to(sigContainer, { opacity: 1, duration: 0.2, ease: "power1.out" }, 0.45);
+
+        // Beat 4 (0.60 → 0.85): text fades in
+        tl.to(content, { opacity: 1, duration: 0.15, ease: "power1.out" }, 0.6);
+        tl.to(".bp-eyebrow, .bp-line, .bp-meta", { opacity: 1, duration: 0.2, stagger: 0.05 }, 0.65);
+
+        gsap.set(content, { opacity: 0 });
+        gsap.set(".bp-line, .bp-eyebrow, .bp-meta", { opacity: 0 });
+
+        return;
+      }
+
+      // ── DESKTOP: full choreographed animation ────────────────────────────
       gsap.set(heroLayer, { scale: 1, opacity: 1, borderRadius: "0px" });
       gsap.set(promiseLayer, { opacity: 0 });
 
@@ -67,7 +142,6 @@ export function BrandPromise() {
       });
 
       // Use normalized pathLength=1 (set in JSX) instead of getTotalLength().
-      // No sync layout reflow — animation timing is consistent across all paths.
       paths.forEach((p) => {
         gsap.set(p, { strokeDasharray: 1, strokeDashoffset: 1, fillOpacity: 0 });
       });
@@ -76,107 +150,50 @@ export function BrandPromise() {
       gsap.set(".bp-line", { y: 60, opacity: 0 });
       gsap.set(".bp-eyebrow", { y: 30, opacity: 0 });
       gsap.set(".bp-meta", { y: 20, opacity: 0 });
-      // Start transparent so BackgroundCurls show through (body paper is ivory)
       sticky.style.setProperty("--bp-bg", "transparent");
       sticky.style.setProperty("--bp-fg", "#0a0a0a");
 
-      // MASTER TIMELINE
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: outer,
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.5, // lower scrub = less smoothing math per frame, smoother on mobile
+          scrub: 0.5,
           invalidateOnRefresh: true,
         },
       });
 
-      // PHASE A (0 → 0.20): hero shrinks into a rounded card
-      // (no borderRadius — that triggers paint; just scale, which is composited)
-      tl.to(heroLayer, {
-        scale: 0.55,
-        duration: 0.2,
-        ease: "power2.inOut",
-      }, 0);
-
-      // PHASE A2 (0.05 → 0.25): sticky background transitions paper → olive-ink,
-      // so when hero card shrinks the exposed backdrop becomes the promise color
+      tl.to(heroLayer, { scale: 0.55, duration: 0.2, ease: "power2.inOut" }, 0);
       tl.to(sticky, {
         "--bp-bg": "rgba(40,44,32,0.92)",
         "--bp-fg": "#fcfcfa",
         duration: 0.2,
         ease: "power2.inOut",
       } as gsap.TweenVars, 0.05);
-
-      // PHASE B (0.10 → 0.25): promise layer fades in behind
       tl.to(promiseLayer, { opacity: 1, duration: 0.15, ease: "power2.out" }, 0.1);
+      tl.to(heroLayer, { scale: 0.3, opacity: 0, duration: 0.12, ease: "power2.in" }, 0.2);
 
-      // PHASE C (0.20 → 0.32): hero fades out while shrinking further
-      tl.to(heroLayer, {
-        scale: 0.3,
-        opacity: 0,
-        duration: 0.12,
-        ease: "power2.in",
-      }, 0.2);
-
-      // PHASE D (0.18 → 0.55): signature writes stroke-by-stroke
       const STROKE_START = 0.18;
       const STROKE_SPAN = 0.37;
       const perStroke = STROKE_SPAN / paths.length;
       paths.forEach((p, i) => {
-        tl.to(p, {
-          strokeDashoffset: 0,
-          duration: perStroke * 1.1,
-          ease: "none",
-        }, STROKE_START + i * perStroke * 0.9);
+        tl.to(p, { strokeDashoffset: 0, duration: perStroke * 1.1, ease: "none" }, STROKE_START + i * perStroke * 0.9);
       });
 
-      // PHASE E (0.55 → 0.63): fill fades in
       tl.to(paths, { fillOpacity: 1, duration: 0.08, ease: "power2.out" }, 0.55);
-
-      // PHASE F (0.63 → 0.70): hold
       tl.to({}, { duration: 0.07 }, 0.63);
-
-      // PHASE G (0.70 → 0.82): signature shrinks + moves to rest slot
-      tl.fromTo(
-        sigContainer,
-        { top: "50%" },
-        {
-          top: "28%",
-          scale: 0.35,
-          duration: 0.12,
-          ease: "power2.inOut",
-        },
-        0.7,
-      );
-
-      // PHASE H (0.75 → 0.92): text cascades
+      tl.fromTo(sigContainer, { top: "50%" }, { top: "28%", scale: 0.35, duration: 0.12, ease: "power2.inOut" }, 0.7);
       tl.to(content, { opacity: 1, y: 0, duration: 0.07, ease: "power2.out" }, 0.75)
         .to(".bp-eyebrow", { y: 0, opacity: 1, duration: 0.04 }, 0.78)
         .to(".bp-line", { y: 0, opacity: 1, duration: 0.04, stagger: 0.03 }, 0.82)
         .to(".bp-meta", { y: 0, opacity: 1, duration: 0.04 }, 0.9);
-
-      // Flow color override
-      ScrollTrigger.create({
-        trigger: outer,
-        start: "top 80%",
-        end: "bottom 20%",
-        onEnter: () =>
-          document.documentElement.style.setProperty("--flow-color", "rgba(252,252,250,0.35)"),
-        onEnterBack: () =>
-          document.documentElement.style.setProperty("--flow-color", "rgba(252,252,250,0.35)"),
-        onLeave: () =>
-          document.documentElement.style.removeProperty("--flow-color"),
-        onLeaveBack: () =>
-          document.documentElement.style.removeProperty("--flow-color"),
-      });
     }, outer);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={outerRef} className="relative h-[500vh] lg:h-[700vh]">
+    <section ref={outerRef} className="relative h-[300vh] lg:h-[700vh]">
       <div
         ref={stickyRef}
         className="sticky top-0 h-screen w-full overflow-hidden"
@@ -190,7 +207,7 @@ export function BrandPromise() {
             to light during promise phase → would make hero text white-on-white). */}
         <div
           ref={heroLayerRef}
-          className="absolute inset-0 will-change-transform overflow-hidden"
+          className="absolute inset-0 will-change-[transform,opacity] overflow-hidden"
           style={{ transformOrigin: "center center", color: "#0a0a0a" }}
         >
           <MastheadHero />
