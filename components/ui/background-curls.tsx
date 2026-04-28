@@ -31,6 +31,9 @@ export function BackgroundCurls() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    // Disable on mobile — RAF loop + canvas painting is heavy on low-end phones
+    if (typeof window !== "undefined" && window.innerWidth < 1024) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");

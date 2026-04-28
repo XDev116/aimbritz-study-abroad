@@ -66,13 +66,10 @@ export function BrandPromise() {
         opacity: 1,
       });
 
-      const lengths = paths.map((p) => p.getTotalLength());
-      paths.forEach((p, i) => {
-        gsap.set(p, {
-          strokeDasharray: lengths[i],
-          strokeDashoffset: lengths[i],
-          fillOpacity: 0,
-        });
+      // Use normalized pathLength=1 (set in JSX) instead of getTotalLength().
+      // No sync layout reflow — animation timing is consistent across all paths.
+      paths.forEach((p) => {
+        gsap.set(p, { strokeDasharray: 1, strokeDashoffset: 1, fillOpacity: 0 });
       });
 
       gsap.set(content, { opacity: 0, y: 40 });
@@ -89,15 +86,15 @@ export function BrandPromise() {
           trigger: outer,
           start: "top top",
           end: "bottom bottom",
-          scrub: 1,
+          scrub: 0.5, // lower scrub = less smoothing math per frame, smoother on mobile
           invalidateOnRefresh: true,
         },
       });
 
       // PHASE A (0 → 0.20): hero shrinks into a rounded card
+      // (no borderRadius — that triggers paint; just scale, which is composited)
       tl.to(heroLayer, {
         scale: 0.55,
-        borderRadius: "28px",
         duration: 0.2,
         ease: "power2.inOut",
       }, 0);
@@ -312,11 +309,15 @@ export function BrandPromise() {
                   <path
                     key={i}
                     d={d}
+                    pathLength={1}
                     fill="currentColor"
                     stroke="currentColor"
                     strokeWidth="30"
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    strokeDasharray="1"
+                    strokeDashoffset="1"
+                    fillOpacity={0}
                   />
                 ))}
               </g>
