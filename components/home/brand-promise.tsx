@@ -37,6 +37,7 @@ export function BrandPromise() {
   const sigContainerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const darkBgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const outer = outerRef.current;
@@ -46,7 +47,8 @@ export function BrandPromise() {
     const sigContainer = sigContainerRef.current;
     const svg = svgRef.current;
     const content = contentRef.current;
-    if (!outer || !sticky || !heroLayer || !promiseLayer || !sigContainer || !svg || !content) return;
+    const darkBg = darkBgRef.current;
+    if (!outer || !sticky || !heroLayer || !promiseLayer || !sigContainer || !svg || !content || !darkBg) return;
 
     const paths = Array.from(svg.querySelectorAll<SVGPathElement>("path"));
     if (!paths.length) return;
@@ -70,59 +72,49 @@ export function BrandPromise() {
       });
 
       if (isMobile) {
-        // ── MOBILE: no scrub, no SVG stroke paint, no scale tweens ──────────
-        // Show hero immediately; crossfade into promise on scroll-enter.
-        // All animated props are opacity-only (GPU composited, no paint).
-        gsap.set(heroLayer, { scale: 1, opacity: 1 });
+        // ── MOBILE: pure opacity crossfade, no CSS variable tweens ──────────
+        // CSS vars can't be composited — the browser recalculates style every tick.
+        // Instead we fade a real darkBg div (opacity = GPU composited = smooth).
+        gsap.set(heroLayer, { opacity: 1 });
+        gsap.set(darkBg, { opacity: 0 });
         gsap.set(promiseLayer, { opacity: 0 });
         gsap.set(sigContainer, {
           position: "absolute",
-          top: "42%",
+          top: "50%",
           left: "50%",
           xPercent: -50,
           yPercent: -50,
-          scale: 0.6,
+          scale: 0.55,
           opacity: 0,
         });
-        // Signature: show fully drawn (no stroke animation — avoids per-frame paint)
         paths.forEach((p) => {
           gsap.set(p, { strokeDasharray: "none", strokeDashoffset: 0, fillOpacity: 1 });
         });
+        gsap.set(content, { opacity: 0 });
+        gsap.set(".bp-line, .bp-eyebrow, .bp-meta", { opacity: 0 });
         sticky.style.setProperty("--bp-bg", "transparent");
-        sticky.style.setProperty("--bp-fg", "#0a0a0a");
 
-        // Simple 2-beat scrubless timeline: hero out → promise in
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: outer,
             start: "top top",
             end: "bottom bottom",
-            scrub: true, // true = instant (no lag), no smoothing math
+            scrub: 0.8,
             invalidateOnRefresh: true,
           },
         });
 
-        // Beat 1 (0 → 0.35): hero fades out (opacity only — composited)
+        // 0 → 0.35: hero fades out
         tl.to(heroLayer, { opacity: 0, duration: 0.35, ease: "power1.in" }, 0);
-
-        // Beat 2 (0.25 → 0.55): bg + promise fade in
-        tl.to(sticky, {
-          "--bp-bg": "rgba(40,44,32,0.92)",
-          "--bp-fg": "#fcfcfa",
-          duration: 0.3,
-          ease: "none",
-        } as gsap.TweenVars, 0.25);
-        tl.to(promiseLayer, { opacity: 1, duration: 0.25, ease: "power1.out" }, 0.3);
-
-        // Beat 3 (0.45 → 0.65): signature fades in (already fully drawn)
-        tl.to(sigContainer, { opacity: 1, duration: 0.2, ease: "power1.out" }, 0.45);
-
-        // Beat 4 (0.60 → 0.85): text fades in
-        tl.to(content, { opacity: 1, duration: 0.15, ease: "power1.out" }, 0.6);
-        tl.to(".bp-eyebrow, .bp-line, .bp-meta", { opacity: 1, duration: 0.2, stagger: 0.05 }, 0.65);
-
-        gsap.set(content, { opacity: 0 });
-        gsap.set(".bp-line, .bp-eyebrow, .bp-meta", { opacity: 0 });
+        // 0.15 → 0.45: dark bg fades in (replaces --bp-bg CSS var tween)
+        tl.to(darkBg, { opacity: 1, duration: 0.30, ease: "power1.inOut" }, 0.15);
+        // 0.30 → 0.55: promise content fades in
+        tl.to(promiseLayer, { opacity: 1, duration: 0.25, ease: "power1.out" }, 0.30);
+        // 0.45 → 0.65: signature fades in
+        tl.to(sigContainer, { opacity: 1, duration: 0.20, ease: "power1.out" }, 0.45);
+        // 0.60 → 0.85: text cascades in
+        tl.to(content, { opacity: 1, duration: 0.15, ease: "power1.out" }, 0.60);
+        tl.to(".bp-eyebrow, .bp-line, .bp-meta", { opacity: 1, duration: 0.20, stagger: 0.04 }, 0.65);
 
         return;
       }
@@ -205,10 +197,17 @@ export function BrandPromise() {
         {/* HERO LAYER — shrinks + fades; transparent so body paper + curls show through.
             Explicit ink color so it doesn't inherit the sticky's --bp-fg (which animates
             to light during promise phase → would make hero text white-on-white). */}
+        {/* Dark bg overlay — opacity-animated instead of CSS var tween (composited) */}
+        <div
+          ref={darkBgRef}
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: "rgba(40,44,32,0.92)", zIndex: 0 }}
+        />
+
         <div
           ref={heroLayerRef}
           className="absolute inset-0 will-change-[transform,opacity] overflow-hidden"
-          style={{ transformOrigin: "center center", color: "#0a0a0a" }}
+          style={{ transformOrigin: "center center", color: "#0a0a0a", zIndex: 1 }}
         >
           <MastheadHero />
 
@@ -261,7 +260,7 @@ export function BrandPromise() {
 
 
         {/* PROMISE LAYER — fades in as hero fades out */}
-        <div ref={promiseLayerRef} className="absolute inset-0">
+        <div ref={promiseLayerRef} className="absolute inset-0" style={{ zIndex: 2 }}>
           {/* Scroll hint — on Promise layer, light color for dark bg */}
           <div
             className="hidden lg:flex absolute bottom-3 left-0 right-0 z-30 justify-center items-center gap-2 pointer-events-none"
