@@ -34,6 +34,10 @@ html.lenis body {
     /* Hairline */
     --hairline: rgba(10, 10, 10, 0.1);
 
+    /* Section vertical rhythm — one source of truth so all sections breathe the same.
+       Mobile bottom, fluid middle (vw scales), desktop cap. */
+    --section-py: clamp(72px, 9vw, 130px);
+
     /* Lime-chartreuse accent */
     --ember: #c4f542;
     --ember-2: #d6ff5e;

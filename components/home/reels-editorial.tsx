@@ -75,7 +75,7 @@ export function ReelsEditorial() {
     <section
       ref={sectionRef}
       className="relative overflow-hidden"
-      style={{ background: "var(--paper)", paddingTop: "clamp(64px,8vw,110px)", paddingBottom: "clamp(64px,8vw,110px)" }}
+      style={{ background: "var(--paper)", paddingTop: "var(--section-py)", paddingBottom: "var(--section-py)" }}
     >
       {/* Header */}
       <div className="text-center mb-12 px-6">

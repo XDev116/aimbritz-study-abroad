@@ -71,8 +71,8 @@ export function CtaBold() {
       style={{
         background: "var(--ink)",
         color: "var(--paper)",
-        paddingTop: "clamp(100px,12vw,180px)",
-        paddingBottom: "clamp(80px,10vw,140px)",
+        paddingTop: "var(--section-py)",
+        paddingBottom: "var(--section-py)",
       }}
     >
       {/* ── CTA Block ─────────────────────────────────────────────── */}

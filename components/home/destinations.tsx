@@ -28,7 +28,7 @@ const COUNTRIES: Country[] = [
   { code: "FR", name: "France",          unis: 41,  topCourse: "MSc Business",         cost: "€12k / yr",  intake: "Sept",   hero: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1200&q=80", shape: "half",  w: 340 },
   { code: "US", name: "United States",   unis: 182, topCourse: "MS Engineering",       cost: "$42k / yr",  intake: "Fall",   hero: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1600&q=80", shape: "tall",  w: 540 },
   { code: "IE", name: "Ireland",         unis: 24,  topCourse: "MSc Pharma",           cost: "€18k / yr",  intake: "Sept",   hero: "https://images.unsplash.com/photo-1590089415225-401ed6f9db8e?w=1200&q=80", shape: "half",  w: 380 },
-  { code: "NL", name: "Netherlands",     unis: 28,  topCourse: "MSc Econ",             cost: "€16k / yr",  intake: "Sept",   hero: "https://images.unsplash.com/photo-1576924542622-772579d7fdbe?w=1200&q=80", shape: "half",  w: 380 },
+  { code: "NL", name: "Netherlands",     unis: 28,  topCourse: "MSc Econ",             cost: "€16k / yr",  intake: "Sept",   hero: "https://images.unsplash.com/photo-1459679749680-18eb1eb37418?w=1200&q=80", shape: "half",  w: 380 },
   { code: "CA", name: "Canada",          unis: 96,  topCourse: "MS Data Science",      cost: "C$28k / yr", intake: "Sept",   hero: "https://images.unsplash.com/photo-1517935706615-2717063c2225?w=1600&q=80", shape: "tall",  w: 480 },
   { code: "AU", name: "Australia",       unis: 68,  topCourse: "BArch",                cost: "A$34k / yr", intake: "Feb",    hero: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=1600&q=80", shape: "tall",  w: 420 },
 ];
@@ -178,8 +178,12 @@ export function Destinations() {
       {/* MOBILE LAYOUT — editorial staggered vertical grid             */}
       {/* ───────────────────────────────────────────────────────────── */}
       <section
-        className="lg:hidden relative py-[clamp(80px,14vw,140px)] px-5"
-        style={{ background: "transparent" }}
+        className="lg:hidden relative px-5"
+        style={{
+          background: "transparent",
+          paddingTop: "var(--section-py)",
+          paddingBottom: "var(--section-py)",
+        }}
       >
         {/* Mobile header */}
         <div className="mb-12">

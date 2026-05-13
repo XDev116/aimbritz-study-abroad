@@ -74,7 +74,7 @@ export default function RootLayout({
       lang="en"
       className={`${fraunces.variable} ${interTight.variable} ${jetbrains.variable} ${greatVibes.variable}`}
     >
-      <body className="bg-paper text-ink antialiased flex flex-col min-h-screen font-sans">
+      <body className="bg-paper text-ink antialiased flex flex-col min-h-screen font-sans" suppressHydrationWarning>
         <SmoothScrollProvider>
           <PageFrame>
             <Header />

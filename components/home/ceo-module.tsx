@@ -55,8 +55,8 @@ export function CeoModule() {
       ref={sectionRef}
       className="relative overflow-hidden"
       style={{
-        paddingTop: "clamp(100px,12vw,180px)",
-        paddingBottom: "clamp(100px,12vw,180px)",
+        paddingTop: "var(--section-py)",
+        paddingBottom: "var(--section-py)",
       }}
     >
 
@@ -151,10 +151,9 @@ export function CeoModule() {
             }}
           >
             <img
-              src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=900&q=80"
+              src="/images/team/alameen.png"
               alt="Al Ameen, Founder & CEO"
               className="absolute inset-0 w-full h-full object-cover"
-              style={{ filter: "grayscale(0.15)" }}
             />
 
             {/* Bottom gradient overlay */}
