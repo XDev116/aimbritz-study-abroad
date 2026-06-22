@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, Award, BookOpen, CheckCircle, FileCheck, Globe, GraduationCap, Plane, Users } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -115,149 +113,212 @@ const services = [
 ];
 
 const processSteps = [
-  {
-    step: 1,
-    title: "Free Consultation",
-    description: "Initial assessment of your profile, goals, and preferences"
-  },
-  {
-    step: 2,
-    title: "Course & University Selection",
-    description: "Shortlist universities based on your profile and budget"
-  },
-  {
-    step: 3,
-    title: "Test Preparation",
-    description: "Prepare for and take required standardized tests"
-  },
-  {
-    step: 4,
-    title: "Application Process",
-    description: "Complete and submit applications with our guidance"
-  },
-  {
-    step: 5,
-    title: "Offer Letters",
-    description: "Receive and evaluate offers from universities"
-  },
-  {
-    step: 6,
-    title: "Visa Application",
-    description: "Apply for and obtain your student visa"
-  },
-  {
-    step: 7,
-    title: "Pre-Departure",
-    description: "Final preparations before your journey"
-  },
-  {
-    step: 8,
-    title: "Departure & Beyond",
-    description: "Travel and continue with post-landing support"
-  }
+  { step: 1, title: "Free Consultation",          description: "Initial assessment of your profile, goals, and preferences" },
+  { step: 2, title: "Course & University Selection", description: "Shortlist universities based on your profile and budget" },
+  { step: 3, title: "Test Preparation",           description: "Prepare for and take required standardized tests" },
+  { step: 4, title: "Application Process",        description: "Complete and submit applications with our guidance" },
+  { step: 5, title: "Offer Letters",              description: "Receive and evaluate offers from universities" },
+  { step: 6, title: "Visa Application",           description: "Apply for and obtain your student visa" },
+  { step: 7, title: "Pre-Departure",              description: "Final preparations before your journey" },
+  { step: 8, title: "Departure & Beyond",         description: "Travel and continue with post-landing support" }
 ];
 
 export default function ServicesPage() {
   return (
-    <div className="container mx-auto px-6 py-12 lg:px-8">
-      {/* Header */}
-      <div className="mx-auto max-w-3xl text-center mb-16">
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-6">
-          Our Services
+    <div style={{ background: "#0E0E10", color: "#F6F2EA", minHeight: "100vh" }}>
+
+      {/* ── Header ── */}
+      <div className="max-w-[1280px] mx-auto px-5 md:px-8" style={{ paddingTop: "clamp(72px,9vw,130px)", paddingBottom: "clamp(48px,6vw,80px)" }}>
+        <p className="font-mono text-[10px] tracking-[0.32em] uppercase mb-4" style={{ color: "#C2410C" }}>
+          What we do
+        </p>
+        <h1
+          className="font-sans font-black uppercase tracking-[-0.03em] leading-[0.9] mb-6"
+          style={{ fontSize: "clamp(2.8rem,7vw,6rem)", color: "#F6F2EA" }}
+        >
+          Our{" "}
+          <span className="font-serif italic font-normal" style={{ color: "#C2410C" }}>Services</span>
         </h1>
-        <p className="text-xl text-muted-foreground">
+        <p
+          className="font-sans max-w-2xl"
+          style={{ fontSize: "clamp(1rem,1.2vw,1.15rem)", lineHeight: 1.6, color: "rgba(246,242,234,0.55)" }}
+        >
           Comprehensive end-to-end support for your study abroad journey.
-          From initial counseling to post-landing assistance, we're with you every step of the way.
+          From initial counseling to post-landing assistance, we&apos;re with you every step of the way.
         </p>
       </div>
 
-      {/* Services Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
-        {services.map((service) => (
-          <Card key={service.title} className="hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary mb-4">
-                <service.icon className="h-6 w-6" />
-              </div>
-              <CardTitle className="text-2xl">{service.title}</CardTitle>
-              <CardDescription className="text-base">{service.description}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                {service.features.map((feature, idx) => (
-                  <div key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <CheckCircle className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                    <span>{feature}</span>
+      {/* ── Services Grid ── */}
+      <div className="max-w-[1280px] mx-auto px-5 md:px-8 pb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-px" style={{ border: "1px solid rgba(246,242,234,0.08)", background: "rgba(246,242,234,0.08)" }}>
+          {services.map((service, idx) => {
+            const Icon = service.icon;
+            return (
+              <div
+                key={service.title}
+                className="service-card group relative flex flex-col gap-5 p-8 transition-colors duration-300"
+              >
+                {/* Number + Icon row */}
+                <div className="flex items-start justify-between">
+                  <span
+                    className="font-mono text-[10px] tracking-[0.28em] tabular-nums"
+                    style={{ color: "rgba(246,242,234,0.25)" }}
+                  >
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
+                  <div
+                    className="flex items-center justify-center"
+                    style={{ width: 40, height: 40, background: "rgba(194,65,12,0.1)", border: "1px solid rgba(194,65,12,0.25)" }}
+                  >
+                    <Icon size={18} style={{ color: "#C2410C" }} />
                   </div>
-                ))}
+                </div>
+
+                {/* Title + description */}
+                <div>
+                  <h3
+                    className="font-sans font-black uppercase tracking-[-0.02em] mb-2"
+                    style={{ fontSize: "clamp(1.1rem,1.6vw,1.35rem)", color: "#F6F2EA" }}
+                  >
+                    {service.title}
+                  </h3>
+                  <p className="font-sans text-sm leading-relaxed" style={{ color: "rgba(246,242,234,0.45)" }}>
+                    {service.description}
+                  </p>
+                </div>
+
+                {/* Feature list */}
+                <ul className="flex flex-col gap-2 mt-auto">
+                  {service.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2.5">
+                      <span
+                        className="mt-[3px] shrink-0"
+                        style={{ width: 5, height: 5, background: "#C2410C", borderRadius: 0, display: "inline-block", marginTop: 6 }}
+                      />
+                      <span className="font-mono text-[11px] tracking-[0.06em]" style={{ color: "rgba(246,242,234,0.5)" }}>
+                        {f}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Bottom rule accent */}
+                <div
+                  className="service-accent absolute bottom-0 left-8"
+                  style={{ height: 1, background: "#C2410C" }}
+                />
               </div>
-            </CardContent>
-          </Card>
-        ))}
+            );
+          })}
+        </div>
       </div>
 
-      {/* Process Timeline */}
-      <section className="mb-20">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Our Process</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Follow our proven 8-step process to successfully study abroad
-          </p>
+      {/* ── Process Timeline ── */}
+      <div style={{ background: "#111113", borderTop: "1px solid rgba(246,242,234,0.06)", borderBottom: "1px solid rgba(246,242,234,0.06)" }}>
+        <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-20">
+          <div className="mb-12">
+            <p className="font-mono text-[10px] tracking-[0.32em] uppercase mb-3" style={{ color: "#C2410C" }}>
+              How it works
+            </p>
+            <h2
+              className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92]"
+              style={{ fontSize: "clamp(2rem,4vw,3.5rem)", color: "#F6F2EA" }}
+            >
+              Our{" "}
+              <span className="font-serif italic font-normal" style={{ color: "rgba(246,242,234,0.45)" }}>8-step</span>{" "}
+              Process
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px" style={{ background: "rgba(246,242,234,0.07)" }}>
+            {processSteps.map((item) => (
+              <div
+                key={item.step}
+                className="flex flex-col gap-4 p-6"
+                style={{ background: "#111113" }}
+              >
+                <span
+                  className="font-mono text-[11px] tracking-[0.28em] tabular-nums font-bold px-2 py-0.5 self-start"
+                  style={{ background: "rgba(194,65,12,0.12)", color: "#C2410C", border: "1px solid rgba(194,65,12,0.2)" }}
+                >
+                  {String(item.step).padStart(2, "0")}
+                </span>
+                <h3
+                  className="font-sans font-black uppercase tracking-[-0.015em]"
+                  style={{ fontSize: "0.95rem", color: "#F6F2EA" }}
+                >
+                  {item.title}
+                </h3>
+                <p className="font-mono text-[11px] tracking-[0.04em] leading-relaxed" style={{ color: "rgba(246,242,234,0.38)" }}>
+                  {item.description}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {processSteps.map((item) => (
-            <Card key={item.step} className="relative">
-              <CardHeader>
-                <div className="absolute -top-4 -left-4 w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-xl">
-                  {item.step}
-                </div>
-                <CardTitle className="text-lg mt-4">{item.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">{item.description}</p>
-              </CardContent>
-            </Card>
+      </div>
+
+      {/* ── Stats ── */}
+      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-20">
+        <div
+          className="grid grid-cols-1 md:grid-cols-3 text-center"
+          style={{ border: "1px solid rgba(246,242,234,0.08)" }}
+        >
+          {([
+            ["95%", "Visa Success Rate"],
+            ["500+", "Partner Universities"],
+            ["10K+", "Students Placed"],
+          ] as const).map(([val, label], i) => (
+            <div
+              key={label}
+              className="py-12 px-6"
+              style={{
+                borderRight: i < 2 ? "1px solid rgba(246,242,234,0.08)" : undefined,
+              }}
+            >
+              <p
+                className="font-sans font-black tabular-nums leading-none mb-3"
+                style={{ fontSize: "clamp(2.8rem,5vw,4.5rem)", color: "#C2410C" }}
+              >
+                {val}
+              </p>
+              <p className="font-mono text-[10px] tracking-[0.28em] uppercase" style={{ color: "rgba(246,242,234,0.38)" }}>
+                {label}
+              </p>
+            </div>
           ))}
         </div>
-      </section>
-
-      {/* Why Choose Our Services */}
-      <section className="mb-20">
-        <Card className="bg-secondary/30">
-          <CardHeader className="text-center">
-            <CardTitle className="text-3xl">Why Choose Our Services?</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-              <div>
-                <div className="text-4xl font-bold text-primary mb-2">95%</div>
-                <div className="text-sm text-muted-foreground">Visa Success Rate</div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-primary mb-2">500+</div>
-                <div className="text-sm text-muted-foreground">Partner Universities</div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-primary mb-2">10K+</div>
-                <div className="text-sm text-muted-foreground">Students Placed</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* CTA */}
-      <div className="bg-primary text-primary-foreground rounded-2xl p-12 text-center">
-        <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
-        <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto">
-          Book a free consultation with our expert counselors to discuss your study abroad plans.
-        </p>
-        <Button size="lg" variant="secondary" asChild>
-          <Link href="/contact">
-            Schedule Free Consultation <ArrowRight className="ml-2 h-4 w-4" />
-          </Link>
-        </Button>
       </div>
+
+      {/* ── CTA ── */}
+      <div className="max-w-[1280px] mx-auto px-5 md:px-8 pb-24">
+        <div
+          className="flex flex-col md:flex-row items-start md:items-end justify-between gap-8 p-10 md:p-14"
+          style={{ background: "#C2410C" }}
+        >
+          <div>
+            <p className="font-mono text-[10px] tracking-[0.3em] uppercase mb-3" style={{ color: "rgba(14,14,16,0.55)" }}>
+              Get started
+            </p>
+            <h2
+              className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92]"
+              style={{ fontSize: "clamp(1.8rem,4vw,3.2rem)", color: "#0E0E10" }}
+            >
+              Ready to begin<br />
+              <span className="font-serif italic font-normal">your journey?</span>
+            </h2>
+          </div>
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-3 font-sans font-black uppercase tracking-[-0.01em] px-7 py-4 transition-opacity hover:opacity-80 shrink-0"
+            style={{ background: "#0E0E10", color: "#F6F2EA", fontSize: "0.9rem" }}
+          >
+            Schedule Free Consultation
+            <ArrowRight size={16} />
+          </Link>
+        </div>
+      </div>
+
     </div>
   );
 }

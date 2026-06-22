@@ -427,6 +427,21 @@ html.lenis body {
   html { font-size: 15px; }
 }
 
+/* ─── Services page ────────────────────────────────────────────────── */
+.service-card {
+  background: #0E0E10;
+}
+.service-card:hover {
+  background: #141416;
+}
+.service-card .service-accent {
+  width: 0;
+  transition: width 500ms ease;
+}
+.service-card:hover .service-accent {
+  width: 4rem;
+}
+
 /* ─── Redesign prototype classes ───────────────────────────────────── */
 /* Type */
 .t-eyebrow {
