@@ -51,7 +51,8 @@ const team = [
     role: "Co-Founder",
     bio: "Co-founder driving AimBritz's vision for ethical, structured, and career-focused international education solutions.",
     initial: "AB",
-    image: "/images/team/akshay.png"
+    image: "/images/team/akshay.png",
+    whiteBg: true,
   },
   {
     name: "Amal DS",
@@ -348,7 +349,7 @@ export default function AboutPage() {
       </div>
 
       {/* ── Team ── */}
-      <div style={{ background: "#111113", borderTop: "1px solid rgba(246,242,234,0.06)", borderBottom: "1px solid rgba(246,242,234,0.06)" }}>
+      <div style={{ background: "#1c1c1f", borderTop: "1px solid rgba(246,242,234,0.06)", borderBottom: "1px solid rgba(246,242,234,0.06)" }}>
         <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-20">
           <div className="mb-12">
             <p className="font-mono text-[10px] tracking-[0.32em] uppercase mb-3" style={{ color: "rgba(246,242,234,0.35)" }}>
@@ -364,7 +365,7 @@ export default function AboutPage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px" style={{ background: "rgba(246,242,234,0.07)" }}>
             {team.map((member) => (
-              <div key={member.name} className="group flex flex-col overflow-hidden" style={{ background: "#111113" }}>
+              <div key={member.name} className="group flex flex-col overflow-hidden" style={{ background: "#1c1c1f" }}>
                 {/* Photo */}
                 <div className="relative w-full aspect-[4/5] overflow-hidden">
                   {member.image ? (
@@ -376,11 +377,14 @@ export default function AboutPage() {
                       className="object-cover object-top group-hover:scale-105 transition-transform duration-700"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center" style={{ background: "#1a1a1c" }}>
+                    <div className="w-full h-full flex items-center justify-center" style={{ background: "#242428" }}>
                       <span className="font-sans font-black text-8xl" style={{ color: "rgba(246,242,234,0.08)" }}>{member.initial}</span>
                     </div>
                   )}
-                  <div className="absolute bottom-0 left-0 right-0 h-28" style={{ background: "linear-gradient(to top, #111113, transparent)" }} />
+                  {member.whiteBg && (
+                    <div className="absolute inset-0" style={{ background: "rgba(28,28,31,0.55)", mixBlendMode: "multiply" }} />
+                  )}
+                  <div className="absolute bottom-0 left-0 right-0 h-28" style={{ background: "linear-gradient(to top, #1c1c1f, transparent)" }} />
                   <div className="absolute bottom-0 left-0 right-0 p-5">
                     <span
                       className="inline-block font-mono text-[9px] tracking-[0.2em] uppercase px-2 py-0.5 mb-2"
