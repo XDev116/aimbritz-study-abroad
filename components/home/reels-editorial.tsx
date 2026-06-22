@@ -1,7 +1,7 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState, useCallback } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -37,6 +37,16 @@ const BASE = REELS.map((_, i) => {
 export function ReelsEditorial() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState<number | null>(null);
+  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleEnter = useCallback((i: number) => {
+    if (leaveTimer.current) clearTimeout(leaveTimer.current);
+    setHovered(i);
+  }, []);
+
+  const handleLeave = useCallback(() => {
+    leaveTimer.current = setTimeout(() => setHovered(null), 80);
+  }, []);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -64,7 +74,7 @@ export function ReelsEditorial() {
   function t(i: number) {
     const b = BASE[i];
     if (hovered === null) return b;
-    if (hovered === i)    return { ...b, y: -30, r: 0, z: 20 };
+    if (hovered === i)    return { ...b, y: -30, r: 0, z: b.z + 15 };
     const nudge = i < hovered ? -14 : 14;
     return { ...b, x: b.x + nudge };
   }
@@ -99,7 +109,7 @@ export function ReelsEditorial() {
           alignItems: "flex-end",
           overflow: "visible",
         }}
-        onMouseLeave={() => setHovered(null)}
+        onMouseLeave={handleLeave}
       >
         {REELS.map((reel, i) => {
           const tr = t(i);
@@ -110,7 +120,8 @@ export function ReelsEditorial() {
               target="_blank"
               rel="noopener noreferrer"
               className={`rc-${i}`}
-              onMouseEnter={() => setHovered(i)}
+              onMouseEnter={() => handleEnter(i)}
+              onMouseLeave={handleLeave}
               style={{
                 position: "absolute",
                 bottom: 0,
@@ -125,7 +136,7 @@ export function ReelsEditorial() {
                 transform: `translateX(${tr.x}px) translateY(${tr.y}px) rotate(${tr.r}deg)`,
                 transformOrigin: "50% 100%",
                 zIndex: tr.z,
-                transition: "transform 580ms cubic-bezier(0.22,1,0.36,1), box-shadow 350ms ease",
+                transition: "transform 700ms cubic-bezier(0.22,1,0.36,1), box-shadow 500ms ease",
                 willChange: "transform",
                 cursor: "pointer",
                 background: "#0e0e10",
