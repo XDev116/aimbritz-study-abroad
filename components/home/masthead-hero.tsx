@@ -151,11 +151,7 @@ export function MastheadHero() {
 
             {/* Subline */}
             <p className="h-line mt-5 max-w-md text-[14px] md:text-[15px] leading-relaxed text-ink-2">
-              {p.course}, Class of {p.year}.&nbsp;
-              <span className="text-ink-3">
-                Every three weeks, another student boards a flight. This is
-                the one rotating above.
-              </span>
+              {p.course}, Class of {p.year}.
             </p>
 
             {/* CTAs — hidden on mobile to save vertical space */}
