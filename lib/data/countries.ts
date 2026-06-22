@@ -336,6 +336,60 @@ export const countries: Country[] = [
       "Marine Sciences"
     ],
     universitiesCount: 15
+  },
+  {
+    id: "13",
+    name: "Georgia",
+    slug: "georgia",
+    code: "GE",
+    flag: "🇬🇪",
+    description: "Georgia has rapidly emerged as a top destination for medical and engineering students, offering internationally accredited degrees at highly affordable tuition fees. With a welcoming culture, low cost of living, and English-taught programs at recognized universities, it's an increasingly popular choice for South Asian students.",
+    benefits: [
+      "Very affordable tuition fees ($3,000–6,000/year)",
+      "WHO & globally recognised MBBS degrees",
+      "English-medium instruction widely available",
+      "Low cost of living compared to Western countries",
+      "No entrance exams for most programs",
+      "Safe, hospitable country with rich cultural heritage"
+    ],
+    visaInfo: "Georgia offers a visa-free or visa-on-arrival policy for many nationalities. Students from countries requiring a visa apply through the Georgian embassy. A residence permit is required for stays over 365 days and is obtained through the Civil Registry Agency after arrival.",
+    costOfLiving: "GEL 800–1,400/month (approx. $300–520 USD). Includes accommodation, food, transport, and personal expenses. One of the most affordable study destinations in the world.",
+    topCourses: [
+      "Medicine (MBBS)",
+      "Dentistry",
+      "Pharmacy",
+      "Engineering",
+      "Business & Management",
+      "Computer Science"
+    ],
+    universitiesCount: 18
+  },
+  {
+    id: "14",
+    name: "Austria",
+    slug: "austria",
+    code: "AT",
+    flag: "🇦🇹",
+    description: "Austria offers world-class education at some of the lowest tuition fees in Europe. Home to prestigious institutions like the University of Vienna and TU Wien, Austria provides an exceptional academic environment in one of Europe's most beautiful and culturally rich countries.",
+    benefits: [
+      "Very low tuition fees at public universities (€1,500/year)",
+      "Central European location for travel and networking",
+      "High quality of life and safe environment",
+      "Strong research universities with global recognition",
+      "Post-study job seeker visa (12 months)",
+      "Gateway to EU job market"
+    ],
+    visaInfo: "Non-EU students require a student residence permit. Applicants need proof of university admission, sufficient financial means (approx. €11,000/year), and health insurance. Students may work up to 20 hours/week during studies. A 12-month job seeker permit is available after graduation.",
+    costOfLiving: "Vienna: €900–1,400/month. Other cities: €700–1,100/month. Includes accommodation, food, transport (discounted student passes), and personal expenses.",
+    topCourses: [
+      "Engineering (Mechanical, Electrical)",
+      "Computer Science",
+      "Business & Economics",
+      "Music & Arts",
+      "Natural Sciences",
+      "Architecture"
+    ],
+    universitiesCount: 22
   }
 ];
 
