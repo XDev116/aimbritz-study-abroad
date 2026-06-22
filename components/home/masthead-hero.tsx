@@ -182,13 +182,13 @@ export function MastheadHero() {
           </div>
         </div>
 
-        {/* RIGHT column -- cinematic portrait + mini grid */}
+        {/* RIGHT column -- cinematic portrait */}
         <div className="col-span-12 lg:col-span-5 relative flex flex-col lg:h-full">
           {/* Big portrait / film frame */}
           <div
             className="h-frame relative overflow-hidden flex-1 min-h-0"
             style={{
-              maxHeight: "clamp(280px, 52vh, 520px)",
+              minHeight: "clamp(280px, 55vh, 540px)",
               background: "var(--paper-3)",
               border: "1px solid var(--hairline)",
             }}
@@ -271,62 +271,6 @@ export function MastheadHero() {
             </div>
           </div>
 
-          {/* Mini strip of other students */}
-          <div className="mt-2 grid grid-cols-6 gap-1.5 shrink-0">
-            {PLACEMENTS.map((pl, i) => {
-              const isActive = i === (hoverIdx ?? active);
-              return (
-                <button
-                  key={pl.name}
-                  type="button"
-                  onMouseEnter={() => setHoverIdx(i)}
-                  onMouseLeave={() => setHoverIdx(null)}
-                  onFocus={() => setHoverIdx(i)}
-                  aria-label={`${pl.name} at ${pl.uni}`}
-                  className="h-port relative aspect-[3/4] overflow-hidden focus:outline-none"
-                  style={{ border: "1px solid var(--hairline)" }}
-                >
-                  <Image
-                    src={pl.photo}
-                    alt=""
-                    fill
-                    className="object-cover transition-all duration-700"
-                    style={{
-                      objectPosition: pl.objectPosition ?? "center",
-                      filter: isActive
-                        ? "grayscale(0) contrast(1.05)"
-                        : "grayscale(1) contrast(1.08)",
-                      opacity: isActive ? 1 : 0.65,
-                      transform: isActive ? "scale(1.04)" : "scale(1)",
-                    }}
-                  />
-                  <span
-                    className="absolute bottom-1 left-1 font-mono text-[8px] font-bold tracking-[0.2em]"
-                    style={{
-                      color: isActive ? "var(--paper)" : "var(--ink)",
-                    }}
-                  >
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span
-                    className="absolute bottom-0 left-0 h-[2px] origin-left transition-transform"
-                    style={{
-                      background: "var(--ember)",
-                      width: "100%",
-                      transform: isActive ? "scaleX(1)" : "scaleX(0)",
-                      transitionDuration: isActive ? "3500ms" : "180ms",
-                      transitionTimingFunction: "linear",
-                    }}
-                  />
-                </button>
-              );
-            })}
-          </div>
-
-          <p className="mt-2 flex items-center justify-between font-mono text-[10px] tracking-[0.25em] uppercase text-ink-3 shrink-0">
-            <span>Hover to pin frame</span>
-            <span>Auto-cycle &middot; 4s</span>
-          </p>
         </div>
       </div>
 
