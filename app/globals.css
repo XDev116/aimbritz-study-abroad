@@ -38,9 +38,9 @@ html.lenis body {
        Mobile bottom, fluid middle (vw scales), desktop cap. */
     --section-py: clamp(72px, 9vw, 130px);
 
-    /* Lime-chartreuse accent */
-    --ember: #c4f542;
-    --ember-2: #d6ff5e;
+    /* Silver-grey accent */
+    --ember: #9e9e9e;
+    --ember-2: #b8b8b8;
     --ink-blue: #1a2847;
     --olive: #3B5A2A;
     --rose: #A63E4A;

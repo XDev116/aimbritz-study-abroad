@@ -359,7 +359,7 @@ export function BrandPromise() {
                 <p className="bp-line t-display" style={{ fontSize: "clamp(2rem, 6vw, 6.2rem)" }}>
                   students abroad.
                 </p>
-                <p className="bp-line t-display-serif mt-4" style={{ color: "var(--ember)", fontSize: "clamp(2rem, 6vw, 6.2rem)" }}>
+                <p className="bp-line t-display-serif mt-4" style={{ color: "#c4f542", fontSize: "clamp(2rem, 6vw, 6.2rem)" }}>
                   We build global futures.
                 </p>
               </div>
