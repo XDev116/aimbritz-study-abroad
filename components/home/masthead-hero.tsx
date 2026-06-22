@@ -58,15 +58,13 @@ export function MastheadHero() {
       ref={heroRef}
       className="relative w-full h-full overflow-hidden"
       style={{
-        paddingTop: "clamp(108px,13vh,128px)",
-        paddingBottom: "clamp(28px,4vh,56px)",
+        paddingTop: "clamp(96px,11vh,116px)",
+        paddingBottom: "clamp(20px,3vh,40px)",
       }}
     >
       <FlowLines />
 
-
-
-      <div className="relative z-10 px-5 md:px-10 lg:px-14 grid grid-cols-12 gap-6 lg:gap-8">
+      <div className="relative z-10 px-5 md:px-10 lg:px-14 grid grid-cols-12 gap-4 lg:gap-6 h-full">
         {/* LEFT column -- rotating headline */}
         <div className="col-span-12 lg:col-span-7 flex flex-col justify-between">
           <div>
@@ -163,7 +161,7 @@ export function MastheadHero() {
 
           {/* Meta strip */}
           <div
-            className="mt-6 pt-4 border-t flex flex-wrap gap-x-8 gap-y-2"
+            className="mt-4 pt-3 border-t flex flex-wrap gap-x-8 gap-y-2"
             style={{ borderColor: "var(--hairline)" }}
           >
             {(
@@ -185,12 +183,12 @@ export function MastheadHero() {
         </div>
 
         {/* RIGHT column -- cinematic portrait + mini grid */}
-        <div className="col-span-12 lg:col-span-5 relative flex flex-col">
+        <div className="col-span-12 lg:col-span-5 relative flex flex-col lg:h-full">
           {/* Big portrait / film frame */}
           <div
-            className="h-frame relative overflow-hidden lg:flex-1 lg:min-h-0"
+            className="h-frame relative overflow-hidden flex-1 min-h-0"
             style={{
-              aspectRatio: "3/4",
+              maxHeight: "clamp(280px, 52vh, 520px)",
               background: "var(--paper-3)",
               border: "1px solid var(--hairline)",
             }}
