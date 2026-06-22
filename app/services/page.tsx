@@ -113,23 +113,24 @@ const services = [
 ];
 
 const processSteps = [
-  { step: 1, title: "Free Consultation",          description: "Initial assessment of your profile, goals, and preferences" },
+  { step: 1, title: "Free Consultation",             description: "Initial assessment of your profile, goals, and preferences" },
   { step: 2, title: "Course & University Selection", description: "Shortlist universities based on your profile and budget" },
-  { step: 3, title: "Test Preparation",           description: "Prepare for and take required standardized tests" },
-  { step: 4, title: "Application Process",        description: "Complete and submit applications with our guidance" },
-  { step: 5, title: "Offer Letters",              description: "Receive and evaluate offers from universities" },
-  { step: 6, title: "Visa Application",           description: "Apply for and obtain your student visa" },
-  { step: 7, title: "Pre-Departure",              description: "Final preparations before your journey" },
-  { step: 8, title: "Departure & Beyond",         description: "Travel and continue with post-landing support" }
+  { step: 3, title: "Test Preparation",              description: "Prepare for and take required standardized tests" },
+  { step: 4, title: "Application Process",           description: "Complete and submit applications with our guidance" },
+  { step: 5, title: "Offer Letters",                 description: "Receive and evaluate offers from universities" },
+  { step: 6, title: "Visa Application",              description: "Apply for and obtain your student visa" },
+  { step: 7, title: "Pre-Departure",                 description: "Final preparations before your journey" },
+  { step: 8, title: "Departure & Beyond",            description: "Travel and continue with post-landing support" }
 ];
 
 export default function ServicesPage() {
   return (
     <div style={{ background: "#0E0E10", color: "#F6F2EA", minHeight: "100vh" }}>
+      <style>{`:root { --flow-color: rgba(246,242,234,0.18); }`}</style>
 
       {/* ── Header ── */}
       <div className="max-w-[1280px] mx-auto px-5 md:px-8" style={{ paddingTop: "clamp(72px,9vw,130px)", paddingBottom: "clamp(48px,6vw,80px)" }}>
-        <p className="font-mono text-[10px] tracking-[0.32em] uppercase mb-4" style={{ color: "#C2410C" }}>
+        <p className="font-mono text-[10px] tracking-[0.32em] uppercase mb-4" style={{ color: "rgba(246,242,234,0.35)" }}>
           What we do
         </p>
         <h1
@@ -137,11 +138,11 @@ export default function ServicesPage() {
           style={{ fontSize: "clamp(2.8rem,7vw,6rem)", color: "#F6F2EA" }}
         >
           Our{" "}
-          <span className="font-serif italic font-normal" style={{ color: "#C2410C" }}>Services</span>
+          <span className="font-serif italic font-normal" style={{ color: "rgba(246,242,234,0.45)" }}>Services</span>
         </h1>
         <p
           className="font-sans max-w-2xl"
-          style={{ fontSize: "clamp(1rem,1.2vw,1.15rem)", lineHeight: 1.6, color: "rgba(246,242,234,0.55)" }}
+          style={{ fontSize: "clamp(1rem,1.2vw,1.15rem)", lineHeight: 1.6, color: "rgba(246,242,234,0.45)" }}
         >
           Comprehensive end-to-end support for your study abroad journey.
           From initial counseling to post-landing assistance, we&apos;re with you every step of the way.
@@ -162,15 +163,15 @@ export default function ServicesPage() {
                 <div className="flex items-start justify-between">
                   <span
                     className="font-mono text-[10px] tracking-[0.28em] tabular-nums"
-                    style={{ color: "rgba(246,242,234,0.25)" }}
+                    style={{ color: "rgba(246,242,234,0.2)" }}
                   >
                     {String(idx + 1).padStart(2, "0")}
                   </span>
                   <div
                     className="flex items-center justify-center"
-                    style={{ width: 40, height: 40, background: "rgba(194,65,12,0.1)", border: "1px solid rgba(194,65,12,0.25)" }}
+                    style={{ width: 40, height: 40, background: "rgba(246,242,234,0.06)", border: "1px solid rgba(246,242,234,0.12)" }}
                   >
-                    <Icon size={18} style={{ color: "#C2410C" }} />
+                    <Icon size={18} style={{ color: "rgba(246,242,234,0.7)" }} />
                   </div>
                 </div>
 
@@ -182,7 +183,7 @@ export default function ServicesPage() {
                   >
                     {service.title}
                   </h3>
-                  <p className="font-sans text-sm leading-relaxed" style={{ color: "rgba(246,242,234,0.45)" }}>
+                  <p className="font-sans text-sm leading-relaxed" style={{ color: "rgba(246,242,234,0.4)" }}>
                     {service.description}
                   </p>
                 </div>
@@ -192,10 +193,10 @@ export default function ServicesPage() {
                   {service.features.map((f) => (
                     <li key={f} className="flex items-start gap-2.5">
                       <span
-                        className="mt-[3px] shrink-0"
-                        style={{ width: 5, height: 5, background: "#C2410C", borderRadius: 0, display: "inline-block", marginTop: 6 }}
+                        className="shrink-0"
+                        style={{ width: 4, height: 4, background: "rgba(246,242,234,0.35)", borderRadius: 0, display: "inline-block", marginTop: 7 }}
                       />
-                      <span className="font-mono text-[11px] tracking-[0.06em]" style={{ color: "rgba(246,242,234,0.5)" }}>
+                      <span className="font-mono text-[11px] tracking-[0.06em]" style={{ color: "rgba(246,242,234,0.45)" }}>
                         {f}
                       </span>
                     </li>
@@ -205,7 +206,7 @@ export default function ServicesPage() {
                 {/* Bottom rule accent */}
                 <div
                   className="service-accent absolute bottom-0 left-8"
-                  style={{ height: 1, background: "#C2410C" }}
+                  style={{ height: 1, background: "#ffffff" }}
                 />
               </div>
             );
@@ -217,7 +218,7 @@ export default function ServicesPage() {
       <div style={{ background: "#111113", borderTop: "1px solid rgba(246,242,234,0.06)", borderBottom: "1px solid rgba(246,242,234,0.06)" }}>
         <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-20">
           <div className="mb-12">
-            <p className="font-mono text-[10px] tracking-[0.32em] uppercase mb-3" style={{ color: "#C2410C" }}>
+            <p className="font-mono text-[10px] tracking-[0.32em] uppercase mb-3" style={{ color: "rgba(246,242,234,0.35)" }}>
               How it works
             </p>
             <h2
@@ -225,7 +226,7 @@ export default function ServicesPage() {
               style={{ fontSize: "clamp(2rem,4vw,3.5rem)", color: "#F6F2EA" }}
             >
               Our{" "}
-              <span className="font-serif italic font-normal" style={{ color: "rgba(246,242,234,0.45)" }}>8-step</span>{" "}
+              <span className="font-serif italic font-normal" style={{ color: "rgba(246,242,234,0.4)" }}>8-step</span>{" "}
               Process
             </h2>
           </div>
@@ -239,7 +240,7 @@ export default function ServicesPage() {
               >
                 <span
                   className="font-mono text-[11px] tracking-[0.28em] tabular-nums font-bold px-2 py-0.5 self-start"
-                  style={{ background: "rgba(194,65,12,0.12)", color: "#C2410C", border: "1px solid rgba(194,65,12,0.2)" }}
+                  style={{ background: "rgba(246,242,234,0.08)", color: "#F6F2EA", border: "1px solid rgba(246,242,234,0.12)" }}
                 >
                   {String(item.step).padStart(2, "0")}
                 </span>
@@ -249,7 +250,7 @@ export default function ServicesPage() {
                 >
                   {item.title}
                 </h3>
-                <p className="font-mono text-[11px] tracking-[0.04em] leading-relaxed" style={{ color: "rgba(246,242,234,0.38)" }}>
+                <p className="font-mono text-[11px] tracking-[0.04em] leading-relaxed" style={{ color: "rgba(246,242,234,0.35)" }}>
                   {item.description}
                 </p>
               </div>
@@ -272,17 +273,15 @@ export default function ServicesPage() {
             <div
               key={label}
               className="py-12 px-6"
-              style={{
-                borderRight: i < 2 ? "1px solid rgba(246,242,234,0.08)" : undefined,
-              }}
+              style={{ borderRight: i < 2 ? "1px solid rgba(246,242,234,0.08)" : undefined }}
             >
               <p
                 className="font-sans font-black tabular-nums leading-none mb-3"
-                style={{ fontSize: "clamp(2.8rem,5vw,4.5rem)", color: "#C2410C" }}
+                style={{ fontSize: "clamp(2.8rem,5vw,4.5rem)", color: "#ffffff" }}
               >
                 {val}
               </p>
-              <p className="font-mono text-[10px] tracking-[0.28em] uppercase" style={{ color: "rgba(246,242,234,0.38)" }}>
+              <p className="font-mono text-[10px] tracking-[0.28em] uppercase" style={{ color: "rgba(246,242,234,0.35)" }}>
                 {label}
               </p>
             </div>
@@ -294,24 +293,24 @@ export default function ServicesPage() {
       <div className="max-w-[1280px] mx-auto px-5 md:px-8 pb-24">
         <div
           className="flex flex-col md:flex-row items-start md:items-end justify-between gap-8 p-10 md:p-14"
-          style={{ background: "#C2410C" }}
+          style={{ background: "#1a1a1c", border: "1px solid rgba(246,242,234,0.1)" }}
         >
           <div>
-            <p className="font-mono text-[10px] tracking-[0.3em] uppercase mb-3" style={{ color: "rgba(14,14,16,0.55)" }}>
+            <p className="font-mono text-[10px] tracking-[0.3em] uppercase mb-3" style={{ color: "rgba(246,242,234,0.35)" }}>
               Get started
             </p>
             <h2
               className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92]"
-              style={{ fontSize: "clamp(1.8rem,4vw,3.2rem)", color: "#0E0E10" }}
+              style={{ fontSize: "clamp(1.8rem,4vw,3.2rem)", color: "#F6F2EA" }}
             >
               Ready to begin<br />
-              <span className="font-serif italic font-normal">your journey?</span>
+              <span className="font-serif italic font-normal" style={{ color: "rgba(246,242,234,0.55)" }}>your journey?</span>
             </h2>
           </div>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-3 font-sans font-black uppercase tracking-[-0.01em] px-7 py-4 transition-opacity hover:opacity-80 shrink-0"
-            style={{ background: "#0E0E10", color: "#F6F2EA", fontSize: "0.9rem" }}
+            className="inline-flex items-center gap-3 font-sans font-black uppercase tracking-[-0.01em] px-7 py-4 transition-opacity hover:opacity-75 shrink-0"
+            style={{ background: "#ffffff", color: "#0E0E10", fontSize: "0.9rem" }}
           >
             Schedule Free Consultation
             <ArrowRight size={16} />

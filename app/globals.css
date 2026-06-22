@@ -441,6 +441,7 @@ html.lenis body {
 .service-card:hover .service-accent {
   width: 4rem;
 }
+.service-accent { background: #ffffff; }
 
 /* ─── Redesign prototype classes ───────────────────────────────────── */
 /* Type */
