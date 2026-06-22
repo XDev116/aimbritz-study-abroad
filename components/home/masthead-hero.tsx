@@ -194,7 +194,7 @@ export function MastheadHero() {
           <div
             className="h-frame relative overflow-hidden lg:flex-1 lg:min-h-0"
             style={{
-              aspectRatio: "4/3",
+              aspectRatio: "3/4",
               background: "var(--paper-3)",
               border: "1px solid var(--hairline)",
             }}
@@ -218,7 +218,7 @@ export function MastheadHero() {
                 className="absolute inset-0"
                 style={{
                   background:
-                    "linear-gradient(180deg, transparent 45%, rgba(17,17,19,0.75) 100%)",
+                    "linear-gradient(180deg, transparent 35%, rgba(10,10,10,0.55) 100%)",
                 }}
               />
 
@@ -239,37 +239,37 @@ export function MastheadHero() {
 
               {/* Caption card */}
               <div
-                className="absolute left-4 right-4 bottom-4 p-4 flex items-end justify-between"
+                className="absolute left-0 right-0 bottom-0 px-4 py-4 flex items-end justify-between"
                 style={{
-                  background: "rgba(248,244,235,0.92)",
-                  backdropFilter: "blur(6px)",
+                  background: "linear-gradient(0deg, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.4) 70%, transparent 100%)",
+                  backdropFilter: "blur(2px)",
                 }}
               >
                 <div>
                   <span
                     className="inline-flex items-center gap-2 px-3 py-1 rounded-full font-mono text-[10px] tracking-[0.22em] uppercase font-bold"
-                    style={{ background: "var(--ember)", color: "var(--ink)" }}
+                    style={{ background: "rgba(255,255,255,0.12)", color: "var(--paper)", border: "1px solid rgba(255,255,255,0.2)" }}
                   >
                     <span
                       className="font-mono font-bold text-[9px] tracking-[0.18em] px-1 py-0.5 rounded"
-                      style={{ background: "var(--ink)", color: "var(--ember)" }}
+                      style={{ background: "var(--ember)", color: "var(--ink)" }}
                     >
                       {p.flag}
                     </span>
                     {p.country}
                   </span>
-                  <p className="font-sans font-black text-[22px] tracking-[-0.02em] mt-2 uppercase">
+                  <p className="font-sans font-black text-[22px] tracking-[-0.02em] mt-2 uppercase" style={{ color: "var(--paper)" }}>
                     {p.name}
                   </p>
-                  <p className="text-[12px] text-ink-3 mt-0.5">
+                  <p className="text-[12px] mt-0.5" style={{ color: "rgba(252,252,250,0.6)" }}>
                     {p.course}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="font-mono text-[10px] tracking-[0.22em] text-ink-3 uppercase">
+                  <p className="font-mono text-[10px] tracking-[0.22em] uppercase" style={{ color: "rgba(252,252,250,0.5)" }}>
                     Class of
                   </p>
-                  <p className="font-sans font-black text-[24px]">
+                  <p className="font-sans font-black text-[24px]" style={{ color: "var(--paper)" }}>
                     {p.year}
                   </p>
                 </div>
