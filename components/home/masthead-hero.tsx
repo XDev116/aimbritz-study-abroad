@@ -17,11 +17,12 @@ interface Placement {
   course: string;
   year: string;
   photo: string;
+  objectPosition?: string;
 }
 
 const PLACEMENTS: Placement[] = [
   { name: "Priya Nair",   first: "Priya",  uni: "Oxford",         country: "UK",        flag: "GB", course: "MSc Computer Science", year: "'26", photo: "/images/students/student1.webp" },
-  { name: "Ahmed Khan",   first: "Ahmed",  uni: "Birmingham",     country: "UK",        flag: "GB", course: "MBA",                  year: "'26", photo: "/images/students/student2.webp" },
+  { name: "Vignesh Arumugham", first: "Vignesh", uni: "Northumbria University", country: "UK", flag: "GB", course: "MBA", year: "'26", photo: "/images/students/Vignesh Arumugham.jpg", objectPosition: "top" },
   { name: "Meera Iyer",   first: "Meera",  uni: "Toronto",        country: "Canada",    flag: "CA", course: "MS Data Science",      year: "'26", photo: "/images/students/student3.webp" },
   { name: "Arjun Das",    first: "Arjun",  uni: "Edinburgh",      country: "UK",        flag: "GB", course: "MSc Finance",          year: "'26", photo: "/images/students/student4.webp" },
   { name: "Neha Varma",   first: "Neha",   uni: "Sydney",         country: "Australia", flag: "AU", course: "BArch",                year: "'26", photo: "/images/students/student5.webp" },
@@ -211,6 +212,7 @@ export function MastheadHero() {
                 alt={p.name}
                 fill
                 className="object-cover"
+                style={{ objectPosition: p.objectPosition ?? "center" }}
               />
               <div
                 className="absolute inset-0"
@@ -296,6 +298,7 @@ export function MastheadHero() {
                     fill
                     className="object-cover transition-all duration-700"
                     style={{
+                      objectPosition: pl.objectPosition ?? "center",
                       filter: isActive
                         ? "grayscale(0) contrast(1.05)"
                         : "grayscale(1) contrast(1.08)",
