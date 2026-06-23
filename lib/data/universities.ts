@@ -1340,6 +1340,231 @@ export const universities: University[] = [
       "Erasmus+ for European students",
       "Research funding opportunities"
     ]
+  },
+  {
+    id: "18",
+    name: "Sciences Po",
+    slug: "sciences-po",
+    country: "France",
+    countryCode: "FR",
+    city: "Paris",
+    description: "Sciences Po is a world-leading university in the social sciences, renowned for its rigorous programs in political science, international relations, economics, and law. With seven campuses across France and a deeply international student body, it prepares graduates for careers in public policy, diplomacy, and business.",
+    logo: "🏛️",
+    ranking: 242,
+    website: "https://www.sciencespo.fr",
+    established: 1872,
+    type: "Public",
+    courses: [
+      {
+        id: "sciencespo-1",
+        name: "International Relations",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 14700,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "sciencespo-2",
+        name: "Economics and Public Policy",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 14700,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "sciencespo-3",
+        name: "European Affairs",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 14700,
+        currency: "EUR",
+        intakeDates: ["September"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "High school diploma with strong academic record",
+        "Written exam and interview",
+        "English proficiency: IELTS 7.0+ or TOEFL 100+",
+        "Motivation letter",
+        "CV"
+      ],
+      master: [
+        "Bachelor's degree with strong grades",
+        "English or French proficiency depending on program",
+        "IELTS 7.0+ or TOEFL 100+ for English-taught programs",
+        "Statement of purpose",
+        "Two references",
+        "CV"
+      ],
+      phd: [
+        "Master's degree with distinction",
+        "Research proposal",
+        "English or French proficiency",
+        "Academic references",
+        "Interview"
+      ]
+    },
+    campusLife: "Sciences Po's main campus is located in the heart of Paris's Saint-Germain-des-Prés quarter. The university offers a cosmopolitan environment with students from over 150 countries. Facilities include modern libraries, student associations, career services, and access to Paris's diplomatic and policy community.",
+    scholarships: [
+      "Sciences Po Emile Boutmy Scholarship",
+      "Eiffel Excellence Scholarship",
+      "French Government Scholarships",
+      "Need-based financial aid",
+      "Erasmus+ for European students"
+    ]
+  },
+  {
+    id: "19",
+    name: "ESSEC Business School",
+    slug: "essec",
+    country: "France",
+    countryCode: "FR",
+    city: "Cergy-Pontoise",
+    description: "ESSEC Business School is one of France's top Grande École, holding triple accreditation (AACSB, EQUIS, AMBA). With campuses in France, Singapore, and Morocco, ESSEC is globally recognized for its MBA, finance, and management programs, producing leaders in business and entrepreneurship.",
+    logo: "📊",
+    ranking: 0,
+    website: "https://www.essec.edu",
+    established: 1907,
+    type: "Private",
+    courses: [
+      {
+        id: "essec-1",
+        name: "Global BBA",
+        degree: "Bachelor",
+        duration: "4 years",
+        tuitionFee: 16900,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "essec-2",
+        name: "Master in Management",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 18500,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "essec-3",
+        name: "Master in Finance",
+        degree: "Master",
+        duration: "1 year",
+        tuitionFee: 29000,
+        currency: "EUR",
+        intakeDates: ["September"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "High school diploma with strong grades",
+        "English proficiency: IELTS 6.5+ or TOEFL 90+",
+        "Written tests and interview",
+        "Motivation letter",
+        "CV"
+      ],
+      master: [
+        "Bachelor's degree with strong academic record",
+        "GMAT 680+ or GRE equivalent",
+        "IELTS 7.0+ or TOEFL 100+",
+        "Professional experience preferred for MBA",
+        "Statement of purpose",
+        "Two references"
+      ],
+      phd: [
+        "Master's degree with excellent grades",
+        "Research proposal",
+        "GMAT/GRE scores",
+        "English proficiency",
+        "Interview with faculty"
+      ]
+    },
+    campusLife: "ESSEC's main campus in Cergy-Pontoise offers a modern, purpose-built environment with state-of-the-art facilities. The school provides a global experience through mandatory international exchanges, with 180+ partner institutions worldwide. Students benefit from strong corporate partnerships and career placement services.",
+    scholarships: [
+      "ESSEC Excellence Scholarship",
+      "ESSEC Foundation Grants",
+      "Eiffel Excellence Scholarship",
+      "Corporate-sponsored scholarships",
+      "Need-based financial aid"
+    ]
+  },
+  {
+    id: "20",
+    name: "Université Grenoble Alpes",
+    slug: "grenoble-alpes",
+    country: "France",
+    countryCode: "FR",
+    city: "Grenoble",
+    description: "Université Grenoble Alpes is a leading French research university nestled in the Alps, known for its strengths in engineering, computer science, physics, and environmental studies. Home to major research centers including CNRS and CEA, it offers an innovative academic environment surrounded by world-class outdoor recreation.",
+    logo: "🏔️",
+    ranking: 339,
+    website: "https://www.univ-grenoble-alpes.fr",
+    established: 1339,
+    type: "Public",
+    courses: [
+      {
+        id: "grenoble-1",
+        name: "Computer Science",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 3770,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "grenoble-2",
+        name: "Mechanical Engineering",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 3770,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "grenoble-3",
+        name: "Environmental Sciences",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 3770,
+        currency: "EUR",
+        intakeDates: ["September"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "Baccalauréat or equivalent",
+        "French proficiency: DELF B2 or TCF",
+        "Academic transcripts",
+        "Application through Campus France",
+        "Motivation letter"
+      ],
+      master: [
+        "Bachelor's degree with good grades",
+        "English proficiency: IELTS 6.0+ for English-taught programs",
+        "French proficiency for French-taught programs",
+        "Statement of purpose",
+        "Two references",
+        "CV"
+      ],
+      phd: [
+        "Master's degree with strong grades",
+        "Research proposal",
+        "French or English proficiency",
+        "Supervisor agreement",
+        "Academic references"
+      ]
+    },
+    campusLife: "Grenoble is consistently ranked as one of France's best student cities. The campus is surrounded by the French Alps, offering unmatched outdoor activities — skiing, hiking, and cycling. The university provides modern facilities, affordable student housing, and a vibrant international student community with over 9,000 international students.",
+    scholarships: [
+      "Université Grenoble Alpes Excellence Scholarship",
+      "Eiffel Excellence Scholarship",
+      "French Government Scholarships",
+      "Erasmus+ for European students",
+      "Idex Scholarship for Master's students"
+    ]
   }
 ];
 
