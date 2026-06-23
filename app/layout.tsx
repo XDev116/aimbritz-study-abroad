@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll-provider";
 import { PageFrame } from "@/components/layout/page-frame";
+import { ChatWidget } from "@/components/chatbot/chat-widget-loader";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -80,6 +81,7 @@ export default function RootLayout({
             <Header />
             <main className="flex-1 relative">{children}</main>
           </PageFrame>
+          <ChatWidget />
         </SmoothScrollProvider>
       </body>
     </html>
