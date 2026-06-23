@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function CountriesPage() {
   return (
-    <div style={{ background: "var(--paper)", color: "var(--ink)", minHeight: "100vh" }}>
+    <div style={{ background: "transparent", color: "var(--ink)", minHeight: "100vh" }}>
 
       {/* ── Hero ── */}
       <div

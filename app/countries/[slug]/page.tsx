@@ -33,7 +33,7 @@ export default async function CountryPage({ params }: CountryPageProps) {
   const universities = getUniversitiesByCountry(country.code);
 
   return (
-    <div style={{ background: "var(--paper)", color: "var(--ink)", minHeight: "100vh" }}>
+    <div style={{ background: "transparent", color: "var(--ink)", minHeight: "100vh" }}>
 
       {/* ── Hero ── */}
       <div
