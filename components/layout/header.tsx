@@ -5,6 +5,15 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+// World-clock cities cycled in the top strip (key study-abroad destinations)
+const CITIES = [
+  { code: "LDN", tz: "Europe/London" },
+  { code: "NYC", tz: "America/New_York" },
+  { code: "TOR", tz: "America/Toronto" },
+  { code: "SYD", tz: "Australia/Sydney" },
+  { code: "DXB", tz: "Asia/Dubai" },
+];
+
 const COUNTRIES = [
   { code: "GB", name: "United Kingdom", unis: 142, slug: "uk" },
   { code: "CA", name: "Canada", unis: 96, slug: "canada" },
@@ -30,19 +39,35 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [drawer, setDrawer] = useState<"explore" | "services" | null>(null);
   const [menu, setMenu] = useState(false);
+  const [cityIdx, setCityIdx] = useState(0);
   const [time, setTime] = useState("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    const tick = () => {
-      setTime(new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Europe/London" }));
-    };
-    tick();
-    const id = setInterval(tick, 30000);
-    return () => { window.removeEventListener("scroll", onScroll); clearInterval(id); };
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Rotate to the next city every 3s, and keep its clock current
+  useEffect(() => {
+    const rotate = setInterval(() => setCityIdx((i) => (i + 1) % CITIES.length), 3000);
+    return () => clearInterval(rotate);
+  }, []);
+
+  useEffect(() => {
+    const update = () =>
+      setTime(
+        new Date().toLocaleTimeString("en-GB", {
+          hour: "2-digit",
+          minute: "2-digit",
+          timeZone: CITIES[cityIdx].tz,
+        })
+      );
+    update();
+    const id = setInterval(update, 15000);
+    return () => clearInterval(id);
+  }, [cityIdx]);
 
   return (
     <>
@@ -62,8 +87,9 @@ export function Header() {
           <span className="hidden md:inline">Session open · 30 min</span>
         </div>
         <div className="flex items-center gap-6">
-          <span className="hidden md:inline">EN / ML / HI</span>
-          <span>LDN {time || "—"}</span>
+          <span className="tabular-nums transition-opacity duration-300">
+            {CITIES[cityIdx].code} {time || "—"}
+          </span>
         </div>
       </div>
 

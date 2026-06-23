@@ -1,10 +1,15 @@
 import Image from "next/image";
 
 /* ── partner logos (public/images/Partnering Universities/) ──────── */
-const logos = Array.from({ length: 8 }, (_, i) => ({
-  src: `/images/Partnering Universities/uni${i + 1}.png`,
-  alt: `Partner university ${i + 1}`,
-}));
+const DIR = "/images/Partnering Universities";
+const logos = [
+  { src: `${DIR}/demontfort.png`, alt: "De Montfort University" },
+  { src: `${DIR}/leicester.png`, alt: "University of Leicester" },
+  { src: `${DIR}/greenwich.png`, alt: "University of Greenwich" },
+  { src: `${DIR}/teesside.png`, alt: "Teesside University" },
+  { src: `${DIR}/uws.png`, alt: "University of the West of Scotland" },
+  { src: `${DIR}/coventry.png`, alt: "Coventry University" },
+];
 
 /* Double the array so the strip can loop seamlessly */
 const strip = [...logos, ...logos];
@@ -55,15 +60,14 @@ export function UniversityMarquee() {
             <div
               key={i}
               className="shrink-0 flex items-center justify-center"
-              style={{ width: "clamp(100px, 12vw, 160px)", height: 60 }}
+              style={{ width: "clamp(120px, 14vw, 180px)", height: 70 }}
             >
               <Image
                 src={logo.src}
                 alt={logo.alt}
-                width={160}
-                height={60}
-                className="object-contain max-h-[50px] w-auto opacity-60 hover:opacity-100 transition-opacity duration-300"
-                style={{ filter: "grayscale(100%)" }}
+                width={180}
+                height={64}
+                className="object-contain max-h-[56px] w-auto"
               />
             </div>
           ))}
