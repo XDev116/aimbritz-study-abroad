@@ -4,6 +4,7 @@ import { FeaturedUniversities } from "@/components/home/featured-universities";
 import { ReelsEditorial } from "@/components/home/reels-editorial";
 import { CeoModule } from "@/components/home/ceo-module";
 import { CtaBold } from "@/components/home/cta-bold";
+import { UniversityMarquee } from "@/components/home/university-marquee";
 
 export default function HomePage() {
   return (
@@ -14,6 +15,7 @@ export default function HomePage() {
       <FeaturedUniversities />
       <ReelsEditorial />
       <CeoModule />
+      <UniversityMarquee />
       <CtaBold />
     </>
   );
