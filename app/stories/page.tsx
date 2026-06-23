@@ -175,41 +175,41 @@ export default function StoriesPage() {
             <span style={{ color: C.faint }}>Where they are now.</span>
           </h2>
 
-          <div className="flex flex-col gap-14 md:gap-24">
+          <div className="flex flex-col gap-10 md:gap-24">
             {featured.map((s, i) => {
               const flip = i % 2 === 1;
               return (
-                <div key={s.id} className={`st-spot grid md:grid-cols-2 gap-6 md:gap-12 items-center ${flip ? "md:[&>*:first-child]:order-2" : ""}`}>
+                <div key={s.id} className={`st-spot grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-12 items-center ${flip ? "md:[&>*:first-child]:order-2" : ""}`}>
                   {/* photo */}
-                  <div className="relative rounded-2xl overflow-hidden" style={{ aspectRatio: "4/3", background: C.bg2 }}>
+                  <div className="relative rounded-xl md:rounded-2xl overflow-hidden" style={{ aspectRatio: "16/10", background: C.bg2 }}>
                     {s.photo && (
                       <img src={s.photo} alt={s.name} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" style={{ objectPosition: s.photoPosition || "top" }} />
                     )}
                   </div>
                   {/* story */}
                   <div>
-                    <p className="font-mono text-[10px] tracking-[0.2em] uppercase mb-3" style={{ color: C.faint }}>
+                    <p className="font-mono text-[9px] md:text-[10px] tracking-[0.2em] uppercase mb-2 md:mb-3" style={{ color: C.faint }}>
                       {s.name} · {s.country}
                     </p>
-                    <blockquote className="font-serif italic leading-snug" style={{ fontSize: "clamp(1.3rem, 3vw, 2rem)" }}>
+                    <blockquote className="font-serif italic leading-snug" style={{ fontSize: "clamp(1.1rem, 3vw, 2rem)" }}>
                       &ldquo;{s.quote}&rdquo;
                     </blockquote>
-                    <p className="mt-5 text-[14px] md:text-[15px] leading-relaxed" style={{ color: C.muted }}>
+                    <p className="mt-3 md:mt-5 text-[13px] md:text-[15px] leading-relaxed" style={{ color: C.muted }}>
                       {s.journey}
                     </p>
                     {/* before → after bar */}
-                    <div className="mt-7 flex items-stretch gap-3">
-                      <div className="flex-1 rounded-xl p-4" style={{ background: C.bg2, border: `1px solid ${C.line}` }}>
-                        <p className="font-mono text-[8px] tracking-[0.2em] uppercase mb-1.5" style={{ color: C.faint }}>Before</p>
-                        <p className="text-[14px] font-bold leading-tight">{s.before}</p>
+                    <div className="mt-5 md:mt-7 flex items-stretch gap-2 md:gap-3">
+                      <div className="flex-1 rounded-lg md:rounded-xl p-3 md:p-4" style={{ background: C.bg2, border: `1px solid ${C.line}` }}>
+                        <p className="font-mono text-[7px] md:text-[8px] tracking-[0.2em] uppercase mb-1" style={{ color: C.faint }}>Before</p>
+                        <p className="text-[12px] md:text-[14px] font-bold leading-tight">{s.before}</p>
                       </div>
-                      <div className="flex items-center font-sans font-black text-xl" style={{ color: C.ink }}>→</div>
-                      <div className="flex-1 rounded-xl p-4" style={{ background: C.ink, color: C.bg }}>
-                        <p className="font-mono text-[8px] tracking-[0.2em] uppercase mb-1.5" style={{ color: "rgba(252,252,250,0.5)" }}>After</p>
-                        <p className="text-[14px] font-bold leading-tight">{s.after}</p>
+                      <div className="flex items-center font-sans font-black text-base md:text-xl" style={{ color: C.ink }}>→</div>
+                      <div className="flex-1 rounded-lg md:rounded-xl p-3 md:p-4" style={{ background: C.ink, color: C.bg }}>
+                        <p className="font-mono text-[7px] md:text-[8px] tracking-[0.2em] uppercase mb-1" style={{ color: "rgba(252,252,250,0.5)" }}>After</p>
+                        <p className="text-[12px] md:text-[14px] font-bold leading-tight">{s.after}</p>
                       </div>
                     </div>
-                    <p className="mt-4 text-[13px]" style={{ color: C.faint }}>{s.course} · {s.uni}</p>
+                    <p className="mt-3 md:mt-4 text-[12px] md:text-[13px]" style={{ color: C.faint }}>{s.course} · {s.uni}</p>
                   </div>
                 </div>
               );
@@ -229,16 +229,16 @@ export default function StoriesPage() {
             <br />
             <span style={{ color: C.faint }}>14 countries.</span>
           </h2>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3 md:gap-4">
             {STORY_DESTINATIONS.map((d) => (
-              <div key={d.country} className="st-rev flex items-center gap-4">
-                <span className="font-mono text-[11px] tracking-[0.12em] uppercase w-32 md:w-44 shrink-0">{d.country}</span>
-                <div className="flex-1 h-7 md:h-9 rounded-full overflow-hidden" style={{ background: "rgba(10,10,10,0.06)" }}>
+              <div key={d.country} className="st-rev flex items-center gap-2.5 md:gap-4">
+                <span className="font-mono text-[9px] md:text-[11px] tracking-[0.12em] uppercase w-24 md:w-44 shrink-0 truncate">{d.country}</span>
+                <div className="flex-1 h-6 md:h-9 rounded-full overflow-hidden" style={{ background: "rgba(10,10,10,0.06)" }}>
                   <div
-                    className="h-full rounded-full flex items-center justify-end pr-3"
-                    style={{ width: `${Math.max(18, (d.count / maxDest) * 100)}%`, background: C.ink }}
+                    className="h-full rounded-full flex items-center justify-end pr-2 md:pr-3"
+                    style={{ width: `${Math.max(22, (d.count / maxDest) * 100)}%`, background: C.ink }}
                   >
-                    <span className="font-mono text-[10px] md:text-[11px] font-bold tabular-nums" style={{ color: C.bg }}>
+                    <span className="font-mono text-[9px] md:text-[11px] font-bold tabular-nums" style={{ color: C.bg }}>
                       <CountUp to={d.count} />
                     </span>
                   </div>
@@ -265,7 +265,7 @@ export default function StoriesPage() {
               @aimbritz →
             </a>
           </div>
-          <div className="flex gap-3 md:gap-4 overflow-x-auto pb-3 -mx-1 px-1 items-center" style={{ scrollbarWidth: "none" }}>
+          <div className="flex gap-2.5 md:gap-4 overflow-x-auto pb-3 -mx-1 px-1 items-center" style={{ scrollbarWidth: "none" }}>
             {STORY_REELS.map((r, i) => {
               // staggered heights for an authentic IG-feed rhythm
               const tall = i % 3 === 1;
@@ -275,9 +275,9 @@ export default function StoriesPage() {
                   href={r.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="st-rev group relative flex-none overflow-hidden rounded-2xl"
+                  className="st-rev group relative flex-none overflow-hidden rounded-xl md:rounded-2xl"
                   style={{
-                    width: tall ? "min(62vw, 240px)" : "min(54vw, 200px)",
+                    width: tall ? "min(42vw, 240px)" : "min(36vw, 200px)",
                     aspectRatio: "9/16",
                     background: C.bg2,
                   }}
@@ -324,14 +324,16 @@ export default function StoriesPage() {
             })}
           </div>
 
-          <div className="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+          <div className="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-2.5 md:gap-4">
             {filtered.map((s) => (
-              <button key={s.id} onClick={() => setActive(s)} className="st-card group relative overflow-hidden rounded-2xl text-left" style={{ background: C.bg2, aspectRatio: "3/4" }}>
-                <img src={s.photo} alt={s.name} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]" />
+              <button key={s.id} onClick={() => setActive(s)} className="st-card group relative overflow-hidden rounded-xl md:rounded-2xl text-left" style={{ background: C.bg2, aspectRatio: "3/4" }}>
+                {s.photo && (
+                  <img src={s.photo} alt={s.name} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]" />
+                )}
                 <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(10,10,12,0.9) 0%, transparent 55%)" }} />
-                <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
-                  <h3 className="font-sans font-black uppercase tracking-[-0.01em] leading-tight" style={{ fontSize: "clamp(0.9rem, 1.4vw, 1.1rem)", color: "#F6F2EA" }}>{s.name}</h3>
-                  <p className="font-mono text-[9px] tracking-[0.1em] mt-1" style={{ color: "rgba(246,242,234,0.6)" }}>{s.uni}</p>
+                <div className="absolute bottom-0 left-0 right-0 p-2.5 md:p-4">
+                  <h3 className="font-sans font-black uppercase tracking-[-0.01em] leading-tight text-[13px] md:text-[clamp(0.9rem,1.4vw,1.1rem)]" style={{ color: "#F6F2EA" }}>{s.name}</h3>
+                  <p className="font-mono text-[8px] md:text-[9px] tracking-[0.1em] mt-0.5 md:mt-1" style={{ color: "rgba(246,242,234,0.6)" }}>{s.uni}</p>
                 </div>
               </button>
             ))}
@@ -359,28 +361,30 @@ export default function StoriesPage() {
       {active && (
         <div className="fixed inset-0 z-[80] flex md:items-center justify-center" onClick={() => setActive(null)}>
           <div className="absolute inset-0" style={{ background: "rgba(8,8,10,0.55)", backdropFilter: "blur(6px)" }} />
-          <div className="relative w-full md:max-w-[760px] md:mx-6 mt-auto md:mt-0 max-h-[92vh] md:max-h-[88vh] overflow-y-auto rounded-t-3xl md:rounded-3xl animate-[storyup_0.4s_cubic-bezier(0.22,1,0.36,1)]"
+          <div className="relative w-full md:max-w-[760px] md:mx-6 mt-auto md:mt-0 max-h-[85vh] md:max-h-[88vh] overflow-y-auto rounded-t-2xl md:rounded-3xl animate-[storyup_0.4s_cubic-bezier(0.22,1,0.36,1)]"
             style={{ background: C.card, border: `1px solid ${C.line}` }} onClick={(e) => e.stopPropagation()}>
-            <button onClick={() => setActive(null)} className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full flex items-center justify-center text-xl" style={{ background: "rgba(0,0,0,0.5)", color: "#F6F2EA" }} aria-label="Close">×</button>
-            <div className="grid md:grid-cols-2">
-              <div className="relative aspect-[3/4] md:aspect-auto md:h-full overflow-hidden">
-                <img src={active.photo} alt={active.name} className="absolute inset-0 w-full h-full object-cover object-top" />
-              </div>
-              <div className="p-6 md:p-8">
-                <p className="font-mono text-[10px] tracking-[0.2em] uppercase mb-3" style={{ color: C.faint }}>{active.country} · {active.year}</p>
-                <h3 className="font-sans font-black uppercase tracking-[-0.02em] leading-tight" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>{active.name}</h3>
-                <p className="mt-1 text-[14px]" style={{ color: C.muted }}>{active.course} · {active.uni}</p>
-                <blockquote className="mt-6 font-serif italic leading-snug" style={{ fontSize: "clamp(1.1rem, 2.4vw, 1.5rem)" }}>&ldquo;{active.quote}&rdquo;</blockquote>
-                <p className="mt-6 text-[14px] leading-relaxed" style={{ color: C.muted }}>{active.journey}</p>
-                <div className="mt-7 flex items-center gap-3">
-                  <div className="flex-1 rounded-xl p-3" style={{ background: C.bg2 }}>
-                    <p className="font-mono text-[8px] tracking-[0.2em] uppercase mb-1" style={{ color: C.faint }}>Before</p>
-                    <p className="text-[13px] font-semibold">{active.before}</p>
+            <button onClick={() => setActive(null)} className="absolute top-3 right-3 md:top-4 md:right-4 z-10 w-8 h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center text-lg md:text-xl" style={{ background: "rgba(0,0,0,0.5)", color: "#F6F2EA" }} aria-label="Close">×</button>
+            <div className="grid grid-cols-1 md:grid-cols-2">
+              {active.photo && (
+                <div className="relative aspect-[16/10] md:aspect-auto md:h-full overflow-hidden rounded-t-2xl md:rounded-none">
+                  <img src={active.photo} alt={active.name} className="absolute inset-0 w-full h-full object-cover" style={{ objectPosition: active.photoPosition || "top" }} />
+                </div>
+              )}
+              <div className="p-5 md:p-8">
+                <p className="font-mono text-[9px] md:text-[10px] tracking-[0.2em] uppercase mb-2 md:mb-3" style={{ color: C.faint }}>{active.country} · {active.year}</p>
+                <h3 className="font-sans font-black uppercase tracking-[-0.02em] leading-tight" style={{ fontSize: "clamp(1.3rem, 4vw, 2.2rem)" }}>{active.name}</h3>
+                <p className="mt-1 text-[13px] md:text-[14px]" style={{ color: C.muted }}>{active.course} · {active.uni}</p>
+                <blockquote className="mt-4 md:mt-6 font-serif italic leading-snug" style={{ fontSize: "clamp(1rem, 2.4vw, 1.5rem)" }}>&ldquo;{active.quote}&rdquo;</blockquote>
+                <p className="mt-4 md:mt-6 text-[13px] md:text-[14px] leading-relaxed" style={{ color: C.muted }}>{active.journey}</p>
+                <div className="mt-5 md:mt-7 flex items-center gap-2 md:gap-3">
+                  <div className="flex-1 rounded-lg md:rounded-xl p-2.5 md:p-3" style={{ background: C.bg2 }}>
+                    <p className="font-mono text-[7px] md:text-[8px] tracking-[0.2em] uppercase mb-0.5 md:mb-1" style={{ color: C.faint }}>Before</p>
+                    <p className="text-[12px] md:text-[13px] font-semibold">{active.before}</p>
                   </div>
-                  <span style={{ color: C.faint }}>→</span>
-                  <div className="flex-1 rounded-xl p-3" style={{ background: C.ink, color: C.bg }}>
-                    <p className="font-mono text-[8px] tracking-[0.2em] uppercase mb-1" style={{ color: "rgba(252,252,250,0.5)" }}>After</p>
-                    <p className="text-[13px] font-semibold">{active.after}</p>
+                  <span className="text-sm" style={{ color: C.faint }}>→</span>
+                  <div className="flex-1 rounded-lg md:rounded-xl p-2.5 md:p-3" style={{ background: C.ink, color: C.bg }}>
+                    <p className="font-mono text-[7px] md:text-[8px] tracking-[0.2em] uppercase mb-0.5 md:mb-1" style={{ color: "rgba(252,252,250,0.5)" }}>After</p>
+                    <p className="text-[12px] md:text-[13px] font-semibold">{active.after}</p>
                   </div>
                 </div>
               </div>
