@@ -182,7 +182,7 @@ export default function StoriesPage() {
                 <div key={s.id} className={`st-spot grid md:grid-cols-2 gap-6 md:gap-12 items-center ${flip ? "md:[&>*:first-child]:order-2" : ""}`}>
                   {/* photo */}
                   <div className="relative rounded-2xl overflow-hidden" style={{ aspectRatio: "4/3", background: C.bg2 }}>
-                    <img src={s.photo} alt={s.name} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover object-top" />
+                    <img src={s.photo} alt={s.name} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" style={{ objectPosition: s.photoPosition || "top" }} />
                   </div>
                   {/* story */}
                   <div>
