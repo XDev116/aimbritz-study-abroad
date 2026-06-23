@@ -80,6 +80,8 @@ sharp
 !/public/images/team/*.png
 !/public/png/*.png
 !/public/images/reels/*.jpg
+!/public/images/universties/*.jpg
+!/public/images/students/*.jpg
 
 # Temporary files
 *.tmp
