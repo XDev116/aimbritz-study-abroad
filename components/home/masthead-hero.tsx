@@ -17,11 +17,12 @@ interface Placement {
   course: string;
   year: string;
   photo: string;
+  objectPosition?: string;
 }
 
 const PLACEMENTS: Placement[] = [
   { name: "Priya Nair",   first: "Priya",  uni: "Oxford",         country: "UK",        flag: "GB", course: "MSc Computer Science", year: "'26", photo: "/images/students/student1.webp" },
-  { name: "Ahmed Khan",   first: "Ahmed",  uni: "Birmingham",     country: "UK",        flag: "GB", course: "MBA",                  year: "'26", photo: "/images/students/student2.webp" },
+  { name: "Vignesh Arumugham", first: "Vignesh", uni: "Northumbria University", country: "UK", flag: "GB", course: "MBA", year: "'26", photo: "/images/students/Vignesh Arumugham.jpg", objectPosition: "top" },
   { name: "Meera Iyer",   first: "Meera",  uni: "Toronto",        country: "Canada",    flag: "CA", course: "MS Data Science",      year: "'26", photo: "/images/students/student3.webp" },
   { name: "Arjun Das",    first: "Arjun",  uni: "Edinburgh",      country: "UK",        flag: "GB", course: "MSc Finance",          year: "'26", photo: "/images/students/student4.webp" },
   { name: "Neha Varma",   first: "Neha",   uni: "Sydney",         country: "Australia", flag: "AU", course: "BArch",                year: "'26", photo: "/images/students/student5.webp" },
@@ -57,15 +58,13 @@ export function MastheadHero() {
       ref={heroRef}
       className="relative w-full h-full overflow-hidden"
       style={{
-        paddingTop: "clamp(108px,13vh,128px)",
-        paddingBottom: "clamp(28px,4vh,56px)",
+        paddingTop: "clamp(96px,11vh,116px)",
+        paddingBottom: "clamp(20px,3vh,40px)",
       }}
     >
       <FlowLines />
 
-
-
-      <div className="relative z-10 px-5 md:px-10 lg:px-14 grid grid-cols-12 gap-6 lg:gap-8">
+      <div className="relative z-10 px-5 md:px-10 lg:px-14 grid grid-cols-12 gap-4 lg:gap-6 h-full">
         {/* LEFT column -- rotating headline */}
         <div className="col-span-12 lg:col-span-7 flex flex-col justify-between">
           <div>
@@ -150,11 +149,7 @@ export function MastheadHero() {
 
             {/* Subline */}
             <p className="h-line mt-5 max-w-md text-[14px] md:text-[15px] leading-relaxed text-ink-2">
-              {p.course}, Class of {p.year}.&nbsp;
-              <span className="text-ink-3">
-                Every three weeks, another student boards a flight. This is
-                the one rotating above.
-              </span>
+              {p.course}, Class of {p.year}.
             </p>
 
             {/* CTAs — hidden on mobile to save vertical space */}
@@ -166,7 +161,7 @@ export function MastheadHero() {
 
           {/* Meta strip */}
           <div
-            className="mt-6 pt-4 border-t flex flex-wrap gap-x-8 gap-y-2"
+            className="mt-4 pt-3 border-t flex flex-wrap gap-x-8 gap-y-2"
             style={{ borderColor: "var(--hairline)" }}
           >
             {(
@@ -187,13 +182,13 @@ export function MastheadHero() {
           </div>
         </div>
 
-        {/* RIGHT column -- cinematic portrait + mini grid */}
-        <div className="col-span-12 lg:col-span-5 relative flex flex-col">
+        {/* RIGHT column -- cinematic portrait */}
+        <div className="col-span-12 lg:col-span-5 relative flex flex-col lg:h-full">
           {/* Big portrait / film frame */}
           <div
-            className="h-frame relative overflow-hidden lg:flex-1 lg:min-h-0"
+            className="h-frame relative overflow-hidden flex-1 min-h-0"
             style={{
-              aspectRatio: "4/3",
+              minHeight: "clamp(280px, 55vh, 540px)",
               background: "var(--paper-3)",
               border: "1px solid var(--hairline)",
             }}
@@ -211,12 +206,13 @@ export function MastheadHero() {
                 alt={p.name}
                 fill
                 className="object-cover"
+                style={{ objectPosition: p.objectPosition ?? "center" }}
               />
               <div
                 className="absolute inset-0"
                 style={{
                   background:
-                    "linear-gradient(180deg, transparent 45%, rgba(17,17,19,0.75) 100%)",
+                    "linear-gradient(180deg, transparent 35%, rgba(10,10,10,0.55) 100%)",
                 }}
               />
 
@@ -237,37 +233,37 @@ export function MastheadHero() {
 
               {/* Caption card */}
               <div
-                className="absolute left-4 right-4 bottom-4 p-4 flex items-end justify-between"
+                className="absolute left-0 right-0 bottom-0 px-4 py-4 flex items-end justify-between"
                 style={{
-                  background: "rgba(248,244,235,0.92)",
-                  backdropFilter: "blur(6px)",
+                  background: "linear-gradient(0deg, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.4) 70%, transparent 100%)",
+                  backdropFilter: "blur(2px)",
                 }}
               >
                 <div>
                   <span
                     className="inline-flex items-center gap-2 px-3 py-1 rounded-full font-mono text-[10px] tracking-[0.22em] uppercase font-bold"
-                    style={{ background: "var(--ember)", color: "var(--ink)" }}
+                    style={{ background: "rgba(255,255,255,0.12)", color: "var(--paper)", border: "1px solid rgba(255,255,255,0.2)" }}
                   >
                     <span
                       className="font-mono font-bold text-[9px] tracking-[0.18em] px-1 py-0.5 rounded"
-                      style={{ background: "var(--ink)", color: "var(--ember)" }}
+                      style={{ background: "var(--ember)", color: "var(--ink)" }}
                     >
                       {p.flag}
                     </span>
                     {p.country}
                   </span>
-                  <p className="font-sans font-black text-[22px] tracking-[-0.02em] mt-2 uppercase">
+                  <p className="font-sans font-black text-[22px] tracking-[-0.02em] mt-2 uppercase" style={{ color: "var(--paper)" }}>
                     {p.name}
                   </p>
-                  <p className="text-[12px] text-ink-3 mt-0.5">
+                  <p className="text-[12px] mt-0.5" style={{ color: "rgba(252,252,250,0.6)" }}>
                     {p.course}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="font-mono text-[10px] tracking-[0.22em] text-ink-3 uppercase">
+                  <p className="font-mono text-[10px] tracking-[0.22em] uppercase" style={{ color: "rgba(252,252,250,0.5)" }}>
                     Class of
                   </p>
-                  <p className="font-sans font-black text-[24px]">
+                  <p className="font-sans font-black text-[24px]" style={{ color: "var(--paper)" }}>
                     {p.year}
                   </p>
                 </div>
@@ -275,61 +271,6 @@ export function MastheadHero() {
             </div>
           </div>
 
-          {/* Mini strip of other students */}
-          <div className="mt-2 grid grid-cols-6 gap-1.5 shrink-0">
-            {PLACEMENTS.map((pl, i) => {
-              const isActive = i === (hoverIdx ?? active);
-              return (
-                <button
-                  key={pl.name}
-                  type="button"
-                  onMouseEnter={() => setHoverIdx(i)}
-                  onMouseLeave={() => setHoverIdx(null)}
-                  onFocus={() => setHoverIdx(i)}
-                  aria-label={`${pl.name} at ${pl.uni}`}
-                  className="h-port relative aspect-[3/4] overflow-hidden focus:outline-none"
-                  style={{ border: "1px solid var(--hairline)" }}
-                >
-                  <Image
-                    src={pl.photo}
-                    alt=""
-                    fill
-                    className="object-cover transition-all duration-700"
-                    style={{
-                      filter: isActive
-                        ? "grayscale(0) contrast(1.05)"
-                        : "grayscale(1) contrast(1.08)",
-                      opacity: isActive ? 1 : 0.65,
-                      transform: isActive ? "scale(1.04)" : "scale(1)",
-                    }}
-                  />
-                  <span
-                    className="absolute bottom-1 left-1 font-mono text-[8px] font-bold tracking-[0.2em]"
-                    style={{
-                      color: isActive ? "var(--paper)" : "var(--ink)",
-                    }}
-                  >
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span
-                    className="absolute bottom-0 left-0 h-[2px] origin-left transition-transform"
-                    style={{
-                      background: "var(--ember)",
-                      width: "100%",
-                      transform: isActive ? "scaleX(1)" : "scaleX(0)",
-                      transitionDuration: isActive ? "3500ms" : "180ms",
-                      transitionTimingFunction: "linear",
-                    }}
-                  />
-                </button>
-              );
-            })}
-          </div>
-
-          <p className="mt-2 flex items-center justify-between font-mono text-[10px] tracking-[0.25em] uppercase text-ink-3 shrink-0">
-            <span>Hover to pin frame</span>
-            <span>Auto-cycle &middot; 4s</span>
-          </p>
         </div>
       </div>
 

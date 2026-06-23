@@ -164,7 +164,7 @@ export function Header() {
                   >
                     Destinations · 14
                   </span>
-                  <h3 className="mt-4 font-serif italic text-4xl leading-tight">Where will the next<br />year take you?</h3>
+                  <h3 className="mt-4 font-serif italic text-4xl leading-tight">Where will next<br />year take you?</h3>
                 </div>
                 <div className="col-span-8 grid grid-cols-3 gap-x-8 gap-y-3">
                   {COUNTRIES.map((c) => (
