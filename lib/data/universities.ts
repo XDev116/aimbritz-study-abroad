@@ -1867,6 +1867,230 @@ export const universities: University[] = [
       "International Experience Awards",
       "Graduate Research Studentships"
     ]
+  },
+  {
+    id: "25",
+    name: "Trinity College Dublin",
+    slug: "trinity-dublin",
+    country: "Ireland",
+    countryCode: "IE",
+    city: "Dublin",
+    description: "Trinity College Dublin is Ireland's oldest and most prestigious university, founded in 1592. Consistently ranked in the world's top 100, Trinity is renowned for its historic campus in the heart of Dublin, its research excellence, and strong programs in computer science, business, law, and the humanities.",
+    logo: "🏛️",
+    ranking: 81,
+    website: "https://www.tcd.ie",
+    established: 1592,
+    type: "Public",
+    courses: [
+      {
+        id: "trinity-1",
+        name: "Computer Science",
+        degree: "Bachelor",
+        duration: "4 years",
+        tuitionFee: 25956,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "trinity-2",
+        name: "MBA",
+        degree: "Master",
+        duration: "1 year",
+        tuitionFee: 34950,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "trinity-3",
+        name: "Law (LL.B)",
+        degree: "Bachelor",
+        duration: "4 years",
+        tuitionFee: 21680,
+        currency: "EUR",
+        intakeDates: ["September"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "High school diploma with competitive grades",
+        "English proficiency: IELTS 6.5+ or TOEFL 90+",
+        "Academic transcripts",
+        "Personal statement",
+        "Application through CAO or direct"
+      ],
+      master: [
+        "Bachelor's degree with 2:1 honours or equivalent",
+        "IELTS 6.5+ or TOEFL 90+",
+        "GMAT for MBA applicants",
+        "Statement of purpose",
+        "Two academic references",
+        "CV"
+      ],
+      phd: [
+        "Master's degree with strong academic record",
+        "Research proposal",
+        "English proficiency",
+        "Academic references",
+        "Supervisor agreement"
+      ]
+    },
+    campusLife: "Trinity's iconic campus sits in the centre of Dublin, home to the famous Book of Kells and the Long Room library. Students enjoy a vibrant social scene with 170+ societies and 50+ sports clubs. Dublin offers a thriving tech hub (Google, Meta, and Stripe have European HQs here), excellent nightlife, and easy access to Ireland's stunning coastline.",
+    scholarships: [
+      "Trinity Global Scholarships",
+      "Provost's PhD Project Awards",
+      "Government of Ireland Scholarships",
+      "Science Foundation Ireland funding",
+      "Erasmus+ for European students"
+    ]
+  },
+  {
+    id: "26",
+    name: "University College Dublin",
+    slug: "ucd",
+    country: "Ireland",
+    countryCode: "IE",
+    city: "Dublin",
+    description: "University College Dublin (UCD) is Ireland's largest university and a member of the prestigious Universitas 21 network. With a modern parkland campus in south Dublin, UCD is known for its strong business school (Smurfit), engineering programs, and global outlook — over 30% of its students are international, from 139 countries.",
+    logo: "🎓",
+    ranking: 126,
+    website: "https://www.ucd.ie",
+    established: 1854,
+    type: "Public",
+    courses: [
+      {
+        id: "ucd-1",
+        name: "Business & Management",
+        degree: "Bachelor",
+        duration: "4 years",
+        tuitionFee: 20480,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "ucd-2",
+        name: "Data & Computational Science",
+        degree: "Master",
+        duration: "1 year",
+        tuitionFee: 24800,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "ucd-3",
+        name: "Biomedical Engineering",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 26400,
+        currency: "EUR",
+        intakeDates: ["September"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "High school diploma with strong grades",
+        "English proficiency: IELTS 6.5+ or TOEFL 90+",
+        "Academic transcripts",
+        "Personal statement",
+        "Application through CAO or direct international application"
+      ],
+      master: [
+        "Bachelor's degree with upper second class honours or equivalent",
+        "IELTS 6.5+ or TOEFL 90+",
+        "GMAT for Smurfit MBA applicants",
+        "Statement of purpose",
+        "Two references",
+        "CV"
+      ],
+      phd: [
+        "Master's degree with strong academic record",
+        "Research proposal",
+        "English proficiency",
+        "Academic references",
+        "Interview"
+      ]
+    },
+    campusLife: "UCD's 133-hectare Belfield campus is one of the largest in Europe, featuring modern residences, sports facilities, and a student centre. Located in leafy south Dublin, it offers easy access to the city centre. UCD has 100+ clubs and societies, a strong international community, and is adjacent to many multinational companies in Dublin's tech corridor.",
+    scholarships: [
+      "UCD Global Excellence Scholarship (up to full fees)",
+      "Ad Astra Academic Scholarships",
+      "UCD Smurfit School Scholarships",
+      "Government of Ireland Scholarships",
+      "Sport and artistic achievement awards"
+    ]
+  },
+  {
+    id: "27",
+    name: "University of Galway",
+    slug: "galway",
+    country: "Ireland",
+    countryCode: "IE",
+    city: "Galway",
+    description: "University of Galway (formerly NUI Galway) is a research-led university on Ireland's Atlantic coast, known for its strengths in biomedical science, engineering, marine science, and the arts. With a welcoming campus on the banks of the River Corrib, it combines academic rigour with the cultural charm of Galway — Europe's Capital of Culture.",
+    logo: "🌊",
+    ranking: 259,
+    website: "https://www.universityofgalway.ie",
+    established: 1845,
+    type: "Public",
+    courses: [
+      {
+        id: "galway-1",
+        name: "Biomedical Engineering",
+        degree: "Bachelor",
+        duration: "4 years",
+        tuitionFee: 18500,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "galway-2",
+        name: "Marine Science",
+        degree: "Master",
+        duration: "1 year",
+        tuitionFee: 16800,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "galway-3",
+        name: "Data Analytics",
+        degree: "Master",
+        duration: "1 year",
+        tuitionFee: 18700,
+        currency: "EUR",
+        intakeDates: ["September"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "High school diploma with good grades",
+        "English proficiency: IELTS 6.0+ or TOEFL 80+",
+        "Academic transcripts",
+        "Personal statement",
+        "Application via CAO or direct"
+      ],
+      master: [
+        "Bachelor's degree with second class honours or equivalent",
+        "IELTS 6.5+ or TOEFL 88+",
+        "Statement of purpose",
+        "Two academic references",
+        "CV"
+      ],
+      phd: [
+        "Master's degree with strong academic record",
+        "Research proposal",
+        "English proficiency",
+        "Academic references",
+        "Supervisor match"
+      ]
+    },
+    campusLife: "University of Galway's riverside campus blends historic limestone buildings with modern research facilities. Galway city is famed for its arts festivals, traditional music scene, and friendly atmosphere. Students enjoy a tight-knit community, 100+ clubs and societies, and easy access to the Wild Atlantic Way, the Aran Islands, and Connemara.",
+    scholarships: [
+      "University of Galway International Student Scholarship",
+      "Hardiman Research Scholarships (PhD)",
+      "Government of Ireland Scholarships",
+      "Science Foundation Ireland funding",
+      "Faculty-specific merit awards"
+    ]
   }
 ];
 
