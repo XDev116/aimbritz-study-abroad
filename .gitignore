@@ -73,7 +73,6 @@ sharp
 # Original uncompressed images (keep only optimized .webp versions)
 /public/**/*.png
 /public/**/*.jpg
-/public/**/*.jpeg
 !/public/professor3d/*.png
 !/public/images/universties/*.png
 !/public/images/Partnering Universities/*.png
