@@ -2,6 +2,7 @@
 
 import { useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -169,12 +170,15 @@ export function CtaBold() {
       >
         {/* Brand column */}
         <div className="col-span-12 md:col-span-4">
-          <span className="font-sans font-black text-2xl">
-            aimbritz
-            <span style={{ color: "var(--ember)" }}>.</span>
-          </span>
+          <Image
+            src="/logo/logo-full-white.png"
+            alt="AimBritz — a dream that you can build with us"
+            width={673}
+            height={279}
+            className="h-16 md:h-20 w-auto object-contain object-left"
+          />
           <p
-            className="mt-4 text-[13px] leading-relaxed"
+            className="mt-5 text-[13px] leading-relaxed"
             style={{ color: "rgba(248,244,235,0.55)" }}
           >
             Study abroad consultancy &middot; Since 2020. Guiding students into

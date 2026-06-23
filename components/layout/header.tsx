@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const COUNTRIES = [
@@ -25,6 +26,7 @@ const SERVICES = [
 ];
 
 export function Header() {
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [drawer, setDrawer] = useState<"explore" | "services" | null>(null);
   const [menu, setMenu] = useState(false);
@@ -80,14 +82,14 @@ export function Header() {
               borderColor: "var(--hairline)",
             }}
           >
-            {/* Logo */}
-            <Link href="/" className="flex items-center">
+            {/* Logo — Big Ben + compass icon only (compact, no wide wordmark) */}
+            <Link href="/" className="flex items-center" aria-label="AimBritz home">
               <Image
-                src="/logo/aimbritz-logo-transparent.png"
+                src="/logo/logo-icon.png"
                 alt="AimBritz"
-                width={140}
-                height={32}
-                className="h-8 w-auto object-contain"
+                width={44}
+                height={75}
+                className="h-10 md:h-11 w-auto object-contain"
                 priority
               />
             </Link>
@@ -99,18 +101,39 @@ export function Header() {
                 { name: "Services", key: "services" as const, href: "/services" },
                 { name: "Stories", key: null, href: "/stories" },
                 { name: "About", key: null, href: "/about" },
-              ].map((item) => (
-                <button
-                  key={item.name}
-                  onMouseEnter={() => setDrawer(item.key)}
-                  onClick={() => { if (!item.key) window.location.href = item.href; }}
-                  className="relative px-4 py-2 text-[11px] font-bold uppercase tracking-[0.14em] hover:text-ember transition-colors group"
-                >
-                  {item.name}
-                  {item.key && <span className="ml-1 text-[8px] opacity-60">↓</span>}
-                  <span className="absolute bottom-0 left-3 right-3 h-px scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500" style={{ background: "var(--ember)" }} />
-                </button>
-              ))}
+              ].map((item) => {
+                const cls =
+                  "relative px-4 py-2 text-[11px] font-bold uppercase tracking-[0.14em] hover:text-ember transition-colors group";
+                const underline = (
+                  <span
+                    className="absolute bottom-0 left-3 right-3 h-px scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500"
+                    style={{ background: "var(--ember)" }}
+                  />
+                );
+                // Items with a mega-drawer keep the button (for hover); navigate via
+                // router.push so it's client-side, not a full reload.
+                if (item.key) {
+                  return (
+                    <button
+                      key={item.name}
+                      onMouseEnter={() => setDrawer(item.key)}
+                      onClick={() => router.push(item.href)}
+                      className={cls}
+                    >
+                      {item.name}
+                      <span className="ml-1 text-[8px] opacity-60">↓</span>
+                      {underline}
+                    </button>
+                  );
+                }
+                // Plain items → real Next.js Link (instant client nav, prefetch)
+                return (
+                  <Link key={item.name} href={item.href} onMouseEnter={() => setDrawer(null)} className={cls}>
+                    {item.name}
+                    {underline}
+                  </Link>
+                );
+              })}
             </div>
 
             {/* Right CTAs */}
@@ -213,9 +236,15 @@ export function Header() {
               <Image src="/logo/aimbritz-logo-transparent.png" alt="AimBritz" width={120} height={28} className="h-7 w-auto" />
               <button onClick={() => setMenu(false)} className="text-2xl" aria-label="Close">×</button>
             </div>
-            {["Explore", "Services", "Stories", "About", "Contact"].map((n) => (
-              <Link key={n} href={`/${n.toLowerCase()}`} onClick={() => setMenu(false)} className="block py-3 border-b font-serif italic text-3xl" style={{ borderColor: "var(--hairline)" }}>
-                {n}
+            {[
+              { name: "Explore", href: "/countries" },
+              { name: "Services", href: "/services" },
+              { name: "Stories", href: "/stories" },
+              { name: "About", href: "/about" },
+              { name: "Contact", href: "/contact" },
+            ].map((item) => (
+              <Link key={item.name} href={item.href} onClick={() => setMenu(false)} className="block py-3 border-b font-serif italic text-3xl" style={{ borderColor: "var(--hairline)" }}>
+                {item.name}
               </Link>
             ))}
             <div className="mt-8 space-y-3">
