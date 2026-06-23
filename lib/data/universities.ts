@@ -2091,6 +2091,231 @@ export const universities: University[] = [
       "Science Foundation Ireland funding",
       "Faculty-specific merit awards"
     ]
+  },
+  {
+    id: "28",
+    name: "Technical University of Munich",
+    slug: "tu-munich",
+    country: "Germany",
+    countryCode: "DE",
+    city: "Munich",
+    description: "The Technical University of Munich (TUM) is Germany's top-ranked technical university and one of Europe's leading research institutions. A member of the TU9, Germany's alliance of premier technical universities, TUM excels in engineering, computer science, natural sciences, and management. Most master's programs are tuition-free for international students.",
+    logo: "⚙️",
+    ranking: 37,
+    website: "https://www.tum.de",
+    established: 1868,
+    type: "Public",
+    courses: [
+      {
+        id: "tum-1",
+        name: "Informatics (Computer Science)",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 0,
+        currency: "EUR",
+        intakeDates: ["October", "April"]
+      },
+      {
+        id: "tum-2",
+        name: "Automotive Engineering",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 0,
+        currency: "EUR",
+        intakeDates: ["October"]
+      },
+      {
+        id: "tum-3",
+        name: "Management & Technology",
+        degree: "Bachelor",
+        duration: "3 years",
+        tuitionFee: 0,
+        currency: "EUR",
+        intakeDates: ["October"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "Hochschulzugangsberechtigung or equivalent (13 years of schooling)",
+        "Subject-specific aptitude test for some programs",
+        "German proficiency: DSH-2 or TestDaF 4x4 for German-taught programs",
+        "English proficiency: IELTS 6.5+ for English-taught programs",
+        "Motivation letter and CV"
+      ],
+      master: [
+        "Bachelor's degree in a related field with strong grades",
+        "English proficiency: IELTS 6.5+ or TOEFL 88+",
+        "GRE recommended for select programs",
+        "Statement of purpose",
+        "Two references",
+        "CV with relevant experience"
+      ],
+      phd: [
+        "Master's degree with excellent grades",
+        "Research proposal",
+        "Supervisor agreement at TUM",
+        "English or German proficiency",
+        "Academic references"
+      ]
+    },
+    campusLife: "TUM's campuses are spread across Munich, Garching, and Freising. Munich is consistently ranked among the world's most liveable cities, offering a blend of Bavarian tradition and modern innovation. Students enjoy proximity to the Alps for skiing and hiking, a thriving startup scene, world-class museums, and Munich's famous beer gardens and cultural festivals.",
+    scholarships: [
+      "Deutschlandstipendium (€300/month)",
+      "DAAD Scholarships for international students",
+      "TUM Global Diversity Scholarship",
+      "Bavarian State Ministry funding",
+      "TUM research assistantships"
+    ]
+  },
+  {
+    id: "29",
+    name: "Ludwig Maximilian University of Munich",
+    slug: "lmu-munich",
+    country: "Germany",
+    countryCode: "DE",
+    city: "Munich",
+    description: "Ludwig Maximilian University of Munich (LMU) is one of Europe's oldest and most prestigious universities, consistently ranked among the world's top 50. Founded in 1472, LMU is a leading research university with particular strengths in medicine, law, economics, humanities, and natural sciences. It is one of Germany's eleven Universities of Excellence.",
+    logo: "🏛️",
+    ranking: 38,
+    website: "https://www.lmu.de",
+    established: 1472,
+    type: "Public",
+    courses: [
+      {
+        id: "lmu-1",
+        name: "Economics",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 0,
+        currency: "EUR",
+        intakeDates: ["October"]
+      },
+      {
+        id: "lmu-2",
+        name: "Data Science",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 0,
+        currency: "EUR",
+        intakeDates: ["October"]
+      },
+      {
+        id: "lmu-3",
+        name: "Medicine",
+        degree: "Bachelor",
+        duration: "6 years",
+        tuitionFee: 0,
+        currency: "EUR",
+        intakeDates: ["October"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "Hochschulzugangsberechtigung or equivalent",
+        "German proficiency: DSH-2 or TestDaF 4x4 for most programs",
+        "English proficiency: IELTS 6.5+ for English-taught programs",
+        "Subject-specific entrance requirements",
+        "Motivation letter"
+      ],
+      master: [
+        "Bachelor's degree in a related field with good grades",
+        "English proficiency: IELTS 6.5+ or TOEFL 88+",
+        "German proficiency for German-taught programs",
+        "Statement of purpose",
+        "Two academic references",
+        "CV"
+      ],
+      phd: [
+        "Master's degree with distinction",
+        "Research proposal",
+        "Supervisor agreement",
+        "English or German proficiency",
+        "Academic references"
+      ]
+    },
+    campusLife: "LMU's main campus is located in the heart of Munich's city centre, with additional institutes and clinics throughout the city. Students benefit from Munich's exceptional quality of life, a strong research ecosystem, and vibrant student culture. LMU offers 150+ student organizations, modern libraries, and access to Munich's world-class cultural and sporting facilities.",
+    scholarships: [
+      "Deutschlandstipendium (€300/month)",
+      "DAAD Scholarships",
+      "LMU Munich Excellence Scholarship",
+      "Bavarian State Scholarships",
+      "Erasmus+ for European students"
+    ]
+  },
+  {
+    id: "30",
+    name: "RWTH Aachen University",
+    slug: "rwth-aachen",
+    country: "Germany",
+    countryCode: "DE",
+    city: "Aachen",
+    description: "RWTH Aachen University is one of Europe's leading technical universities and Germany's largest university of technology. A founding member of the IDEA League and TU9, RWTH is globally renowned for its engineering, technology, and natural sciences programs. The university has strong industry partnerships with companies like Siemens, Ford, and Ericsson.",
+    logo: "🔧",
+    ranking: 90,
+    website: "https://www.rwth-aachen.de",
+    established: 1870,
+    type: "Public",
+    courses: [
+      {
+        id: "rwth-1",
+        name: "Mechanical Engineering",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 0,
+        currency: "EUR",
+        intakeDates: ["October", "April"]
+      },
+      {
+        id: "rwth-2",
+        name: "Electrical Engineering",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 0,
+        currency: "EUR",
+        intakeDates: ["October"]
+      },
+      {
+        id: "rwth-3",
+        name: "Computer Science",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 0,
+        currency: "EUR",
+        intakeDates: ["October", "April"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "Hochschulzugangsberechtigung or equivalent",
+        "German proficiency: DSH-2 or TestDaF 4x4",
+        "Mathematics aptitude for engineering programs",
+        "Academic transcripts",
+        "Motivation letter"
+      ],
+      master: [
+        "Bachelor's degree in a related field with good grades",
+        "English proficiency: IELTS 6.5+ or TOEFL 90+ for English-taught programs",
+        "German proficiency for German-taught programs",
+        "Statement of purpose",
+        "Two references",
+        "CV"
+      ],
+      phd: [
+        "Master's degree with excellent grades",
+        "Research proposal",
+        "Supervisor agreement",
+        "English or German proficiency",
+        "Academic references"
+      ]
+    },
+    campusLife: "RWTH Aachen's campus is integrated into the city of Aachen, a charming university city near the borders of Belgium and the Netherlands. Students enjoy an affordable cost of living, a strong engineering community, and access to Europe's largest technology campus. Aachen offers a lively student scene with cafés, pubs, and easy weekend travel to Brussels, Cologne, and Amsterdam.",
+    scholarships: [
+      "Deutschlandstipendium (€300/month)",
+      "DAAD Scholarships for international students",
+      "RWTH Scholarship Program",
+      "Erasmus+ for European students",
+      "Industry-sponsored research funding"
+    ]
   }
 ];
 
