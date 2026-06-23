@@ -1,10 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowRight, CheckCircle, DollarSign, FileText, GraduationCap, Home } from "lucide-react";
-import { countries, getAllCountrySlugs, getCountryBySlug } from "@/lib/data/countries";
+import { ArrowRight } from "lucide-react";
+import { getAllCountrySlugs, getCountryBySlug } from "@/lib/data/countries";
 import { getUniversitiesByCountry } from "@/lib/data/universities";
 
 interface CountryPageProps {
@@ -14,23 +12,15 @@ interface CountryPageProps {
 }
 
 export async function generateStaticParams() {
-  return getAllCountrySlugs().map((slug) => ({
-    slug,
-  }));
+  return getAllCountrySlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: CountryPageProps): Promise<Metadata> {
   const { slug } = await params;
   const country = getCountryBySlug(slug);
-
-  if (!country) {
-    return {
-      title: "Country Not Found",
-    };
-  }
-
+  if (!country) return { title: "Country Not Found" };
   return {
-    title: `Study in ${country.name}`,
+    title: `Study in ${country.name} | AimBritz`,
     description: country.description,
   };
 }
@@ -38,226 +28,309 @@ export async function generateMetadata({ params }: CountryPageProps): Promise<Me
 export default async function CountryPage({ params }: CountryPageProps) {
   const { slug } = await params;
   const country = getCountryBySlug(slug);
-
-  if (!country) {
-    notFound();
-  }
+  if (!country) notFound();
 
   const universities = getUniversitiesByCountry(country.code);
 
   return (
-    <div className="container mx-auto px-6 py-12 lg:px-8">
-      {/* Breadcrumb */}
-      <nav className="mb-8 text-sm text-muted-foreground">
-        <Link href="/" className="hover:text-primary">Home</Link>
-        {" / "}
-        <Link href="/countries" className="hover:text-primary">Countries</Link>
-        {" / "}
-        <span className="text-foreground">{country.name}</span>
-      </nav>
+    <div style={{ background: "#0E0E10", color: "#F6F2EA", minHeight: "100vh" }}>
+      <style>{`:root { --flow-color: rgba(246,242,234,0.18); }`}</style>
 
-      {/* Header */}
-      <div className="mb-12">
-        <div className="text-6xl mb-4">{country.flag}</div>
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-4">
-          Study in {country.name}
+      {/* ── Hero ── */}
+      <div
+        className="max-w-[1280px] mx-auto px-5 md:px-8"
+        style={{ paddingTop: "clamp(72px,9vw,130px)", paddingBottom: "clamp(48px,6vw,80px)" }}
+      >
+        {/* Breadcrumb eyebrow */}
+        <div className="flex items-center gap-3 mb-5">
+          <span
+            className="font-mono font-bold text-[10px] tracking-[0.18em] px-1.5 py-0.5"
+            style={{ background: "#F6F2EA", color: "#0E0E10" }}
+          >
+            {country.code}
+          </span>
+          <nav className="font-mono text-[10px] tracking-[0.25em] uppercase" style={{ color: "rgba(246,242,234,0.35)" }}>
+            <Link href="/" className="hover:opacity-70 transition-opacity">Home</Link>
+            <span className="mx-2">/</span>
+            <Link href="/countries" className="hover:opacity-70 transition-opacity">Countries</Link>
+            <span className="mx-2">/</span>
+            <span style={{ color: "rgba(246,242,234,0.6)" }}>{country.name}</span>
+          </nav>
+        </div>
+
+        <h1
+          className="font-sans font-black uppercase tracking-[-0.03em] leading-[0.9] mb-6"
+          style={{ fontSize: "clamp(2.8rem,7vw,6rem)", color: "#F6F2EA" }}
+        >
+          Study in{" "}
+          <span className="font-serif italic font-normal" style={{ color: "rgba(246,242,234,0.45)" }}>
+            {country.name}
+          </span>
         </h1>
-        <p className="text-xl text-muted-foreground">
+        <p
+          className="font-sans max-w-2xl"
+          style={{ fontSize: "clamp(1rem,1.2vw,1.15rem)", lineHeight: 1.6, color: "rgba(246,242,234,0.45)" }}
+        >
           {country.description}
         </p>
       </div>
 
-      {/* Quick Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-muted-foreground">Universities</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{country.universitiesCount}+</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-muted-foreground">Programs</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">1000+</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-muted-foreground">Intakes</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">2-3/Year</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm text-muted-foreground">Work Rights</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">Yes</div>
-          </CardContent>
-        </Card>
+      {/* ── Stats Bar ── */}
+      <div className="max-w-[1280px] mx-auto px-5 md:px-8 pb-20">
+        <div
+          className="grid grid-cols-2 md:grid-cols-4 text-center"
+          style={{ border: "1px solid rgba(246,242,234,0.08)" }}
+        >
+          {([
+            [String(country.universitiesCount) + "+", "Universities"],
+            ["1000+", "Programs"],
+            ["2–3/yr", "Intakes"],
+            ["Yes", "Work Rights"],
+          ] as const).map(([val, label], i) => (
+            <div
+              key={label}
+              className="py-10 px-4"
+              style={{
+                borderRight: i < 3 ? "1px solid rgba(246,242,234,0.08)" : undefined,
+                borderBottom: i < 2 ? "1px solid rgba(246,242,234,0.08)" : undefined,
+              }}
+            >
+              <p
+                className="font-sans font-black tabular-nums leading-none mb-2"
+                style={{ fontSize: "clamp(1.8rem,3.5vw,3rem)", color: "#ffffff" }}
+              >
+                {val}
+              </p>
+              <p className="font-mono text-[10px] tracking-[0.28em] uppercase" style={{ color: "rgba(246,242,234,0.35)" }}>
+                {label}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-        {/* Main Content */}
-        <div className="lg:col-span-2 space-y-12">
-          {/* Why Study Here */}
-          <section>
-            <div className="flex items-center gap-2 mb-6">
-              <GraduationCap className="h-6 w-6 text-primary" />
-              <h2 className="text-3xl font-bold">Why Study in {country.name}?</h2>
-            </div>
-            <div className="space-y-3">
+      {/* ── Why Study Here + Visa/Cost ── */}
+      <div className="max-w-[1280px] mx-auto px-5 md:px-8 pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          {/* Left — Benefits */}
+          <div>
+            <p className="font-mono text-[10px] tracking-[0.32em] uppercase mb-3" style={{ color: "rgba(246,242,234,0.35)" }}>
+              Why choose {country.name}
+            </p>
+            <h2
+              className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92] mb-8"
+              style={{ fontSize: "clamp(1.8rem,3.5vw,2.8rem)", color: "#F6F2EA" }}
+            >
+              Key{" "}
+              <span className="font-serif italic font-normal" style={{ color: "rgba(246,242,234,0.4)" }}>
+                Benefits
+              </span>
+            </h2>
+            <ul className="flex flex-col gap-3">
               {country.benefits.map((benefit, idx) => (
-                <div key={idx} className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                  <p className="text-muted-foreground">{benefit}</p>
-                </div>
+                <li key={idx} className="flex items-start gap-3">
+                  <span
+                    className="shrink-0 mt-[7px]"
+                    style={{ width: 4, height: 4, background: "rgba(246,242,234,0.35)", display: "inline-block" }}
+                  />
+                  <span className="font-mono text-[11px] tracking-[0.06em] leading-relaxed" style={{ color: "rgba(246,242,234,0.5)" }}>
+                    {benefit}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Right — Visa + Cost */}
+          <div className="grid grid-cols-1 gap-px" style={{ background: "rgba(246,242,234,0.07)", alignSelf: "start" }}>
+            <div className="p-8" style={{ background: "#0E0E10" }}>
+              <p className="font-mono text-[10px] tracking-[0.28em] uppercase mb-3" style={{ color: "rgba(246,242,234,0.35)" }}>
+                Visa information
+              </p>
+              <p className="font-sans text-sm leading-relaxed" style={{ color: "rgba(246,242,234,0.45)" }}>
+                {country.visaInfo}
+              </p>
+            </div>
+            <div className="p-8" style={{ background: "#0E0E10" }}>
+              <p className="font-mono text-[10px] tracking-[0.28em] uppercase mb-3" style={{ color: "rgba(246,242,234,0.35)" }}>
+                Cost of living
+              </p>
+              <p className="font-sans text-sm leading-relaxed" style={{ color: "rgba(246,242,234,0.45)" }}>
+                {country.costOfLiving}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Universities ── */}
+      {universities.length > 0 && (
+        <div style={{ background: "#111113", borderTop: "1px solid rgba(246,242,234,0.06)", borderBottom: "1px solid rgba(246,242,234,0.06)" }}>
+          <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-20">
+            <div className="mb-10">
+              <p className="font-mono text-[10px] tracking-[0.32em] uppercase mb-3" style={{ color: "rgba(246,242,234,0.35)" }}>
+                Our partner universities
+              </p>
+              <h2
+                className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92]"
+                style={{ fontSize: "clamp(2rem,4vw,3.5rem)", color: "#F6F2EA" }}
+              >
+                Top{" "}
+                <span className="font-serif italic font-normal" style={{ color: "rgba(246,242,234,0.4)" }}>
+                  Universities
+                </span>
+              </h2>
+            </div>
+
+            <div
+              className="grid grid-cols-1 md:grid-cols-2 gap-px"
+              style={{ background: "rgba(246,242,234,0.07)" }}
+            >
+              {universities.map((uni, idx) => (
+                <Link
+                  key={uni.id}
+                  href={`/universities/${uni.slug}`}
+                  className="group flex flex-col gap-4 p-8 transition-colors duration-300"
+                  style={{ background: "#111113" }}
+                >
+                  {/* Number + ranking */}
+                  <div className="flex items-start justify-between">
+                    <span
+                      className="font-mono text-[10px] tracking-[0.28em] tabular-nums"
+                      style={{ color: "rgba(246,242,234,0.2)" }}
+                    >
+                      {String(idx + 1).padStart(2, "0")}
+                    </span>
+                    {uni.ranking > 0 && (
+                      <span
+                        className="font-mono text-[9px] tracking-[0.22em] uppercase px-2 py-0.5"
+                        style={{ border: "1px solid rgba(246,242,234,0.15)", color: "rgba(246,242,234,0.5)" }}
+                      >
+                        #{uni.ranking}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Name + city */}
+                  <div>
+                    <h3
+                      className="font-sans font-black uppercase tracking-[-0.02em] mb-1 group-hover:text-[#C2410C] transition-colors"
+                      style={{ fontSize: "clamp(1.1rem,1.6vw,1.35rem)", color: "#F6F2EA" }}
+                    >
+                      {uni.name}
+                    </h3>
+                    <p className="font-mono text-[10px] tracking-[0.18em] uppercase" style={{ color: "rgba(246,242,234,0.35)" }}>
+                      {uni.city} &middot; {uni.type}
+                    </p>
+                  </div>
+
+                  {/* Description */}
+                  <p className="font-sans text-sm leading-relaxed" style={{ color: "rgba(246,242,234,0.4)" }}>
+                    {uni.description.length > 120 ? uni.description.substring(0, 120) + "..." : uni.description}
+                  </p>
+
+                  {/* Course pills */}
+                  <div className="flex flex-wrap gap-1.5 mt-auto">
+                    {uni.courses.slice(0, 3).map((course) => (
+                      <span
+                        key={course.id}
+                        className="font-mono text-[9px] tracking-[0.18em] uppercase px-2 py-0.5"
+                        style={{ border: "1px solid rgba(246,242,234,0.15)", color: "rgba(246,242,234,0.6)" }}
+                      >
+                        {course.name}
+                      </span>
+                    ))}
+                  </div>
+                </Link>
               ))}
             </div>
-          </section>
 
-          {/* Top Courses */}
-          <section>
-            <div className="flex items-center gap-2 mb-6">
-              <FileText className="h-6 w-6 text-primary" />
-              <h2 className="text-3xl font-bold">Popular Courses</h2>
+            <div className="mt-8 text-center">
+              <Link
+                href="/universities"
+                className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.25em] uppercase transition-opacity hover:opacity-60"
+                style={{ color: "rgba(246,242,234,0.5)" }}
+              >
+                View all universities
+                <ArrowRight size={12} />
+              </Link>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {country.topCourses.map((course, idx) => (
-                <Card key={idx}>
-                  <CardHeader>
-                    <CardTitle className="text-lg">{course}</CardTitle>
-                  </CardHeader>
-                </Card>
-              ))}
-            </div>
-          </section>
+          </div>
+        </div>
+      )}
 
-          {/* Visa Information */}
-          <section>
-            <div className="flex items-center gap-2 mb-6">
-              <FileText className="h-6 w-6 text-primary" />
-              <h2 className="text-3xl font-bold">Visa Information</h2>
-            </div>
-            <Card>
-              <CardContent className="pt-6">
-                <p className="text-muted-foreground whitespace-pre-line">{country.visaInfo}</p>
-              </CardContent>
-            </Card>
-          </section>
-
-          {/* Universities */}
-          {universities.length > 0 && (
-            <section>
-              <div className="flex items-center gap-2 mb-6">
-                <GraduationCap className="h-6 w-6 text-primary" />
-                <h2 className="text-3xl font-bold">Top Universities</h2>
-              </div>
-              <div className="grid gap-4">
-                {universities.map((uni) => (
-                  <Link key={uni.id} href={`/universities/${uni.slug}`}>
-                    <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-                      <CardHeader>
-                        <div className="flex items-start justify-between">
-                          <div>
-                            <CardTitle className="text-xl mb-2">
-                              <span className="text-3xl mr-2">{uni.logo}</span>
-                              {uni.name}
-                            </CardTitle>
-                            <p className="text-sm text-muted-foreground">
-                              {uni.city} • Ranking: #{uni.ranking} • {uni.type}
-                            </p>
-                          </div>
-                        </div>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-muted-foreground mb-3">
-                          {uni.description.substring(0, 150)}...
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {uni.courses.slice(0, 3).map((course) => (
-                            <span
-                              key={course.id}
-                              className="text-xs bg-primary/10 text-primary px-2 py-1 rounded"
-                            >
-                              {course.name}
-                            </span>
-                          ))}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                ))}
-              </div>
-              <div className="mt-6 text-center">
-                <Button variant="outline" asChild>
-                  <Link href="/universities">
-                    View All Universities <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-            </section>
-          )}
+      {/* ── Popular Courses ── */}
+      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-20">
+        <div className="mb-10">
+          <p className="font-mono text-[10px] tracking-[0.32em] uppercase mb-3" style={{ color: "rgba(246,242,234,0.35)" }}>
+            What to study
+          </p>
+          <h2
+            className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92]"
+            style={{ fontSize: "clamp(2rem,4vw,3.5rem)", color: "#F6F2EA" }}
+          >
+            Popular{" "}
+            <span className="font-serif italic font-normal" style={{ color: "rgba(246,242,234,0.4)" }}>
+              Courses
+            </span>
+          </h2>
         </div>
 
-        {/* Sidebar */}
-        <div className="space-y-6">
-          {/* Cost of Living */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <DollarSign className="h-5 w-5 text-primary" />
-                <CardTitle>Cost of Living</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">{country.costOfLiving}</p>
-            </CardContent>
-          </Card>
+        <div
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-px"
+          style={{ background: "rgba(246,242,234,0.07)" }}
+        >
+          {country.topCourses.map((course, idx) => (
+            <div
+              key={idx}
+              className="flex items-center gap-4 p-6"
+              style={{ background: "#0E0E10" }}
+            >
+              <span
+                className="font-mono text-[10px] tracking-[0.28em] tabular-nums"
+                style={{ color: "rgba(246,242,234,0.2)" }}
+              >
+                {String(idx + 1).padStart(2, "0")}
+              </span>
+              <span
+                className="font-sans font-bold uppercase tracking-[-0.01em] text-sm"
+                style={{ color: "#F6F2EA" }}
+              >
+                {course}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
 
-          {/* Quick Facts */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Quick Facts</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3 text-sm">
-              <div>
-                <div className="font-semibold mb-1">Country Code</div>
-                <div className="text-muted-foreground">{country.code}</div>
-              </div>
-              <div>
-                <div className="font-semibold mb-1">Universities</div>
-                <div className="text-muted-foreground">{country.universitiesCount}+</div>
-              </div>
-              <div>
-                <div className="font-semibold mb-1">Language</div>
-                <div className="text-muted-foreground">English</div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* CTA */}
-          <Card className="bg-primary text-primary-foreground">
-            <CardHeader>
-              <CardTitle>Ready to Apply?</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-sm opacity-90">
-                Get expert guidance for studying in {country.name}. Our counselors will help you choose the right university and navigate the application process.
-              </p>
-              <Button variant="secondary" className="w-full" asChild>
-                <Link href="/contact">
-                  Schedule Consultation <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </CardContent>
-          </Card>
+      {/* ── CTA ── */}
+      <div className="max-w-[1280px] mx-auto px-5 md:px-8 pb-24">
+        <div
+          className="flex flex-col md:flex-row items-start md:items-end justify-between gap-8 p-10 md:p-14"
+          style={{ background: "#1a1a1c", border: "1px solid rgba(246,242,234,0.1)" }}
+        >
+          <div>
+            <p className="font-mono text-[10px] tracking-[0.3em] uppercase mb-3" style={{ color: "rgba(246,242,234,0.35)" }}>
+              Get started
+            </p>
+            <h2
+              className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92]"
+              style={{ fontSize: "clamp(1.8rem,4vw,3.2rem)", color: "#F6F2EA" }}
+            >
+              Ready to study in<br />
+              <span className="font-serif italic font-normal" style={{ color: "rgba(246,242,234,0.55)" }}>
+                {country.name}?
+              </span>
+            </h2>
+          </div>
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-3 font-sans font-black uppercase tracking-[-0.01em] px-7 py-4 transition-opacity hover:opacity-75 shrink-0"
+            style={{ background: "#ffffff", color: "#0E0E10", fontSize: "0.9rem" }}
+          >
+            Schedule Free Consultation
+            <ArrowRight size={16} />
+          </Link>
         </div>
       </div>
     </div>
