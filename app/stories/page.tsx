@@ -183,7 +183,7 @@ export default function StoriesPage() {
                   {/* photo */}
                   <div className="relative rounded-xl md:rounded-2xl overflow-hidden" style={{ aspectRatio: "16/10", background: C.bg2 }}>
                     {s.photo && (
-                      <img src={s.photo} alt={s.name} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" style={{ objectPosition: s.photoPosition || "top" }} />
+                      <img src={s.photo} alt={s.name} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" style={{ objectPosition: s.photoPosition || "top", transform: s.photoScale ? `scale(${s.photoScale})` : undefined }} />
                     )}
                   </div>
                   {/* story */}

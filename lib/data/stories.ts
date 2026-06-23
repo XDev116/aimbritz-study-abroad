@@ -20,6 +20,7 @@ export interface Story {
   after: string; // e.g. "Imperial College London"
   featured?: boolean;
   photoPosition?: string; // CSS object-position override, default "top"
+  photoScale?: number; // CSS scale override for zooming out, default 1
 }
 
 export const STORIES: Story[] = [
@@ -54,6 +55,7 @@ export const STORIES: Story[] = [
     before: "From another state, all online",
     after: "Arrived in the UK",
     featured: true,
+    photoPosition: "center top",
   },
   {
     id: "lekshmi-priya",
@@ -86,6 +88,7 @@ export const STORIES: Story[] = [
     before: "Delays from university",
     after: "Reached the UK",
     featured: true,
+    photoPosition: "center",
   },
   {
     id: "kavya-krishnan",
