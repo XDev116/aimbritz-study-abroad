@@ -70,18 +70,9 @@ compress-*.js
 sharp
 @types/*
 
-# Original uncompressed images (keep only optimized .webp versions)
-/public/**/*.png
-/public/**/*.jpg
-!/public/professor3d/*.png
-!/public/images/universties/*.png
-!/public/images/Partnering Universities/*.png
-!/public/logo/*.png
-!/public/images/team/*.png
-!/public/png/*.png
-!/public/images/reels/*.jpg
-!/public/images/universties/*.jpg
-!/public/images/students/*.jpg
+# Images: all assets under public/ are intentional and should be tracked
+# (avoids the "committed code but forgot to commit the image" bug for any
+# new folder). Add specific ignores below only if you ever need to exclude one.
 
 # Temporary files
 *.tmp
