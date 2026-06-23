@@ -97,7 +97,7 @@ export function Header() {
               {[
                 { name: "Explore", key: "explore" as const, href: "/countries" },
                 { name: "Services", key: "services" as const, href: "/services" },
-                { name: "Stories", key: null, href: "/#story" },
+                { name: "Stories", key: null, href: "/stories" },
                 { name: "About", key: null, href: "/about" },
               ].map((item) => (
                 <button
