@@ -1340,6 +1340,982 @@ export const universities: University[] = [
       "Erasmus+ for European students",
       "Research funding opportunities"
     ]
+  },
+  {
+    id: "18",
+    name: "Sciences Po",
+    slug: "sciences-po",
+    country: "France",
+    countryCode: "FR",
+    city: "Paris",
+    description: "Sciences Po is a world-leading university in the social sciences, renowned for its rigorous programs in political science, international relations, economics, and law. With seven campuses across France and a deeply international student body, it prepares graduates for careers in public policy, diplomacy, and business.",
+    logo: "🏛️",
+    ranking: 242,
+    website: "https://www.sciencespo.fr",
+    established: 1872,
+    type: "Public",
+    courses: [
+      {
+        id: "sciencespo-1",
+        name: "International Relations",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 14700,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "sciencespo-2",
+        name: "Economics and Public Policy",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 14700,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "sciencespo-3",
+        name: "European Affairs",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 14700,
+        currency: "EUR",
+        intakeDates: ["September"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "High school diploma with strong academic record",
+        "Written exam and interview",
+        "English proficiency: IELTS 7.0+ or TOEFL 100+",
+        "Motivation letter",
+        "CV"
+      ],
+      master: [
+        "Bachelor's degree with strong grades",
+        "English or French proficiency depending on program",
+        "IELTS 7.0+ or TOEFL 100+ for English-taught programs",
+        "Statement of purpose",
+        "Two references",
+        "CV"
+      ],
+      phd: [
+        "Master's degree with distinction",
+        "Research proposal",
+        "English or French proficiency",
+        "Academic references",
+        "Interview"
+      ]
+    },
+    campusLife: "Sciences Po's main campus is located in the heart of Paris's Saint-Germain-des-Prés quarter. The university offers a cosmopolitan environment with students from over 150 countries. Facilities include modern libraries, student associations, career services, and access to Paris's diplomatic and policy community.",
+    scholarships: [
+      "Sciences Po Emile Boutmy Scholarship",
+      "Eiffel Excellence Scholarship",
+      "French Government Scholarships",
+      "Need-based financial aid",
+      "Erasmus+ for European students"
+    ]
+  },
+  {
+    id: "19",
+    name: "ESSEC Business School",
+    slug: "essec",
+    country: "France",
+    countryCode: "FR",
+    city: "Cergy-Pontoise",
+    description: "ESSEC Business School is one of France's top Grande École, holding triple accreditation (AACSB, EQUIS, AMBA). With campuses in France, Singapore, and Morocco, ESSEC is globally recognized for its MBA, finance, and management programs, producing leaders in business and entrepreneurship.",
+    logo: "📊",
+    ranking: 0,
+    website: "https://www.essec.edu",
+    established: 1907,
+    type: "Private",
+    courses: [
+      {
+        id: "essec-1",
+        name: "Global BBA",
+        degree: "Bachelor",
+        duration: "4 years",
+        tuitionFee: 16900,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "essec-2",
+        name: "Master in Management",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 18500,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "essec-3",
+        name: "Master in Finance",
+        degree: "Master",
+        duration: "1 year",
+        tuitionFee: 29000,
+        currency: "EUR",
+        intakeDates: ["September"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "High school diploma with strong grades",
+        "English proficiency: IELTS 6.5+ or TOEFL 90+",
+        "Written tests and interview",
+        "Motivation letter",
+        "CV"
+      ],
+      master: [
+        "Bachelor's degree with strong academic record",
+        "GMAT 680+ or GRE equivalent",
+        "IELTS 7.0+ or TOEFL 100+",
+        "Professional experience preferred for MBA",
+        "Statement of purpose",
+        "Two references"
+      ],
+      phd: [
+        "Master's degree with excellent grades",
+        "Research proposal",
+        "GMAT/GRE scores",
+        "English proficiency",
+        "Interview with faculty"
+      ]
+    },
+    campusLife: "ESSEC's main campus in Cergy-Pontoise offers a modern, purpose-built environment with state-of-the-art facilities. The school provides a global experience through mandatory international exchanges, with 180+ partner institutions worldwide. Students benefit from strong corporate partnerships and career placement services.",
+    scholarships: [
+      "ESSEC Excellence Scholarship",
+      "ESSEC Foundation Grants",
+      "Eiffel Excellence Scholarship",
+      "Corporate-sponsored scholarships",
+      "Need-based financial aid"
+    ]
+  },
+  {
+    id: "20",
+    name: "Université Grenoble Alpes",
+    slug: "grenoble-alpes",
+    country: "France",
+    countryCode: "FR",
+    city: "Grenoble",
+    description: "Université Grenoble Alpes is a leading French research university nestled in the Alps, known for its strengths in engineering, computer science, physics, and environmental studies. Home to major research centers including CNRS and CEA, it offers an innovative academic environment surrounded by world-class outdoor recreation.",
+    logo: "🏔️",
+    ranking: 339,
+    website: "https://www.univ-grenoble-alpes.fr",
+    established: 1339,
+    type: "Public",
+    courses: [
+      {
+        id: "grenoble-1",
+        name: "Computer Science",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 3770,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "grenoble-2",
+        name: "Mechanical Engineering",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 3770,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "grenoble-3",
+        name: "Environmental Sciences",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 3770,
+        currency: "EUR",
+        intakeDates: ["September"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "Baccalauréat or equivalent",
+        "French proficiency: DELF B2 or TCF",
+        "Academic transcripts",
+        "Application through Campus France",
+        "Motivation letter"
+      ],
+      master: [
+        "Bachelor's degree with good grades",
+        "English proficiency: IELTS 6.0+ for English-taught programs",
+        "French proficiency for French-taught programs",
+        "Statement of purpose",
+        "Two references",
+        "CV"
+      ],
+      phd: [
+        "Master's degree with strong grades",
+        "Research proposal",
+        "French or English proficiency",
+        "Supervisor agreement",
+        "Academic references"
+      ]
+    },
+    campusLife: "Grenoble is consistently ranked as one of France's best student cities. The campus is surrounded by the French Alps, offering unmatched outdoor activities — skiing, hiking, and cycling. The university provides modern facilities, affordable student housing, and a vibrant international student community with over 9,000 international students.",
+    scholarships: [
+      "Université Grenoble Alpes Excellence Scholarship",
+      "Eiffel Excellence Scholarship",
+      "French Government Scholarships",
+      "Erasmus+ for European students",
+      "Idex Scholarship for Master's students"
+    ]
+  },
+  {
+    id: "21",
+    name: "University of Toronto",
+    slug: "toronto",
+    country: "Canada",
+    countryCode: "CA",
+    city: "Toronto",
+    description: "The University of Toronto is Canada's top-ranked university and among the best globally, known for groundbreaking research and academic excellence. Located in the heart of Toronto, it offers over 700 undergraduate and 200 graduate programs across three campuses, attracting students from 160+ countries.",
+    logo: "🍁",
+    ranking: 21,
+    website: "https://www.utoronto.ca",
+    established: 1827,
+    type: "Public",
+    courses: [
+      {
+        id: "uoft-1",
+        name: "Computer Science",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 52080,
+        currency: "CAD",
+        intakeDates: ["September", "January"]
+      },
+      {
+        id: "uoft-2",
+        name: "MBA (Rotman)",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 107580,
+        currency: "CAD",
+        intakeDates: ["September"]
+      },
+      {
+        id: "uoft-3",
+        name: "Engineering Science",
+        degree: "Bachelor",
+        duration: "4 years",
+        tuitionFee: 62250,
+        currency: "CAD",
+        intakeDates: ["September"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "High school diploma with competitive grades (85%+ average)",
+        "English proficiency: IELTS 6.5+ (no band below 6.0) or TOEFL 100+",
+        "Supplementary application for some programs",
+        "Academic transcripts",
+        "Personal profile or essay"
+      ],
+      master: [
+        "Bachelor's degree with B+ average or higher",
+        "IELTS 7.0+ or TOEFL 93+",
+        "GRE/GMAT for select programs",
+        "Statement of purpose",
+        "Two to three references",
+        "CV"
+      ],
+      phd: [
+        "Master's degree with strong academic record",
+        "Research proposal",
+        "English proficiency",
+        "Academic references",
+        "Supervisor match",
+        "Interview"
+      ]
+    },
+    campusLife: "The University of Toronto's St. George campus is located in downtown Toronto, offering access to one of the world's most diverse and vibrant cities. Students enjoy 1,000+ student clubs, world-class libraries, athletics facilities, and a thriving cultural scene. Toronto offers excellent internship and employment opportunities in finance, tech, and healthcare.",
+    scholarships: [
+      "Lester B. Pearson International Scholarship (full tuition + living)",
+      "University of Toronto Scholars Program",
+      "Faculty-specific entrance awards",
+      "Ontario Graduate Scholarship (OGS)",
+      "Connaught International Scholarship for PhD"
+    ]
+  },
+  {
+    id: "22",
+    name: "University of British Columbia",
+    slug: "ubc",
+    country: "Canada",
+    countryCode: "CA",
+    city: "Vancouver",
+    description: "The University of British Columbia (UBC) is a global research university consistently ranked among the top 40 worldwide. Set on a stunning coastal campus in Vancouver, UBC is renowned for its programs in science, engineering, forestry, and business, and attracts over 17,000 international students annually.",
+    logo: "🌊",
+    ranking: 34,
+    website: "https://www.ubc.ca",
+    established: 1908,
+    type: "Public",
+    courses: [
+      {
+        id: "ubc-1",
+        name: "Data Science",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 48798,
+        currency: "CAD",
+        intakeDates: ["September"]
+      },
+      {
+        id: "ubc-2",
+        name: "Business Administration",
+        degree: "Bachelor",
+        duration: "4 years",
+        tuitionFee: 55800,
+        currency: "CAD",
+        intakeDates: ["September"]
+      },
+      {
+        id: "ubc-3",
+        name: "Civil Engineering",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 9131,
+        currency: "CAD",
+        intakeDates: ["September", "January"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "High school diploma with strong academic record",
+        "English proficiency: IELTS 6.5+ (no band below 6.0) or TOEFL 90+",
+        "Personal profile submission",
+        "Academic transcripts",
+        "Supplementary essays for some programs"
+      ],
+      master: [
+        "Bachelor's degree with B+ average (76%+)",
+        "IELTS 6.5+ or TOEFL 90+",
+        "GRE/GMAT for select programs",
+        "Statement of intent",
+        "Three academic references",
+        "CV"
+      ],
+      phd: [
+        "Master's degree with strong academic record",
+        "Research proposal",
+        "English proficiency",
+        "Academic references",
+        "Supervisor match recommended",
+        "Interview"
+      ]
+    },
+    campusLife: "UBC's Vancouver campus is one of the most beautiful in the world, bordering ocean, mountains, and old-growth forest. Students enjoy a vibrant campus life with 350+ clubs, varsity athletics, and the UBC Farm. Vancouver offers incredible outdoor recreation, a thriving tech industry, and multicultural dining and entertainment.",
+    scholarships: [
+      "International Major Entrance Scholarship (up to C$40,000)",
+      "Outstanding International Student Award",
+      "Faculty of Science International Scholarship",
+      "Graduate Research Assistantships",
+      "Four Year Doctoral Fellowship"
+    ]
+  },
+  {
+    id: "23",
+    name: "McGill University",
+    slug: "mcgill",
+    country: "Canada",
+    countryCode: "CA",
+    city: "Montreal",
+    description: "McGill University is one of Canada's oldest and most prestigious institutions, consistently ranked among the top universities globally. Located in bilingual Montreal, McGill is known for its rigorous academics in medicine, law, engineering, and the arts, and has produced 12 Nobel laureates among its alumni and faculty.",
+    logo: "⚜️",
+    ranking: 29,
+    website: "https://www.mcgill.ca",
+    established: 1821,
+    type: "Public",
+    courses: [
+      {
+        id: "mcgill-1",
+        name: "Electrical Engineering",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 25546,
+        currency: "CAD",
+        intakeDates: ["September", "January"]
+      },
+      {
+        id: "mcgill-2",
+        name: "Medicine (MDCM)",
+        degree: "PhD",
+        duration: "4 years",
+        tuitionFee: 45702,
+        currency: "CAD",
+        intakeDates: ["September"]
+      },
+      {
+        id: "mcgill-3",
+        name: "Finance",
+        degree: "Master",
+        duration: "16 months",
+        tuitionFee: 55650,
+        currency: "CAD",
+        intakeDates: ["July"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "High school diploma with competitive grades",
+        "English proficiency: IELTS 6.5+ or TOEFL 90+ (some faculties require higher)",
+        "Academic transcripts",
+        "Supplementary application for some programs",
+        "Personal statement"
+      ],
+      master: [
+        "Bachelor's degree with minimum CGPA of 3.0/4.0",
+        "IELTS 6.5+ or TOEFL 86+",
+        "GRE/GMAT for select programs",
+        "Statement of purpose",
+        "Two to three references",
+        "CV"
+      ],
+      phd: [
+        "Master's degree with strong academic record",
+        "Research proposal",
+        "English proficiency",
+        "Academic references",
+        "Interview"
+      ]
+    },
+    campusLife: "McGill's downtown Montreal campus sits at the foot of Mount Royal, combining historic architecture with modern facilities. Montreal is consistently ranked as one of the world's best student cities — affordable, bilingual (French-English), and culturally rich. Students enjoy a vibrant nightlife, world-class dining, and four distinct seasons of outdoor activities.",
+    scholarships: [
+      "McGill Entrance Scholarships",
+      "Schulich Leader Scholarship",
+      "Faculty-specific awards and bursaries",
+      "Graduate Excellence Fellowship",
+      "Tomlinson Doctoral Fellowships"
+    ]
+  },
+  {
+    id: "24",
+    name: "University of Waterloo",
+    slug: "waterloo",
+    country: "Canada",
+    countryCode: "CA",
+    city: "Waterloo",
+    description: "The University of Waterloo is Canada's top innovation university, famous for its world-leading co-operative education program — the largest of its kind globally. Waterloo graduates are highly sought after by Silicon Valley and global tech companies, with particular strength in computer science, engineering, and mathematics.",
+    logo: "💻",
+    ranking: 112,
+    website: "https://uwaterloo.ca",
+    established: 1957,
+    type: "Public",
+    courses: [
+      {
+        id: "waterloo-1",
+        name: "Computer Science (Co-op)",
+        degree: "Bachelor",
+        duration: "5 years",
+        tuitionFee: 64800,
+        currency: "CAD",
+        intakeDates: ["September"]
+      },
+      {
+        id: "waterloo-2",
+        name: "Mechatronics Engineering",
+        degree: "Bachelor",
+        duration: "5 years",
+        tuitionFee: 67400,
+        currency: "CAD",
+        intakeDates: ["September"]
+      },
+      {
+        id: "waterloo-3",
+        name: "Artificial Intelligence",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 28800,
+        currency: "CAD",
+        intakeDates: ["September", "January", "May"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "High school diploma with strong math and science grades (90%+ for competitive programs)",
+        "English proficiency: IELTS 6.5+ (writing 6.5+) or TOEFL 90+",
+        "Admission Information Form (AIF)",
+        "Euclid/CSMC math contest scores (recommended)",
+        "Video interview for some programs"
+      ],
+      master: [
+        "Bachelor's degree with 75%+ average (B+)",
+        "IELTS 6.5+ or TOEFL 90+",
+        "GRE for select programs",
+        "Statement of purpose",
+        "Two to three references",
+        "CV"
+      ],
+      phd: [
+        "Master's degree with strong academic record",
+        "Research proposal",
+        "English proficiency",
+        "Academic references",
+        "Supervisor match required"
+      ]
+    },
+    campusLife: "Waterloo's campus is located in the heart of Canada's Technology Triangle, with easy access to Toronto. The university's co-op program gives students 2 years of paid work experience at companies like Google, Apple, and Tesla before graduation. Campus features include modern engineering labs, a startup incubator (Velocity), and 200+ student clubs.",
+    scholarships: [
+      "International Master's Award of Excellence (C$2,500)",
+      "President's Scholarship (C$10,000)",
+      "Faculty-specific entrance awards",
+      "International Experience Awards",
+      "Graduate Research Studentships"
+    ]
+  },
+  {
+    id: "25",
+    name: "Trinity College Dublin",
+    slug: "trinity-dublin",
+    country: "Ireland",
+    countryCode: "IE",
+    city: "Dublin",
+    description: "Trinity College Dublin is Ireland's oldest and most prestigious university, founded in 1592. Consistently ranked in the world's top 100, Trinity is renowned for its historic campus in the heart of Dublin, its research excellence, and strong programs in computer science, business, law, and the humanities.",
+    logo: "🏛️",
+    ranking: 81,
+    website: "https://www.tcd.ie",
+    established: 1592,
+    type: "Public",
+    courses: [
+      {
+        id: "trinity-1",
+        name: "Computer Science",
+        degree: "Bachelor",
+        duration: "4 years",
+        tuitionFee: 25956,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "trinity-2",
+        name: "MBA",
+        degree: "Master",
+        duration: "1 year",
+        tuitionFee: 34950,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "trinity-3",
+        name: "Law (LL.B)",
+        degree: "Bachelor",
+        duration: "4 years",
+        tuitionFee: 21680,
+        currency: "EUR",
+        intakeDates: ["September"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "High school diploma with competitive grades",
+        "English proficiency: IELTS 6.5+ or TOEFL 90+",
+        "Academic transcripts",
+        "Personal statement",
+        "Application through CAO or direct"
+      ],
+      master: [
+        "Bachelor's degree with 2:1 honours or equivalent",
+        "IELTS 6.5+ or TOEFL 90+",
+        "GMAT for MBA applicants",
+        "Statement of purpose",
+        "Two academic references",
+        "CV"
+      ],
+      phd: [
+        "Master's degree with strong academic record",
+        "Research proposal",
+        "English proficiency",
+        "Academic references",
+        "Supervisor agreement"
+      ]
+    },
+    campusLife: "Trinity's iconic campus sits in the centre of Dublin, home to the famous Book of Kells and the Long Room library. Students enjoy a vibrant social scene with 170+ societies and 50+ sports clubs. Dublin offers a thriving tech hub (Google, Meta, and Stripe have European HQs here), excellent nightlife, and easy access to Ireland's stunning coastline.",
+    scholarships: [
+      "Trinity Global Scholarships",
+      "Provost's PhD Project Awards",
+      "Government of Ireland Scholarships",
+      "Science Foundation Ireland funding",
+      "Erasmus+ for European students"
+    ]
+  },
+  {
+    id: "26",
+    name: "University College Dublin",
+    slug: "ucd",
+    country: "Ireland",
+    countryCode: "IE",
+    city: "Dublin",
+    description: "University College Dublin (UCD) is Ireland's largest university and a member of the prestigious Universitas 21 network. With a modern parkland campus in south Dublin, UCD is known for its strong business school (Smurfit), engineering programs, and global outlook — over 30% of its students are international, from 139 countries.",
+    logo: "🎓",
+    ranking: 126,
+    website: "https://www.ucd.ie",
+    established: 1854,
+    type: "Public",
+    courses: [
+      {
+        id: "ucd-1",
+        name: "Business & Management",
+        degree: "Bachelor",
+        duration: "4 years",
+        tuitionFee: 20480,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "ucd-2",
+        name: "Data & Computational Science",
+        degree: "Master",
+        duration: "1 year",
+        tuitionFee: 24800,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "ucd-3",
+        name: "Biomedical Engineering",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 26400,
+        currency: "EUR",
+        intakeDates: ["September"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "High school diploma with strong grades",
+        "English proficiency: IELTS 6.5+ or TOEFL 90+",
+        "Academic transcripts",
+        "Personal statement",
+        "Application through CAO or direct international application"
+      ],
+      master: [
+        "Bachelor's degree with upper second class honours or equivalent",
+        "IELTS 6.5+ or TOEFL 90+",
+        "GMAT for Smurfit MBA applicants",
+        "Statement of purpose",
+        "Two references",
+        "CV"
+      ],
+      phd: [
+        "Master's degree with strong academic record",
+        "Research proposal",
+        "English proficiency",
+        "Academic references",
+        "Interview"
+      ]
+    },
+    campusLife: "UCD's 133-hectare Belfield campus is one of the largest in Europe, featuring modern residences, sports facilities, and a student centre. Located in leafy south Dublin, it offers easy access to the city centre. UCD has 100+ clubs and societies, a strong international community, and is adjacent to many multinational companies in Dublin's tech corridor.",
+    scholarships: [
+      "UCD Global Excellence Scholarship (up to full fees)",
+      "Ad Astra Academic Scholarships",
+      "UCD Smurfit School Scholarships",
+      "Government of Ireland Scholarships",
+      "Sport and artistic achievement awards"
+    ]
+  },
+  {
+    id: "27",
+    name: "University of Galway",
+    slug: "galway",
+    country: "Ireland",
+    countryCode: "IE",
+    city: "Galway",
+    description: "University of Galway (formerly NUI Galway) is a research-led university on Ireland's Atlantic coast, known for its strengths in biomedical science, engineering, marine science, and the arts. With a welcoming campus on the banks of the River Corrib, it combines academic rigour with the cultural charm of Galway — Europe's Capital of Culture.",
+    logo: "🌊",
+    ranking: 259,
+    website: "https://www.universityofgalway.ie",
+    established: 1845,
+    type: "Public",
+    courses: [
+      {
+        id: "galway-1",
+        name: "Biomedical Engineering",
+        degree: "Bachelor",
+        duration: "4 years",
+        tuitionFee: 18500,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "galway-2",
+        name: "Marine Science",
+        degree: "Master",
+        duration: "1 year",
+        tuitionFee: 16800,
+        currency: "EUR",
+        intakeDates: ["September"]
+      },
+      {
+        id: "galway-3",
+        name: "Data Analytics",
+        degree: "Master",
+        duration: "1 year",
+        tuitionFee: 18700,
+        currency: "EUR",
+        intakeDates: ["September"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "High school diploma with good grades",
+        "English proficiency: IELTS 6.0+ or TOEFL 80+",
+        "Academic transcripts",
+        "Personal statement",
+        "Application via CAO or direct"
+      ],
+      master: [
+        "Bachelor's degree with second class honours or equivalent",
+        "IELTS 6.5+ or TOEFL 88+",
+        "Statement of purpose",
+        "Two academic references",
+        "CV"
+      ],
+      phd: [
+        "Master's degree with strong academic record",
+        "Research proposal",
+        "English proficiency",
+        "Academic references",
+        "Supervisor match"
+      ]
+    },
+    campusLife: "University of Galway's riverside campus blends historic limestone buildings with modern research facilities. Galway city is famed for its arts festivals, traditional music scene, and friendly atmosphere. Students enjoy a tight-knit community, 100+ clubs and societies, and easy access to the Wild Atlantic Way, the Aran Islands, and Connemara.",
+    scholarships: [
+      "University of Galway International Student Scholarship",
+      "Hardiman Research Scholarships (PhD)",
+      "Government of Ireland Scholarships",
+      "Science Foundation Ireland funding",
+      "Faculty-specific merit awards"
+    ]
+  },
+  {
+    id: "28",
+    name: "Technical University of Munich",
+    slug: "tu-munich",
+    country: "Germany",
+    countryCode: "DE",
+    city: "Munich",
+    description: "The Technical University of Munich (TUM) is Germany's top-ranked technical university and one of Europe's leading research institutions. A member of the TU9, Germany's alliance of premier technical universities, TUM excels in engineering, computer science, natural sciences, and management. Most master's programs are tuition-free for international students.",
+    logo: "⚙️",
+    ranking: 37,
+    website: "https://www.tum.de",
+    established: 1868,
+    type: "Public",
+    courses: [
+      {
+        id: "tum-1",
+        name: "Informatics (Computer Science)",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 0,
+        currency: "EUR",
+        intakeDates: ["October", "April"]
+      },
+      {
+        id: "tum-2",
+        name: "Automotive Engineering",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 0,
+        currency: "EUR",
+        intakeDates: ["October"]
+      },
+      {
+        id: "tum-3",
+        name: "Management & Technology",
+        degree: "Bachelor",
+        duration: "3 years",
+        tuitionFee: 0,
+        currency: "EUR",
+        intakeDates: ["October"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "Hochschulzugangsberechtigung or equivalent (13 years of schooling)",
+        "Subject-specific aptitude test for some programs",
+        "German proficiency: DSH-2 or TestDaF 4x4 for German-taught programs",
+        "English proficiency: IELTS 6.5+ for English-taught programs",
+        "Motivation letter and CV"
+      ],
+      master: [
+        "Bachelor's degree in a related field with strong grades",
+        "English proficiency: IELTS 6.5+ or TOEFL 88+",
+        "GRE recommended for select programs",
+        "Statement of purpose",
+        "Two references",
+        "CV with relevant experience"
+      ],
+      phd: [
+        "Master's degree with excellent grades",
+        "Research proposal",
+        "Supervisor agreement at TUM",
+        "English or German proficiency",
+        "Academic references"
+      ]
+    },
+    campusLife: "TUM's campuses are spread across Munich, Garching, and Freising. Munich is consistently ranked among the world's most liveable cities, offering a blend of Bavarian tradition and modern innovation. Students enjoy proximity to the Alps for skiing and hiking, a thriving startup scene, world-class museums, and Munich's famous beer gardens and cultural festivals.",
+    scholarships: [
+      "Deutschlandstipendium (€300/month)",
+      "DAAD Scholarships for international students",
+      "TUM Global Diversity Scholarship",
+      "Bavarian State Ministry funding",
+      "TUM research assistantships"
+    ]
+  },
+  {
+    id: "29",
+    name: "Ludwig Maximilian University of Munich",
+    slug: "lmu-munich",
+    country: "Germany",
+    countryCode: "DE",
+    city: "Munich",
+    description: "Ludwig Maximilian University of Munich (LMU) is one of Europe's oldest and most prestigious universities, consistently ranked among the world's top 50. Founded in 1472, LMU is a leading research university with particular strengths in medicine, law, economics, humanities, and natural sciences. It is one of Germany's eleven Universities of Excellence.",
+    logo: "🏛️",
+    ranking: 38,
+    website: "https://www.lmu.de",
+    established: 1472,
+    type: "Public",
+    courses: [
+      {
+        id: "lmu-1",
+        name: "Economics",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 0,
+        currency: "EUR",
+        intakeDates: ["October"]
+      },
+      {
+        id: "lmu-2",
+        name: "Data Science",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 0,
+        currency: "EUR",
+        intakeDates: ["October"]
+      },
+      {
+        id: "lmu-3",
+        name: "Medicine",
+        degree: "Bachelor",
+        duration: "6 years",
+        tuitionFee: 0,
+        currency: "EUR",
+        intakeDates: ["October"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "Hochschulzugangsberechtigung or equivalent",
+        "German proficiency: DSH-2 or TestDaF 4x4 for most programs",
+        "English proficiency: IELTS 6.5+ for English-taught programs",
+        "Subject-specific entrance requirements",
+        "Motivation letter"
+      ],
+      master: [
+        "Bachelor's degree in a related field with good grades",
+        "English proficiency: IELTS 6.5+ or TOEFL 88+",
+        "German proficiency for German-taught programs",
+        "Statement of purpose",
+        "Two academic references",
+        "CV"
+      ],
+      phd: [
+        "Master's degree with distinction",
+        "Research proposal",
+        "Supervisor agreement",
+        "English or German proficiency",
+        "Academic references"
+      ]
+    },
+    campusLife: "LMU's main campus is located in the heart of Munich's city centre, with additional institutes and clinics throughout the city. Students benefit from Munich's exceptional quality of life, a strong research ecosystem, and vibrant student culture. LMU offers 150+ student organizations, modern libraries, and access to Munich's world-class cultural and sporting facilities.",
+    scholarships: [
+      "Deutschlandstipendium (€300/month)",
+      "DAAD Scholarships",
+      "LMU Munich Excellence Scholarship",
+      "Bavarian State Scholarships",
+      "Erasmus+ for European students"
+    ]
+  },
+  {
+    id: "30",
+    name: "RWTH Aachen University",
+    slug: "rwth-aachen",
+    country: "Germany",
+    countryCode: "DE",
+    city: "Aachen",
+    description: "RWTH Aachen University is one of Europe's leading technical universities and Germany's largest university of technology. A founding member of the IDEA League and TU9, RWTH is globally renowned for its engineering, technology, and natural sciences programs. The university has strong industry partnerships with companies like Siemens, Ford, and Ericsson.",
+    logo: "🔧",
+    ranking: 90,
+    website: "https://www.rwth-aachen.de",
+    established: 1870,
+    type: "Public",
+    courses: [
+      {
+        id: "rwth-1",
+        name: "Mechanical Engineering",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 0,
+        currency: "EUR",
+        intakeDates: ["October", "April"]
+      },
+      {
+        id: "rwth-2",
+        name: "Electrical Engineering",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 0,
+        currency: "EUR",
+        intakeDates: ["October"]
+      },
+      {
+        id: "rwth-3",
+        name: "Computer Science",
+        degree: "Master",
+        duration: "2 years",
+        tuitionFee: 0,
+        currency: "EUR",
+        intakeDates: ["October", "April"]
+      }
+    ],
+    admissionRequirements: {
+      bachelor: [
+        "Hochschulzugangsberechtigung or equivalent",
+        "German proficiency: DSH-2 or TestDaF 4x4",
+        "Mathematics aptitude for engineering programs",
+        "Academic transcripts",
+        "Motivation letter"
+      ],
+      master: [
+        "Bachelor's degree in a related field with good grades",
+        "English proficiency: IELTS 6.5+ or TOEFL 90+ for English-taught programs",
+        "German proficiency for German-taught programs",
+        "Statement of purpose",
+        "Two references",
+        "CV"
+      ],
+      phd: [
+        "Master's degree with excellent grades",
+        "Research proposal",
+        "Supervisor agreement",
+        "English or German proficiency",
+        "Academic references"
+      ]
+    },
+    campusLife: "RWTH Aachen's campus is integrated into the city of Aachen, a charming university city near the borders of Belgium and the Netherlands. Students enjoy an affordable cost of living, a strong engineering community, and access to Europe's largest technology campus. Aachen offers a lively student scene with cafés, pubs, and easy weekend travel to Brussels, Cologne, and Amsterdam.",
+    scholarships: [
+      "Deutschlandstipendium (€300/month)",
+      "DAAD Scholarships for international students",
+      "RWTH Scholarship Program",
+      "Erasmus+ for European students",
+      "Industry-sponsored research funding"
+    ]
   }
 ];
 

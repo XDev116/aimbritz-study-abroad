@@ -5,6 +5,7 @@ import { useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Eyebrow, FlagChip } from "@/components/ui/primitives";
+import { getCountrySlugByCode } from "@/lib/data/countries";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -267,7 +268,7 @@ export function Destinations() {
 /* Mobile card — full-width within its sized container, label ABOVE the image */
 function MobileCountryCard({ country, index }: { country: Country; index: number }) {
   return (
-    <a href="#" className="block">
+    <a href={`/countries/${getCountrySlugByCode(country.code) ?? country.code.toLowerCase()}`} className="block">
       {/* Label above the image — Lando-style */}
       <div className="flex items-center gap-3 mb-3 font-mono text-[10px] tracking-[0.25em] uppercase">
         <FlagChip code={country.code} />
@@ -306,7 +307,7 @@ function DestinationCard({ country, index }: { country: Country; index: number }
 
   return (
     <a
-      href="#"
+      href={`/countries/${getCountrySlugByCode(country.code) ?? country.code.toLowerCase()}`}
       className="group relative overflow-hidden shrink-0"
       style={{
         ...heightStyle,

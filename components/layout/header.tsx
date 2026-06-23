@@ -5,14 +5,14 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const COUNTRIES = [
-  { code: "GB", name: "United Kingdom", unis: 142 },
-  { code: "CA", name: "Canada", unis: 96 },
-  { code: "AU", name: "Australia", unis: 68 },
-  { code: "US", name: "United States", unis: 182 },
-  { code: "IE", name: "Ireland", unis: 24 },
-  { code: "DE", name: "Germany", unis: 58 },
-  { code: "FR", name: "France", unis: 41 },
-  { code: "NL", name: "Netherlands", unis: 28 },
+  { code: "GB", name: "United Kingdom", unis: 142, slug: "uk" },
+  { code: "CA", name: "Canada", unis: 96, slug: "canada" },
+  { code: "AU", name: "Australia", unis: 68, slug: "australia" },
+  { code: "US", name: "United States", unis: 182, slug: "usa" },
+  { code: "IE", name: "Ireland", unis: 24, slug: "ireland" },
+  { code: "DE", name: "Germany", unis: 58, slug: "germany" },
+  { code: "FR", name: "France", unis: 41, slug: "france" },
+  { code: "NZ", name: "New Zealand", unis: 35, slug: "new-zealand" },
 ];
 
 const SERVICES = [
@@ -168,7 +168,7 @@ export function Header() {
                 </div>
                 <div className="col-span-8 grid grid-cols-3 gap-x-8 gap-y-3">
                   {COUNTRIES.map((c) => (
-                    <Link key={c.code} href={`/countries/${c.code.toLowerCase()}`} className="flex items-baseline justify-between border-b pb-2 group" style={{ borderColor: "var(--hairline)" }}>
+                    <Link key={c.code} href={`/countries/${c.slug}`} className="flex items-baseline justify-between border-b pb-2 group" style={{ borderColor: "var(--hairline)" }}>
                       <span className="font-sans font-bold uppercase tracking-[0.02em] text-[14px] group-hover:text-ember transition-colors">{c.name}</span>
                       <span className="font-mono text-[10px] tracking-[0.2em] text-ink-3">{c.unis}</span>
                     </Link>

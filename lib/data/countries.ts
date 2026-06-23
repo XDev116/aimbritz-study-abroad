@@ -400,3 +400,7 @@ export function getCountryBySlug(slug: string): Country | undefined {
 export function getAllCountrySlugs(): string[] {
   return countries.map(country => country.slug);
 }
+
+export function getCountrySlugByCode(code: string): string | undefined {
+  return countries.find(c => c.code === code)?.slug;
+}
