@@ -58,7 +58,7 @@ export const STORIES: Story[] = [
   {
     id: "lekshmi-priya",
     name: "Lekshmi Priya",
-    photo: "/images/testimonials/Jasmine.jpeg",
+    photo: "",
     uni: "Northumbria University, London Campus",
     course: "Study Abroad",
     country: "United Kingdom",
