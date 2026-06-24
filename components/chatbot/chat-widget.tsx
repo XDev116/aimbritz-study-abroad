@@ -207,60 +207,50 @@ export function ChatWidget() {
     <>
       {/* Floating CEO character — walks in on load */}
       {!isOpen && (
-        <div className={`fixed bottom-0 right-0 z-50 pointer-events-none ${!hasWalkedIn ? "translate-x-[200%]" : ""} transition-all duration-1000 ease-out`}>
-          <button
-            onClick={() => {
-              setIsOpen(true);
-              setShowGreeting(false);
-            }}
-            className="relative group focus:outline-none pointer-events-auto"
-            aria-label="Chat with advisor"
-            data-cursor-label="Chat"
-          >
-            <div
-              className="w-[220px] h-[380px] sm:w-[240px] sm:h-[380px] md:w-[280px] md:h-[480px] rounded-3xl overflow-hidden -mr-8 sm:-mr-8 md:-mr-12"
-              onTouchStart={(e) => { (e.currentTarget as any)._touchY = e.touches[0].clientY; }}
-              onTouchMove={(e) => {
-                const prev = (e.currentTarget as any)._touchY ?? e.touches[0].clientY;
-                const delta = prev - e.touches[0].clientY;
-                (e.currentTarget as any)._touchY = e.touches[0].clientY;
-                window.scrollBy(0, delta);
-              }}
+        <>
+          {/* Speech bubble — fixed position so it's always close to the head
+              regardless of canvas empty space. Character box widths: 140/200/280px.
+              Head sits at roughly horizontal-centre of box, top ~25% height.
+              mobile: box=140px, head-bottom from viewport-bottom ≈ 240*0.75=180px
+              sm:     box=200px, head-bottom ≈ 340*0.75=255px
+              md:     box=280px, head-bottom ≈ 480*0.75=360px */}
+          {showGreeting && hasWalkedIn && (
+            <button
+              onClick={() => { setIsOpen(true); setShowGreeting(false); }}
+              aria-label="Chat with advisor"
+              className="fixed z-50 pointer-events-auto animate-in fade-in slide-in-from-right-2 duration-300
+                         [bottom:130px] [right:100px]
+                         sm:[bottom:220px] sm:[right:100px]
+                         md:[bottom:300px] md:[right:180px]"
             >
-              <Professor3D />
-            </div>
-
-            {/* Editorial speech bubble — paper surface, hairline border */}
-            {showGreeting && hasWalkedIn && (
-              <div className="absolute top-24 right-0 z-20 animate-in fade-in zoom-in-95 duration-300 pointer-events-none">
-                <div className="relative bg-paper-3 rounded-2xl shadow-paper px-4 py-2.5 border border-hairline">
-                  <p className="font-serif italic text-[13px] text-ink leading-snug whitespace-nowrap">
-                    Study abroad?
-                    <br />
-                    <span className="not-italic font-sans text-[11px] text-ink-3 tracking-wide">
-                      Let&apos;s find your uni.
-                    </span>
-                  </p>
-                  <div
-                    className="absolute -bottom-[8px] left-5 w-0 h-0"
-                    style={{
-                      borderLeft: "6px solid transparent",
-                      borderRight: "6px solid transparent",
-                      borderTop: "8px solid var(--paper-3)",
-                    }}
-                  />
-                </div>
+              <div
+                className="relative rounded-xl px-3 py-2 sm:rounded-2xl sm:px-4 sm:py-3 shadow-lg text-left"
+                style={{ background: "var(--ink)", maxWidth: "120px" }}
+              >
+                <p className="font-sans text-[10px] sm:text-[12px] leading-snug font-medium" style={{ color: "var(--paper)" }}>
+                  Hi! Need help finding a university?
+                </p>
+                <div className="absolute top-1/2 -translate-y-1/2 -right-[7px] w-0 h-0"
+                  style={{ borderTop: "6px solid transparent", borderBottom: "6px solid transparent", borderLeft: "8px solid var(--ink)" }} />
               </div>
-            )}
+            </button>
+          )}
 
-            {/* Hover tooltip — ink pill */}
-            <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
-              <span className="text-xs font-semibold text-paper bg-ink px-4 py-2 rounded-full tracking-wide">
-                Click to chat
-              </span>
-            </div>
-          </button>
-        </div>
+          <div className={`fixed bottom-0 right-0 z-50 pointer-events-none ${!hasWalkedIn ? "translate-x-[200%]" : ""} transition-all duration-1000 ease-out`}>
+            {/* clicking the character opens chat; canvas stays pointer-events-none so scroll passes through */}
+            <button
+              onClick={() => { setIsOpen(true); setShowGreeting(false); }}
+              aria-label="Chat with advisor"
+              data-cursor-label="Chat"
+              className="relative block w-[140px] h-[240px] sm:w-[200px] sm:h-[340px] md:w-[280px] md:h-[480px] pointer-events-auto cursor-pointer"
+              style={{ touchAction: "pan-y", background: "none", border: "none", padding: 0 }}
+            >
+              <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
+                <Professor3D />
+              </div>
+            </button>
+          </div>
+        </>
       )}
 
       {/* Chat window — paper surface, hairline border, Fraunces header */}
