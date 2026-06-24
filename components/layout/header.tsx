@@ -5,15 +5,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-// World-clock cities cycled in the top strip (key study-abroad destinations)
-const CITIES = [
-  { code: "LDN", tz: "Europe/London" },
-  { code: "NYC", tz: "America/New_York" },
-  { code: "TOR", tz: "America/Toronto" },
-  { code: "SYD", tz: "Australia/Sydney" },
-  { code: "DXB", tz: "Asia/Dubai" },
-];
-
 const COUNTRIES = [
   { code: "GB", name: "United Kingdom", unis: 142, slug: "uk" },
   { code: "CA", name: "Canada", unis: 96, slug: "canada" },
@@ -39,9 +30,6 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [drawer, setDrawer] = useState<"explore" | "services" | null>(null);
   const [menu, setMenu] = useState(false);
-  const [cityIdx, setCityIdx] = useState(0);
-  const [time, setTime] = useState("");
-
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
     onScroll();
@@ -49,52 +37,10 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Rotate to the next city every 3s, and keep its clock current
-  useEffect(() => {
-    const rotate = setInterval(() => setCityIdx((i) => (i + 1) % CITIES.length), 3000);
-    return () => clearInterval(rotate);
-  }, []);
-
-  useEffect(() => {
-    const update = () =>
-      setTime(
-        new Date().toLocaleTimeString("en-GB", {
-          hour: "2-digit",
-          minute: "2-digit",
-          timeZone: CITIES[cityIdx].tz,
-        })
-      );
-    update();
-    const id = setInterval(update, 15000);
-    return () => clearInterval(id);
-  }, [cityIdx]);
-
   return (
     <>
-      {/* Top utility strip */}
-      <div
-        className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-5 md:px-8 h-7 font-mono text-[10px] tracking-[0.28em] uppercase border-b"
-        style={{ background: "var(--paper)", borderColor: "var(--hairline)", color: "var(--ink-3)" }}
-      >
-        <div className="flex items-center gap-6">
-          <span className="flex items-center gap-2">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full rounded-full" style={{ background: "var(--ember)", opacity: 0.5, animation: "ping 2s cubic-bezier(0,0,0.2,1) infinite" }} />
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5" style={{ background: "var(--ember)" }} />
-            </span>
-            Taking Fall &apos;26 applications
-          </span>
-          <span className="hidden md:inline">Session open · 30 min</span>
-        </div>
-        <div className="flex items-center gap-6">
-          <span className="tabular-nums transition-opacity duration-300">
-            {CITIES[cityIdx].code} {time || "—"}
-          </span>
-        </div>
-      </div>
-
       {/* Main nav */}
-      <header className="fixed top-7 left-0 right-0 z-40 transition-all duration-500" onMouseLeave={() => setDrawer(null)}>
+      <header className="fixed top-0 left-0 right-0 z-40 transition-all duration-500" onMouseLeave={() => setDrawer(null)}>
         <div className={`transition-all duration-500 ${scrolled ? "mx-auto max-w-[1180px] mt-3" : "mx-0 max-w-none mt-0"}`}>
           <nav
             className={`flex items-center justify-between transition-all duration-500 ${
