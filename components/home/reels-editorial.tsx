@@ -1,7 +1,7 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
 
-import { useLayoutEffect, useRef, useState, useCallback } from "react";
+import { useLayoutEffect, useRef, useState, useCallback, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -13,81 +13,51 @@ const REELS = [
   { url: "https://www.instagram.com/reel/DPOlXHQj8If/", thumb: "/images/reels/reel1.jpg" },
   { url: "https://www.instagram.com/reel/DNavzAqP-YO/", thumb: "/images/reels/reel2.jpg" },
   { url: "https://www.instagram.com/reel/DLsB3JnP2Ox/", thumb: "/images/reels/reel3.jpg" },
-  { url: "https://www.instagram.com/reel/DJeTT4fPw_e/", thumb: "/images/reels/reel4.jpg" }, // center
+  { url: "https://www.instagram.com/reel/DJeTT4fPw_e/", thumb: "/images/reels/reel4.jpg" },
   { url: "https://www.instagram.com/reel/DPq71cmD3Q8/", thumb: "/images/reels/reel5.jpg" },
   { url: "https://www.instagram.com/reel/DUQZXP1j6VD/", thumb: "/images/reels/reel6.jpg" },
   { url: "https://www.instagram.com/reel/DRhaM6Dj8Ji/", thumb: "/images/reels/reel7.jpg" },
 ];
 
-const W = 260;
-const STEP = 108;
-const CY = 3;
+const CY = 3; // center index
 
-const BASE = REELS.map((_, i) => {
-  const d = i - CY;
-  const absD = Math.abs(d);
-  return {
-    x: d * STEP,
-    y: absD * absD * 12,
-    r: d * 6,
-    z: 10 - absD,
-  };
-});
+/* Fan layout config per breakpoint */
+interface FanConfig {
+  w: number;
+  step: number;
+  yMul: number;
+  rot: number;
+  radius: number;
+  liftY: number;
+  nudge: number;
+}
 
-export function ReelsEditorial() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [hovered, setHovered] = useState<number | null>(null);
-  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+const DESKTOP: FanConfig = { w: 260, step: 108, yMul: 12, rot: 6, radius: 18, liftY: -30, nudge: 14 };
+const MOBILE: FanConfig  = { w: 140, step: 52,  yMul: 6,  rot: 5, radius: 12, liftY: -18, nudge: 8  };
 
-  const handleEnter = useCallback((i: number) => {
-    if (leaveTimer.current) clearTimeout(leaveTimer.current);
-    setHovered(i);
-  }, []);
+function buildBase(cfg: FanConfig) {
+  return REELS.map((_, i) => {
+    const d = i - CY;
+    const absD = Math.abs(d);
+    return { x: d * cfg.step, y: absD * absD * cfg.yMul, r: d * cfg.rot, z: 10 - absD };
+  });
+}
 
-  const handleLeave = useCallback(() => {
-    leaveTimer.current = setTimeout(() => setHovered(null), 80);
-  }, []);
+const D_BASE = buildBase(DESKTOP);
+const M_BASE = buildBase(MOBILE);
 
-  useLayoutEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-    const ctx = gsap.context(() => {
-      gsap.from(".re-head", {
-        y: 32, opacity: 0, stagger: 0.1, duration: 0.8, ease: "expo.out",
-        scrollTrigger: { trigger: section, start: "top 84%", once: true },
-      });
-      BASE.forEach((b, i) => {
-        gsap.fromTo(`.rc-${i}`,
-          { y: 220, opacity: 0 },
-          {
-            y: b.y, opacity: 1,
-            duration: 1.05, ease: "power4.out",
-            delay: 0.06 * i,
-            scrollTrigger: { trigger: ".re-fan", start: "top 86%", once: true },
-          },
-        );
-      });
-    }, section);
-    return () => ctx.revert();
-  }, []);
-
-  function t(i: number) {
-    const b = BASE[i];
-    if (hovered === null) return b;
-    if (hovered === i)    return { ...b, y: -30, r: 0, z: b.z + 15 };
-    const nudge = i < hovered ? -14 : 14;
-    return { ...b, x: b.x + nudge };
-  }
-
-  const ReelCard = ({ reel, i, isHovered, onEnter, onLeave, className, style }: {
-    reel: typeof REELS[0];
-    i: number;
-    isHovered: boolean;
-    onEnter: () => void;
-    onLeave: () => void;
-    className?: string;
-    style?: React.CSSProperties;
-  }) => (
+/* ── ReelCard (defined outside component to avoid re-creation) ── */
+function ReelCard({ reel, i, isActive, onEnter, onLeave, onClick, className, style }: {
+  reel: typeof REELS[0];
+  i: number;
+  isActive: boolean;
+  onEnter: () => void;
+  onLeave: () => void;
+  onClick?: (e: React.MouseEvent) => void;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  return (
     <a
       href={reel.url}
       target="_blank"
@@ -95,6 +65,7 @@ export function ReelsEditorial() {
       className={className}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
+      onClick={onClick}
       style={style}
     >
       <img
@@ -121,7 +92,7 @@ export function ReelsEditorial() {
       </div>
       <div
         className="absolute inset-0 flex items-center justify-center transition-opacity duration-300"
-        style={{ opacity: isHovered ? 1 : 0 }}
+        style={{ opacity: isActive ? 1 : 0 }}
       >
         <div
           className="flex items-center justify-center rounded-full"
@@ -144,6 +115,80 @@ export function ReelsEditorial() {
       </div>
     </a>
   );
+}
+
+/* ── Main component ── */
+export function ReelsEditorial() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState<number | null>(null);
+  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  /* Detect mobile vs desktop (single fan, responsive config) */
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 1023px)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  const cfg = isMobile ? MOBILE : DESKTOP;
+  const base = isMobile ? M_BASE : D_BASE;
+
+  const handleEnter = useCallback((i: number) => {
+    if (leaveTimer.current) clearTimeout(leaveTimer.current);
+    setActive(i);
+  }, []);
+
+  const handleLeave = useCallback(() => {
+    leaveTimer.current = setTimeout(() => setActive(null), 80);
+  }, []);
+
+  /* Scroll-in animation */
+  useLayoutEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const ctx = gsap.context(() => {
+      gsap.from(".re-head", {
+        y: 32, opacity: 0, stagger: 0.1, duration: 0.8, ease: "expo.out",
+        scrollTrigger: { trigger: section, start: "top 84%", once: true },
+      });
+      REELS.forEach((_, i) => {
+        const b = isMobile ? M_BASE[i] : D_BASE[i];
+        gsap.fromTo(`.rc-${i}`,
+          { y: 220, opacity: 0 },
+          {
+            y: b.y, opacity: 1,
+            duration: 1.05, ease: "power4.out",
+            delay: 0.06 * i,
+            scrollTrigger: { trigger: ".re-fan", start: "top 86%", once: true },
+          },
+        );
+      });
+    }, section);
+    return () => ctx.revert();
+  }, [isMobile]);
+
+  /* Compute transform for card i */
+  function getTransform(i: number) {
+    const b = base[i];
+    if (active === null) return b;
+    if (active === i) return { ...b, y: cfg.liftY, r: 0, z: b.z + 15 };
+    const nudge = i < active ? -cfg.nudge : cfg.nudge;
+    return { ...b, x: b.x + nudge };
+  }
+
+  /* Mobile: tap to lift, second tap to open */
+  const handleMobileTap = useCallback((e: React.MouseEvent, i: number, url: string) => {
+    e.stopPropagation();
+    if (active === i) {
+      window.open(url, "_blank", "noopener,noreferrer");
+    } else {
+      e.preventDefault();
+      setActive(i);
+    }
+  }, [active]);
 
   return (
     <section
@@ -165,44 +210,44 @@ export function ReelsEditorial() {
         </h2>
       </div>
 
-      {/* ── DESKTOP: fan layout ── */}
+      {/* ── Single responsive fan layout ── */}
       <div
-        className="re-fan relative mx-auto hidden lg:flex"
+        className="re-fan relative mx-auto"
         style={{
-          width: `${W}px`,
-          height: `${Math.round(W * 16 / 9)}px`,
-          alignItems: "flex-end",
+          width: `${cfg.w}px`,
+          height: `${Math.round(cfg.w * 16 / 9)}px`,
           overflow: "visible",
         }}
-        onMouseLeave={handleLeave}
+        onMouseLeave={!isMobile ? handleLeave : undefined}
+        onClick={isMobile ? () => setActive(null) : undefined}
       >
         {REELS.map((reel, i) => {
-          const tr = t(i);
+          const tr = getTransform(i);
           return (
             <ReelCard
               key={reel.url}
               reel={reel}
               i={i}
-              isHovered={hovered === i}
-              onEnter={() => handleEnter(i)}
-              onLeave={handleLeave}
+              isActive={active === i}
+              onEnter={!isMobile ? () => handleEnter(i) : () => {}}
+              onLeave={!isMobile ? handleLeave : () => {}}
               className={`rc-${i}`}
+              onClick={isMobile ? (e) => handleMobileTap(e, i, reel.url) : undefined}
               style={{
                 position: "absolute",
                 bottom: 0,
                 left: 0,
-                width: `${W}px`,
+                width: `${cfg.w}px`,
                 aspectRatio: "9/16",
-                borderRadius: "18px",
+                borderRadius: `${cfg.radius}px`,
                 overflow: "hidden",
-                boxShadow: hovered === i
-                  ? "0 40px 80px -16px rgba(14,14,16,0.55)"
-                  : "0 12px 40px -10px rgba(14,14,16,0.35)",
+                boxShadow: active === i
+                  ? `0 ${isMobile ? 24 : 40}px ${isMobile ? 48 : 80}px ${isMobile ? -10 : -16}px rgba(14,14,16,0.55)`
+                  : `0 ${isMobile ? 8 : 12}px ${isMobile ? 24 : 40}px ${isMobile ? -6 : -10}px rgba(14,14,16,0.35)`,
                 transform: `translateX(${tr.x}px) translateY(${tr.y}px) rotate(${tr.r}deg)`,
                 transformOrigin: "50% 100%",
                 zIndex: tr.z,
-                transition: "transform 700ms cubic-bezier(0.22,1,0.36,1), box-shadow 500ms ease",
-                willChange: "transform",
+                transition: `transform ${isMobile ? 600 : 700}ms cubic-bezier(0.22,1,0.36,1), box-shadow ${isMobile ? 400 : 500}ms ease`,
                 cursor: "pointer",
                 background: "#0e0e10",
                 display: "block",
@@ -210,39 +255,6 @@ export function ReelsEditorial() {
             />
           );
         })}
-      </div>
-
-      {/* ── MOBILE: horizontal snap scroll ── */}
-      <div className="lg:hidden">
-        <div
-          className="flex gap-3 overflow-x-auto pb-3 -mx-5 px-5 snap-x snap-mandatory"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
-          {REELS.map((reel, i) => (
-            <ReelCard
-              key={reel.url}
-              reel={reel}
-              i={i}
-              isHovered={false}
-              onEnter={() => {}}
-              onLeave={() => {}}
-              className="relative flex-none snap-start"
-              style={{
-                width: "58vw",
-                maxWidth: "220px",
-                aspectRatio: "9/16",
-                borderRadius: "14px",
-                overflow: "hidden",
-                background: "#0e0e10",
-                display: "block",
-                boxShadow: "0 8px 24px -6px rgba(14,14,16,0.35)",
-              }}
-            />
-          ))}
-        </div>
-        <p className="mt-3 px-5 font-mono text-[8px] tracking-[0.25em] uppercase" style={{ color: "var(--ink-4)" }}>
-          Swipe →
-        </p>
       </div>
 
       {/* Footer CTA */}
