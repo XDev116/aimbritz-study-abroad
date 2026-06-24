@@ -284,71 +284,90 @@ export function BrandPromise() {
             </span>
           </div>
 
-          {/* SVG signature */}
-          <div ref={sigContainerRef} className="pointer-events-none">
-            <svg
-              ref={svgRef}
-              viewBox="100 80 440 240"
-              style={{
-                width: "clamp(220px, 65vw, 760px)",
-                height: "auto",
-                display: "block",
-                overflow: "visible",
-              }}
-              preserveAspectRatio="xMidYMid meet"
-            >
-              <g transform="translate(0,405) scale(0.1,-0.1)">
-                {SIG_PATHS.map((d, i) => (
-                  <path
-                    key={i}
-                    d={d}
-                    pathLength={1}
-                    fill="currentColor"
-                    stroke="currentColor"
-                    strokeWidth="30"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeDasharray="1"
-                    strokeDashoffset="1"
-                    fillOpacity={0}
-                  />
-                ))}
-              </g>
-            </svg>
+          {/* Mobile layout: normal flow, signature + text stacked */}
+          <div className="flex flex-col items-center justify-center min-h-screen px-6 py-20 text-center lg:hidden overflow-x-hidden">
+            {/* Signature */}
+            <div className="pointer-events-none mb-8">
+              <svg
+                viewBox="100 80 440 240"
+                style={{ width: "min(72vw, 260px)", height: "auto", display: "block", overflow: "visible" }}
+                preserveAspectRatio="xMidYMid meet"
+              >
+                <g transform="translate(0,405) scale(0.1,-0.1)">
+                  {SIG_PATHS.map((d, i) => (
+                    <path key={i} d={d} pathLength={1} fill="currentColor" stroke="currentColor"
+                      strokeWidth="30" strokeLinecap="round" strokeLinejoin="round"
+                      strokeDasharray="none" strokeDashoffset="0" fillOpacity={1} />
+                  ))}
+                </g>
+              </svg>
+            </div>
+
+            {/* Eyebrow */}
+            <div className="bp-eyebrow flex items-center justify-center gap-3 mb-10">
+              <span className="inline-block h-px w-10" style={{ background: "var(--ember)" }} />
+              <span className="t-eyebrow" style={{ color: "var(--ember)" }}>The Promise</span>
+              <span className="inline-block h-px w-10" style={{ background: "var(--ember)" }} />
+            </div>
+
+            {/* Headline */}
+            <div>
+              <p className="bp-line t-display leading-tight" style={{ fontSize: "clamp(2.6rem, 11vw, 4rem)" }}>We don&apos;t place</p>
+              <p className="bp-line t-display leading-tight" style={{ fontSize: "clamp(2.6rem, 11vw, 4rem)" }}>students abroad.</p>
+              <p className="bp-line t-display-serif mt-4 leading-tight" style={{ color: "#c4f542", fontSize: "clamp(2.6rem, 11vw, 4rem)" }}>We build global futures.</p>
+
+              {/* Divider */}
+              <div className="my-10 flex items-center justify-center gap-4">
+                <span className="inline-block h-px w-16" style={{ background: "rgba(252,252,250,0.2)" }} />
+                <span className="font-mono text-[9px] tracking-[0.3em] uppercase" style={{ opacity: 0.4 }}>Est. 2018</span>
+                <span className="inline-block h-px w-16" style={{ background: "rgba(252,252,250,0.2)" }} />
+              </div>
+
+              <div className="bp-meta flex flex-col items-center gap-3">
+                <span className="font-mono text-[11px] tracking-[0.3em] uppercase" style={{ opacity: 0.7 }}>Al Ameen · Founder · Aimbritz</span>
+                <div className="flex flex-wrap items-center justify-center gap-x-4 font-mono text-[10px] tracking-[0.22em] uppercase" style={{ opacity: 0.45 }}>
+                  <span>42 advisors globally</span><span>·</span><span>14 countries</span><span>·</span><span>5,000+ students</span>
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Text content */}
-          <div
-            ref={contentRef}
-            className="absolute inset-0 flex items-center justify-center pointer-events-none"
-          >
-            <div className="max-w-[1200px] mx-auto px-6 md:px-10 text-center pt-[32vh]">
-              <div className="bp-eyebrow flex items-center justify-center gap-3">
-                <span className="inline-block h-px w-10" style={{ background: "var(--ember)" }} />
-                <span className="t-eyebrow" style={{ color: "var(--ember)" }}>The Promise</span>
-                <span className="inline-block h-px w-10" style={{ background: "var(--ember)" }} />
-              </div>
+          {/* Desktop layout: absolute positioned (driven by GSAP) */}
+          <div className="hidden lg:block">
+            <div ref={sigContainerRef} className="pointer-events-none absolute">
+              <svg
+                ref={svgRef}
+                viewBox="100 80 440 240"
+                style={{ width: "clamp(220px, 65vw, 760px)", height: "auto", display: "block", overflow: "visible" }}
+                preserveAspectRatio="xMidYMid meet"
+              >
+                <g transform="translate(0,405) scale(0.1,-0.1)">
+                  {SIG_PATHS.map((d, i) => (
+                    <path key={i} d={d} pathLength={1} fill="currentColor" stroke="currentColor"
+                      strokeWidth="30" strokeLinecap="round" strokeLinejoin="round"
+                      strokeDasharray="1" strokeDashoffset="1" fillOpacity={0} />
+                  ))}
+                </g>
+              </svg>
+            </div>
 
-              <div className="mt-10">
-                <p className="bp-line t-display" style={{ fontSize: "clamp(2rem, 6vw, 6.2rem)" }}>
-                  We don&apos;t place
-                </p>
-                <p className="bp-line t-display" style={{ fontSize: "clamp(2rem, 6vw, 6.2rem)" }}>
-                  students abroad.
-                </p>
-                <p className="bp-line t-display-serif mt-4" style={{ color: "#c4f542", fontSize: "clamp(2rem, 6vw, 6.2rem)" }}>
-                  We build global futures.
-                </p>
-              </div>
-
-              <div className="bp-meta mt-10 flex flex-col items-center gap-2">
-                <span className="font-mono text-[9px] tracking-[0.3em] uppercase" style={{ opacity: 0.6 }}>
-                  Al Ameen · Founder · Aimbritz
-                </span>
-                <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-1 font-mono text-[10px] tracking-[0.22em] uppercase" style={{ opacity: 0.45 }}>
-                  <span>42 advisors globally</span>
-                  <span>·</span>
-                  <span>Since 2018</span>
+            <div ref={contentRef} className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="max-w-[1200px] mx-auto px-10 text-center pt-[32vh]">
+                <div className="bp-eyebrow flex items-center justify-center gap-3">
+                  <span className="inline-block h-px w-10" style={{ background: "var(--ember)" }} />
+                  <span className="t-eyebrow" style={{ color: "var(--ember)" }}>The Promise</span>
+                  <span className="inline-block h-px w-10" style={{ background: "var(--ember)" }} />
+                </div>
+                <div className="mt-10">
+                  <p className="bp-line t-display" style={{ fontSize: "clamp(2rem, 6vw, 6.2rem)" }}>We don&apos;t place</p>
+                  <p className="bp-line t-display" style={{ fontSize: "clamp(2rem, 6vw, 6.2rem)" }}>students abroad.</p>
+                  <p className="bp-line t-display-serif mt-4" style={{ color: "#c4f542", fontSize: "clamp(2rem, 6vw, 6.2rem)" }}>We build global futures.</p>
+                </div>
+                <div className="bp-meta mt-10 flex flex-col items-center gap-2">
+                  <span className="font-mono text-[9px] tracking-[0.3em] uppercase" style={{ opacity: 0.6 }}>Al Ameen · Founder · Aimbritz</span>
+                  <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-1 font-mono text-[10px] tracking-[0.22em] uppercase" style={{ opacity: 0.45 }}>
+                    <span>42 advisors globally</span><span>·</span><span>Since 2018</span>
+                  </div>
                 </div>
               </div>
             </div>
