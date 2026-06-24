@@ -27,7 +27,7 @@ export const STORIES: Story[] = [
   {
     id: "abhiram",
     name: "Abhiram",
-    photo: "/images/testimonials/Abhiram .jpeg",
+    photo: "/images/testimonials/Abhiram .webp",
     uni: "Northumbria University, Newcastle",
     course: "Study Abroad",
     country: "United Kingdom",
@@ -43,7 +43,7 @@ export const STORIES: Story[] = [
   {
     id: "jasmine",
     name: "Jasmine",
-    photo: "/images/testimonials/Jasmine.jpeg",
+    photo: "/images/testimonials/Jasmine.webp",
     uni: "Northumbria University, London Campus",
     course: "Study Abroad",
     country: "United Kingdom",
@@ -76,7 +76,7 @@ export const STORIES: Story[] = [
   {
     id: "shahin-shamnad",
     name: "Shahin Shamnad",
-    photo: "/images/testimonials/Shahin Shamnad.jpeg",
+    photo: "/images/testimonials/Shahin Shamnad.webp",
     uni: "University of East London",
     course: "Study Abroad",
     country: "United Kingdom",
@@ -93,7 +93,7 @@ export const STORIES: Story[] = [
   {
     id: "kavya-krishnan",
     name: "Kavya Krishnan",
-    photo: "/images/testimonials/KAVYA KRISHNAN.jpeg",
+    photo: "/images/testimonials/KAVYA KRISHNAN.webp",
     uni: "Middlesex University, London",
     course: "Study Abroad",
     country: "United Kingdom",
@@ -110,7 +110,7 @@ export const STORIES: Story[] = [
   {
     id: "devika-ys",
     name: "Devika Y S",
-    photo: "/images/testimonials/DEVIKA Y S.jpeg",
+    photo: "/images/testimonials/DEVIKA Y S.webp",
     uni: "University of Roehampton, London",
     course: "Study Abroad",
     country: "United Kingdom",

@@ -56,7 +56,7 @@ export function Footer() {
         {/* Rotating badge */}
         <div className="absolute top-8 right-8 hidden lg:block">
           <RotatingBadge
-            text="AIMBRITZ · GLOBAL EDUCATION · SINCE 2020 · "
+            text="AIMBRITZ · GLOBAL EDUCATION · SINCE 2018 · "
             size={140}
             fontSize={10}
             color="var(--ember)"
@@ -202,7 +202,7 @@ export function Footer() {
           <div className="flex flex-col sm:flex-row sm:items-center gap-x-4 gap-y-1 text-xs text-ink-3">
             <p>© {new Date().getFullYear()} AimBritz Overseas. All rights reserved.</p>
             <span className="hidden sm:inline text-ink-4">·</span>
-            <p className="font-mono text-ink-3 uppercase tracking-[0.15em]">Building global futures · Since 2020</p>
+            <p className="font-mono text-ink-3 uppercase tracking-[0.15em]">Building global futures · Since 2018</p>
           </div>
           <div className="flex gap-5">
             {navigation.legal.map((item) => (

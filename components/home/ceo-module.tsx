@@ -177,14 +177,14 @@ export function CeoModule() {
                 Al Ameen
               </p>
               <p className="font-mono text-[10px] tracking-[0.2em] uppercase opacity-70 mt-0.5">
-                AB / ADVISOR / SINCE 2020
+                AB / ADVISOR / SINCE 2018
               </p>
             </div>
 
             {/* Rotating circular badge */}
             <div className="absolute top-4 right-4 z-10">
               <RotatingBadge
-                text="AIMBRITZ \u00b7 ADVISOR \u00b7 SINCE 2020 \u00b7 "
+                text="AIMBRITZ \u00b7 ADVISOR \u00b7 SINCE 2018 \u00b7 "
                 size={90}
                 fontSize={8.5}
                 color="var(--paper)"

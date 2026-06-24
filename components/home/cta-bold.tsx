@@ -181,7 +181,7 @@ export function CtaBold() {
             className="mt-5 text-[13px] leading-relaxed"
             style={{ color: "rgba(248,244,235,0.55)" }}
           >
-            Study abroad consultancy &middot; Since 2020. Guiding students into
+            Study abroad consultancy &middot; Since 2018. Guiding students into
             500+ universities across 14 countries.
           </p>
 

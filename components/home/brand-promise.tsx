@@ -371,7 +371,7 @@ export function BrandPromise() {
                 <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-1 font-mono text-[10px] tracking-[0.22em] uppercase" style={{ opacity: 0.45 }}>
                   <span>42 advisors globally</span>
                   <span>·</span>
-                  <span>Since 2020</span>
+                  <span>Since 2018</span>
                 </div>
               </div>
             </div>
