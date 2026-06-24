@@ -72,8 +72,8 @@ export function BrandPromise() {
       });
 
       if (isMobile) {
-        // ── MOBILE: no animation — hero crossfades to promise, signature just sits there ──
-        // Show signature immediately, fully drawn, centred
+        // ── MOBILE: no scroll animation — sections stack normally ──
+        // Just show signature fully drawn, no GSAP needed
         sigContainer.style.cssText = `
           position: absolute;
           top: 50%;
@@ -87,30 +87,7 @@ export function BrandPromise() {
           p.style.fillOpacity = "1";
           p.style.opacity = "1";
         });
-
-        gsap.set(heroLayer, { opacity: 1, clearProps: "transform" });
-        gsap.set(darkBg, { opacity: 0 });
-        gsap.set(promiseLayer, { opacity: 0 });
-        gsap.set(content, { opacity: 1 });
         gsap.set(".bp-line, .bp-eyebrow, .bp-meta", { opacity: 1, y: 0 });
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: outer,
-            start: "top top",
-            end: "bottom bottom",
-            scrub: 1,
-            invalidateOnRefresh: true,
-          },
-        });
-
-        // 0 → 0.40: hero fades out
-        tl.to(heroLayer, { opacity: 0, duration: 0.40, ease: "power1.in" }, 0);
-        // 0.20 → 0.50: dark bg fades in
-        tl.to(darkBg, { opacity: 1, duration: 0.30, ease: "power1.inOut" }, 0.20);
-        // 0.35 → 0.65: promise layer (with signature + text already visible) fades in
-        tl.to(promiseLayer, { opacity: 1, duration: 0.30, ease: "power1.out" }, 0.35);
-
         return;
       }
 
@@ -180,10 +157,10 @@ export function BrandPromise() {
   }, []);
 
   return (
-    <section ref={outerRef} className="relative h-[300vh] lg:h-[700vh]">
+    <section ref={outerRef} className="relative h-auto lg:h-[700vh]">
       <div
         ref={stickyRef}
-        className="sticky top-0 h-screen w-full"
+        className="lg:sticky top-0 lg:h-screen w-full"
         style={{
           background: "var(--bp-bg, transparent)",
           color: "var(--bp-fg, #0a0a0a)",
@@ -192,18 +169,17 @@ export function BrandPromise() {
           touchAction: "pan-y",
         }}
       >
-        {/* Dark bg overlay — starts invisible, fades in via opacity (GPU composited).
-            Sits below both layers initially; hero fades out on top of it. */}
+        {/* Dark bg overlay — desktop only (mobile uses static bg on promise block) */}
         <div
           ref={darkBgRef}
-          className="absolute inset-0 pointer-events-none"
+          className="hidden lg:block absolute inset-0 pointer-events-none"
           style={{ background: "rgba(40,44,32,0.92)", zIndex: 0, opacity: 0 }}
         />
 
-        {/* HERO LAYER — sits above darkBg; fades out to reveal darkBg beneath */}
+        {/* HERO LAYER */}
         <div
           ref={heroLayerRef}
-          className="absolute inset-0 overflow-hidden"
+          className="relative lg:absolute lg:inset-0 overflow-hidden min-h-screen"
           style={{ transformOrigin: "center center", color: "#0a0a0a", zIndex: 1, willChange: "opacity, transform" }}
         >
           <MastheadHero />
@@ -256,8 +232,12 @@ export function BrandPromise() {
         </div>
 
 
-        {/* PROMISE LAYER — fades in as hero fades out */}
-        <div ref={promiseLayerRef} className="absolute inset-0" style={{ zIndex: 2, willChange: "opacity" }}>
+        {/* PROMISE LAYER */}
+        <div
+          ref={promiseLayerRef}
+          className="relative lg:absolute lg:inset-0 min-h-screen lg:min-h-0"
+          style={{ zIndex: 2, willChange: "opacity", background: "rgba(40,44,32,0.92)", color: "#fcfcfa" }}
+        >
           {/* Scroll hint — on Promise layer, light color for dark bg */}
           <div
             className="hidden lg:flex absolute bottom-3 left-0 right-0 z-30 justify-center items-center gap-2 pointer-events-none"
