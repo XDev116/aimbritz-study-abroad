@@ -72,16 +72,14 @@ export function BrandPromise() {
       });
 
       if (isMobile) {
-        // ── MOBILE: pure opacity crossfade, GPU composited only ──────────────
-        // Fix signature position once — CSS, not GSAP inline styles, so it
-        // survives resize/refresh without fighting gsap.set() calls.
+        // ── MOBILE: no animation — hero crossfades to promise, signature just sits there ──
+        // Show signature immediately, fully drawn, centred
         sigContainer.style.cssText = `
           position: absolute;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%) scale(0.5);
-          opacity: 0;
-          will-change: opacity;
+          opacity: 1;
         `;
         paths.forEach((p) => {
           p.style.strokeDasharray = "none";
@@ -93,8 +91,8 @@ export function BrandPromise() {
         gsap.set(heroLayer, { opacity: 1, clearProps: "transform" });
         gsap.set(darkBg, { opacity: 0 });
         gsap.set(promiseLayer, { opacity: 0 });
-        gsap.set(content, { opacity: 0 });
-        gsap.set(".bp-line, .bp-eyebrow, .bp-meta", { opacity: 0 });
+        gsap.set(content, { opacity: 1 });
+        gsap.set(".bp-line, .bp-eyebrow, .bp-meta", { opacity: 1, y: 0 });
 
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -106,17 +104,12 @@ export function BrandPromise() {
           },
         });
 
-        // 0 → 0.35: hero fades out
-        tl.to(heroLayer, { opacity: 0, duration: 0.35, ease: "power1.in" }, 0);
-        // 0.15 → 0.45: dark bg fades in
-        tl.to(darkBg, { opacity: 1, duration: 0.30, ease: "power1.inOut" }, 0.15);
-        // 0.25 → 0.50: promise layer fades in
-        tl.to(promiseLayer, { opacity: 1, duration: 0.25, ease: "power1.out" }, 0.25);
-        // 0.40 → 0.60: signature fades in (opacity only — no transform change)
-        tl.to(sigContainer, { opacity: 1, duration: 0.20, ease: "power1.out" }, 0.40);
-        // 0.55 → 0.80: text cascades in
-        tl.to(content, { opacity: 1, duration: 0.15, ease: "power1.out" }, 0.55);
-        tl.to(".bp-eyebrow, .bp-line, .bp-meta", { opacity: 1, duration: 0.20, stagger: 0.04 }, 0.62);
+        // 0 → 0.40: hero fades out
+        tl.to(heroLayer, { opacity: 0, duration: 0.40, ease: "power1.in" }, 0);
+        // 0.20 → 0.50: dark bg fades in
+        tl.to(darkBg, { opacity: 1, duration: 0.30, ease: "power1.inOut" }, 0.20);
+        // 0.35 → 0.65: promise layer (with signature + text already visible) fades in
+        tl.to(promiseLayer, { opacity: 1, duration: 0.30, ease: "power1.out" }, 0.35);
 
         return;
       }
