@@ -533,13 +533,14 @@ html.lenis body {
 
 /* Hero keyframes */
 @keyframes heroUp {
-  0% { transform: translateY(100%); opacity: 0; }
-  60% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(0); opacity: 1; }
+  0% { transform: translateY(30%); opacity: 0; filter: blur(6px); }
+  60% { filter: blur(0px); }
+  100% { transform: translateY(0); opacity: 1; filter: blur(0px); }
 }
 @keyframes filmSwap {
-  0% { transform: scale(1.08); opacity: 0.4; }
-  100% { transform: scale(1); opacity: 1; }
+  0% { transform: scale(1.02); opacity: 0; filter: blur(4px); }
+  50% { opacity: 0.85; filter: blur(0px); }
+  100% { transform: scale(1); opacity: 1; filter: blur(0px); }
 }
 @keyframes scrollPulseX {
   0%, 100% { opacity: 0.3; transform: scaleX(0.6); }

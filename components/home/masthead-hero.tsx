@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { FlipText, BtnPrimary, BtnGhost } from "@/components/ui/primitives";
+import { BtnPrimary, BtnGhost } from "@/components/ui/primitives";
 import { FlowLines } from "@/components/ui/flow-lines";
 
 /* ------------------------------------------------------------------ */
@@ -21,12 +21,16 @@ interface Placement {
 }
 
 const PLACEMENTS: Placement[] = [
-  { name: "Priya Nair",   first: "Priya",  uni: "Oxford",         country: "UK",        flag: "GB", course: "MSc Computer Science", year: "'26", photo: "/images/students/student1.webp" },
-  { name: "Vignesh Arumugham", first: "Vignesh", uni: "Northumbria University", country: "UK", flag: "GB", course: "MBA", year: "'26", photo: "/images/students/Vignesh Arumugham.jpg", objectPosition: "top" },
-  { name: "Meera Iyer",   first: "Meera",  uni: "Toronto",        country: "Canada",    flag: "CA", course: "MS Data Science",      year: "'26", photo: "/images/students/student3.webp" },
-  { name: "Arjun Das",    first: "Arjun",  uni: "Edinburgh",      country: "UK",        flag: "GB", course: "MSc Finance",          year: "'26", photo: "/images/students/student4.webp" },
-  { name: "Neha Varma",   first: "Neha",   uni: "Sydney",         country: "Australia", flag: "AU", course: "BArch",                year: "'26", photo: "/images/students/student5.webp" },
-  { name: "Rajesh Menon", first: "Rajesh", uni: "Trinity Dublin", country: "Ireland",   flag: "IE", course: "MSc Pharmacology",     year: "'26", photo: "/images/students/student6.webp" },
+  { name: "Thameem Hadhi",      first: "Thameem",   uni: "Anglia Ruskin University",  country: "UK", flag: "GB", course: "MBA",                                      year: "'25", photo: "/images/students/Thameem Hadhi.webp" },
+  { name: "Manu Ajith",         first: "Manu",      uni: "Northumbria University",    country: "UK", flag: "GB", course: "MSc International Project Management",      year: "'25", photo: "/images/students/Manu Ajith.webp" },
+  { name: "Arshad Farook",      first: "Arshad",    uni: "De Montfort University",    country: "UK", flag: "GB", course: "MSc International Business & Management",   year: "'25", photo: "/images/students/Arshad Farook .webp" },
+  { name: "Sreejith Sadasivan", first: "Sreejith",  uni: "University of Salford",     country: "UK", flag: "GB", course: "MSc Procurement & Supply Chain Management", year: "'25", photo: "/images/students/Sreejith Sadasivan.webp" },
+  { name: "Lyjan Siluvai Cruz", first: "Lyjan",     uni: "University of Chester",     country: "UK", flag: "GB", course: "MSc International Business",                year: "'25", photo: "/images/students/Lyjan Siluvai Cruz.webp" },
+  { name: "Viji Francis",       first: "Viji",      uni: "Middlesex University",      country: "UK", flag: "GB", course: "MA International Business Management",      year: "'25", photo: "/images/students/Viji Francis.webp" },
+  { name: "Anjana Vijayan",     first: "Anjana",    uni: "Northumbria University",    country: "UK", flag: "GB", course: "MSc Global Logistics & Supply Chain",       year: "'25", photo: "/images/students/Anjana vijayan.webp" },
+  { name: "Kavya Krishnan",     first: "Kavya",     uni: "Middlesex University",      country: "UK", flag: "GB", course: "MSc Management",                            year: "'25", photo: "/images/students/Kavya Krishnan .webp" },
+  { name: "Aparna Nandakumar",  first: "Aparna",    uni: "De Montfort University",    country: "UK", flag: "GB", course: "MSc International Business & Management",   year: "'25", photo: "/images/students/Aparna Nandakumar.webp" },
+  { name: "Fathima Siraj",      first: "Fathima",   uni: "Anglia Ruskin University",  country: "UK", flag: "GB", course: "MBA in Finance",                            year: "'25", photo: "/images/students/Fathima Siraj.webp" },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -35,15 +39,19 @@ const PLACEMENTS: Placement[] = [
 export function MastheadHero() {
   const heroRef = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
+  const [prev, setPrev] = useState(0);
   const [hoverIdx, setHoverIdx] = useState<number | null>(null);
 
   /* Auto-rotate */
   useEffect(() => {
     const id = setInterval(() => {
-      setActive((i) =>
-        hoverIdx !== null ? i : (i + 1) % PLACEMENTS.length,
-      );
-    }, 3800);
+      setActive((i) => {
+        if (hoverIdx !== null) return i;
+        const next = (i + 1) % PLACEMENTS.length;
+        setPrev(i);
+        return next;
+      });
+    }, 7000);
     return () => clearInterval(id);
   }, [hoverIdx]);
 
@@ -52,6 +60,7 @@ export function MastheadHero() {
      cleanly on scroll-back (causes photo scale + meta opacity to get stuck). */
 
   const p = PLACEMENTS[hoverIdx ?? active];
+  const prevP = PLACEMENTS[prev];
 
   return (
     <section
@@ -66,7 +75,7 @@ export function MastheadHero() {
 
       <div className="relative z-10 px-5 md:px-10 lg:px-14 grid grid-cols-12 gap-4 lg:gap-6 h-full">
         {/* LEFT column -- rotating headline */}
-        <div className="col-span-12 lg:col-span-7 flex flex-col justify-between">
+        <div className="col-span-12 lg:col-span-8 flex flex-col justify-between">
           <div>
             {/* Top eyebrow row */}
             <div className="flex items-center gap-4 mb-5">
@@ -107,17 +116,25 @@ export function MastheadHero() {
               </p>
             </div>
 
-            <div
-              className="h-line mt-0.5 relative"
-              style={{ minHeight: "1.05em" }}
-            >
-              <FlipText
-                text={p.first.toUpperCase()}
-                className="t-display inline-block leading-[0.95]"
-                style={{ fontSize: "clamp(2rem, 5.4vw, 5.6rem)" }}
-              />
+            <div className="h-line mt-0.5 overflow-hidden">
+              <div
+                key={p.first}
+                style={{
+                  animation: "heroUp 2s cubic-bezier(0.16,1,0.3,1) both",
+                }}
+              >
+                <span
+                  className="t-display leading-[0.95]"
+                  style={{ fontSize: "clamp(2rem, 5.4vw, 5.6rem)" }}
+                >
+                  {p.first.toUpperCase()}
+                </span>
+              </div>
+            </div>
+
+            <div className="h-line mt-0.5">
               <span
-                className="font-serif italic ml-4"
+                className="font-serif italic"
                 style={{
                   color: "var(--ember)",
                   fontSize: "clamp(1rem, 2.2vw, 2.2rem)",
@@ -132,7 +149,7 @@ export function MastheadHero() {
                 key={p.uni}
                 style={{
                   animation:
-                    "heroUp 0.7s cubic-bezier(0.65,0.05,0,1) both",
+                    "heroUp 2s cubic-bezier(0.16,1,0.3,1) 0.25s both",
                 }}
               >
                 <span
@@ -183,7 +200,7 @@ export function MastheadHero() {
         </div>
 
         {/* RIGHT column -- cinematic portrait */}
-        <div className="col-span-12 lg:col-span-5 relative flex flex-col lg:h-full">
+        <div className="col-span-12 lg:col-span-4 relative flex flex-col lg:h-full">
           {/* Big portrait / film frame */}
           <div
             className="h-frame relative overflow-hidden flex-1 min-h-0"
@@ -193,19 +210,38 @@ export function MastheadHero() {
               border: "1px solid var(--hairline)",
             }}
           >
+            {/* Previous photo — stays visible underneath to prevent white flash */}
+            <div className="absolute inset-0">
+              <Image
+                src={prevP.photo}
+                alt={prevP.name}
+                fill
+                className="object-cover"
+                style={{ objectPosition: prevP.objectPosition ?? "center" }}
+              />
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(180deg, transparent 35%, rgba(10,10,10,0.55) 100%)",
+                }}
+              />
+            </div>
+
+            {/* Current photo — fades in on top */}
             <div
               className="h-film absolute inset-0"
-              key={`film-${p.uni}`}
+              key={`film-${p.name}`}
               style={{
                 animation:
-                  "filmSwap 1.1s cubic-bezier(0.22,1,0.36,1) both",
+                  "filmSwap 3s cubic-bezier(0.16,1,0.3,1) both",
               }}
             >
               <Image
                 src={p.photo}
                 alt={p.name}
                 fill
-                className="object-cover"
+                className="object-cover transition-transform duration-[7000ms] ease-out hover:scale-[1.03]"
                 style={{ objectPosition: p.objectPosition ?? "center" }}
               />
               <div
