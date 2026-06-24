@@ -183,10 +183,9 @@ useGLTF.preload(OUTFITS[DEFAULT_OUTFIT]);
 
 export function Professor3D({ outfit = DEFAULT_OUTFIT }: { outfit?: string }) {
   return (
-    <div className="w-full h-full" style={{ position: "relative", touchAction: "pan-y" }}>
+    <div className="w-full h-full" style={{ position: "relative", touchAction: "pan-y", pointerEvents: "none" }}>
       <Canvas
-        onPointerDown={(e) => e.stopPropagation()}
-        style={{ touchAction: "pan-y" }}
+        style={{ touchAction: "pan-y", pointerEvents: "none" }}
         shadows={false}
         camera={{ position: [0, 0.5, 4], fov: 50 }}
         gl={{
