@@ -249,58 +249,6 @@ export default function StoriesPage() {
         </div>
       </section>
 
-      {/* ── Reels video strip ── */}
-      <section className="px-5 md:px-8 py-16 md:py-24">
-        <div className="max-w-[1200px] mx-auto">
-          <div className="st-rev flex items-end justify-between gap-4 mb-8 md:mb-10">
-            <div>
-              <p className="font-mono text-[10px] md:text-[11px] tracking-[0.3em] uppercase mb-3" style={{ color: C.faint }}>
-                In their own words
-              </p>
-              <h2 className="font-sans font-black uppercase tracking-[-0.03em] leading-[0.95]" style={{ fontSize: "clamp(1.8rem, 5vw, 3.6rem)" }}>
-                Watch the reels.
-              </h2>
-            </div>
-            <a href="https://www.instagram.com/aimbritz" target="_blank" rel="noopener noreferrer" className="hidden md:inline-flex font-mono text-[10px] tracking-[0.2em] uppercase pb-1 border-b" style={{ borderColor: C.ink }}>
-              @aimbritz →
-            </a>
-          </div>
-          <div className="flex gap-2.5 md:gap-4 overflow-x-auto pb-3 -mx-1 px-1 items-center" style={{ scrollbarWidth: "none" }}>
-            {STORY_REELS.map((r, i) => {
-              // staggered heights for an authentic IG-feed rhythm
-              const tall = i % 3 === 1;
-              return (
-                <a
-                  key={r.url}
-                  href={r.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="st-rev group relative flex-none overflow-hidden rounded-xl md:rounded-2xl"
-                  style={{
-                    width: tall ? "min(42vw, 240px)" : "min(36vw, 200px)",
-                    aspectRatio: "9/16",
-                    background: C.bg2,
-                  }}
-                >
-                  <img src={r.thumb} alt={`AimBritz reel ${i + 1}`} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent 45%)" }} />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: "rgba(255,255,255,0.22)", backdropFilter: "blur(6px)" }}>
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z" /></svg>
-                    </span>
-                  </div>
-                  {/* IG handle footer */}
-                  <div className="absolute bottom-3 left-3 right-3 flex items-center gap-1.5">
-                    <span className="w-4 h-4 rounded-full" style={{ background: "linear-gradient(45deg,#f09433,#dc2743,#bc1888)" }} />
-                    <span className="font-mono text-[8px] tracking-[0.15em] uppercase" style={{ color: "rgba(255,255,255,0.85)" }}>@aimbritz</span>
-                  </div>
-                </a>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
       {/* ── Photo wall (closer) ── */}
       <section className="px-5 md:px-8 pb-16 md:pb-24 border-t pt-16 md:pt-24" style={{ borderColor: C.line }}>
         <div className="max-w-[1200px] mx-auto">
