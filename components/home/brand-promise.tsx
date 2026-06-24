@@ -72,49 +72,51 @@ export function BrandPromise() {
       });
 
       if (isMobile) {
-        // ── MOBILE: pure opacity crossfade, no CSS variable tweens ──────────
-        // CSS vars can't be composited — the browser recalculates style every tick.
-        // Instead we fade a real darkBg div (opacity = GPU composited = smooth).
-        gsap.set(heroLayer, { opacity: 1 });
+        // ── MOBILE: pure opacity crossfade, GPU composited only ──────────────
+        // Fix signature position once — CSS, not GSAP inline styles, so it
+        // survives resize/refresh without fighting gsap.set() calls.
+        sigContainer.style.cssText = `
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%) scale(0.5);
+          opacity: 0;
+          will-change: opacity;
+        `;
+        paths.forEach((p) => {
+          p.style.strokeDasharray = "none";
+          p.style.strokeDashoffset = "0";
+          p.style.fillOpacity = "1";
+          p.style.opacity = "1";
+        });
+
+        gsap.set(heroLayer, { opacity: 1, clearProps: "transform" });
         gsap.set(darkBg, { opacity: 0 });
         gsap.set(promiseLayer, { opacity: 0 });
-        gsap.set(sigContainer, {
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          xPercent: -50,
-          yPercent: -50,
-          scale: 0.55,
-          opacity: 0,
-        });
-        paths.forEach((p) => {
-          gsap.set(p, { strokeDasharray: "none", strokeDashoffset: 0, fillOpacity: 1 });
-        });
         gsap.set(content, { opacity: 0 });
         gsap.set(".bp-line, .bp-eyebrow, .bp-meta", { opacity: 0 });
-        sticky.style.setProperty("--bp-bg", "transparent");
 
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: outer,
             start: "top top",
             end: "bottom bottom",
-            scrub: 0.8,
+            scrub: 1,
             invalidateOnRefresh: true,
           },
         });
 
         // 0 → 0.35: hero fades out
         tl.to(heroLayer, { opacity: 0, duration: 0.35, ease: "power1.in" }, 0);
-        // 0.15 → 0.45: dark bg fades in (replaces --bp-bg CSS var tween)
+        // 0.15 → 0.45: dark bg fades in
         tl.to(darkBg, { opacity: 1, duration: 0.30, ease: "power1.inOut" }, 0.15);
-        // 0.30 → 0.55: promise content fades in
-        tl.to(promiseLayer, { opacity: 1, duration: 0.25, ease: "power1.out" }, 0.30);
-        // 0.45 → 0.65: signature fades in
-        tl.to(sigContainer, { opacity: 1, duration: 0.20, ease: "power1.out" }, 0.45);
-        // 0.60 → 0.85: text cascades in
-        tl.to(content, { opacity: 1, duration: 0.15, ease: "power1.out" }, 0.60);
-        tl.to(".bp-eyebrow, .bp-line, .bp-meta", { opacity: 1, duration: 0.20, stagger: 0.04 }, 0.65);
+        // 0.25 → 0.50: promise layer fades in
+        tl.to(promiseLayer, { opacity: 1, duration: 0.25, ease: "power1.out" }, 0.25);
+        // 0.40 → 0.60: signature fades in (opacity only — no transform change)
+        tl.to(sigContainer, { opacity: 1, duration: 0.20, ease: "power1.out" }, 0.40);
+        // 0.55 → 0.80: text cascades in
+        tl.to(content, { opacity: 1, duration: 0.15, ease: "power1.out" }, 0.55);
+        tl.to(".bp-eyebrow, .bp-line, .bp-meta", { opacity: 1, duration: 0.20, stagger: 0.04 }, 0.62);
 
         return;
       }
@@ -188,11 +190,13 @@ export function BrandPromise() {
     <section ref={outerRef} className="relative h-[300vh] lg:h-[700vh]">
       <div
         ref={stickyRef}
-        className="sticky top-0 h-screen w-full overflow-hidden"
+        className="sticky top-0 h-screen w-full"
         style={{
           background: "var(--bp-bg, transparent)",
           color: "var(--bp-fg, #0a0a0a)",
           isolation: "isolate",
+          overflow: "clip",
+          touchAction: "pan-y",
         }}
       >
         {/* Dark bg overlay — starts invisible, fades in via opacity (GPU composited).
@@ -206,8 +210,8 @@ export function BrandPromise() {
         {/* HERO LAYER — sits above darkBg; fades out to reveal darkBg beneath */}
         <div
           ref={heroLayerRef}
-          className="absolute inset-0 will-change-[transform,opacity] overflow-hidden"
-          style={{ transformOrigin: "center center", color: "#0a0a0a", zIndex: 1 }}
+          className="absolute inset-0 overflow-hidden"
+          style={{ transformOrigin: "center center", color: "#0a0a0a", zIndex: 1, willChange: "opacity, transform" }}
         >
           <MastheadHero />
 
@@ -260,7 +264,7 @@ export function BrandPromise() {
 
 
         {/* PROMISE LAYER — fades in as hero fades out */}
-        <div ref={promiseLayerRef} className="absolute inset-0" style={{ zIndex: 2 }}>
+        <div ref={promiseLayerRef} className="absolute inset-0" style={{ zIndex: 2, willChange: "opacity" }}>
           {/* Scroll hint — on Promise layer, light color for dark bg */}
           <div
             className="hidden lg:flex absolute bottom-3 left-0 right-0 z-30 justify-center items-center gap-2 pointer-events-none"
