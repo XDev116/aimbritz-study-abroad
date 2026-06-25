@@ -185,25 +185,6 @@ export function CtaBold() {
             500+ universities across 14 countries.
           </p>
 
-          {/* Offices */}
-          <div className="mt-5 space-y-3">
-            <div>
-              <p className="font-mono text-[9px] tracking-[0.22em] uppercase" style={{ color: "var(--ember)" }}>
-                Trivandrum
-              </p>
-              <p className="mt-1 text-[12px] leading-relaxed" style={{ color: "rgba(248,244,235,0.5)" }}>
-                Mahatma Gandhi Rd, Puthenchanthai, Santhi Nagar, Pulimoodu, Thiruvananthapuram, Kerala 695001
-              </p>
-            </div>
-            <div>
-              <p className="font-mono text-[9px] tracking-[0.22em] uppercase" style={{ color: "var(--ember)" }}>
-                Kochi
-              </p>
-              <p className="mt-1 text-[12px] leading-relaxed" style={{ color: "rgba(248,244,235,0.5)" }}>
-                3rd Floor, Koonamthai, Edappally, Kochi, Kerala 682024
-              </p>
-            </div>
-          </div>
         </div>
 
         {/* Link columns */}
@@ -254,12 +235,31 @@ export function CtaBold() {
           </div>
         ))}
 
+        {/* Offices — full width, 2 cols */}
+        <div className="col-span-12 pt-6" style={{ borderTop: "1px solid rgba(248,244,235,0.08)" }}>
+          <p className="font-mono text-[9px] tracking-[0.28em] uppercase mb-4" style={{ color: "var(--ember)" }}>Our Offices</p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-5">
+            {[
+              { name: "United Kingdom", addr: "42 Montcalm House, Westferry, London, E14 3SD" },
+              { name: "Trivandrum",     addr: "Mahatma Gandhi Rd, Pulimoodu, Thiruvananthapuram, Kerala 695001" },
+              { name: "Kochi",         addr: "3rd Floor, Koonamthai, Edappally, Kochi, Kerala 682024" },
+              { name: "Thiruvalla",    addr: "2nd Floor, Seesa Arcade, Ramanchira, Thiruvalla, Kerala 689107" },
+              { name: "Vizhinjam",     addr: "Near Akshaya Center, Vizhinjam, Kerala 695521" },
+              { name: "Tamil Nadu",    addr: "Tiruchirappalli, Tamil Nadu" },
+              { name: "Dubai",         addr: "" },
+            ].map((o) => (
+              <div key={o.name}>
+                <p className="font-mono text-[9px] tracking-[0.22em] uppercase" style={{ color: "rgba(248,244,235,0.7)" }}>{o.name}</p>
+                {o.addr && <p className="mt-0.5 text-[11px] leading-relaxed" style={{ color: "rgba(248,244,235,0.35)" }}>{o.addr}</p>}
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Copyright */}
-        <div className="col-span-12 md:col-span-2 flex md:justify-end">
-          <div className="font-mono text-[10px] tracking-[0.25em] uppercase opacity-50 self-end">
-            &copy; 2026 Aimbritz
-            <br />
-            Built with care.
+        <div className="col-span-12 flex justify-center">
+          <div className="font-mono text-[10px] tracking-[0.25em] uppercase opacity-50 text-center">
+            &copy; 2026 Aimbritz &middot; Built with care.
           </div>
         </div>
       </div>

@@ -25,11 +25,12 @@ const navigation = {
 
 const branches = [
   { name: "United Kingdom", address: "42 Montcalm House, Westferry, London, E14 3SD" },
-  { name: "Ernakulam", address: "3rd Floor, Koonamthai, Edappally, Kochi, Kerala 682024" },
   { name: "Trivandrum", address: "Mahatma Gandhi Rd, Puthenchanthai, Santhi Nagar, Pulimoodu, Thiruvananthapuram, 695001" },
+  { name: "Ernakulam", address: "3rd Floor, Koonamthai, Edappally, Kochi, Kerala 682024" },
   { name: "Thiruvalla", address: "2nd Floor, Seesa Arcade, Ramanchira, Thiruvalla, Kerala 689107" },
   { name: "Vizhinjam", address: "Near Akshaya Center, Vizhinjam, Kerala 695521" },
-  { name: "Trichy", address: "Tiruchirappalli, Tamil Nadu" },
+  { name: "Tamil Nadu", address: "Tiruchirappalli, Tamil Nadu" },
+  { name: "Dubai", address: "" },
 ];
 
 export function Footer() {
@@ -165,7 +166,7 @@ export function Footer() {
             </h3>
             <span className="text-eyebrow text-ink-3">UK · India</span>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-8">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-8">
             {branches.map((b, i) => (
               <div key={b.name} className="group">
                 <div className="flex items-center gap-3 mb-2">
@@ -177,9 +178,9 @@ export function Footer() {
                     {b.name}
                   </h4>
                 </div>
-                <p className="text-sm text-ink-3 leading-relaxed pl-7">
+                {b.address && <p className="text-sm text-ink-3 leading-relaxed pl-7">
                   {b.address}
-                </p>
+                </p>}
               </div>
             ))}
           </div>
