@@ -1,11 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 
 interface Uni {
-  rank: number;
   name: string;
   full: string;
   city: string;
@@ -20,14 +19,29 @@ interface Uni {
 }
 
 const UNIS: Uni[] = [
-  { rank: 2,  name: "Oxford",    full: "University of Oxford",        city: "Oxford",    country: "United Kingdom", code: "GB", accept: "17%", founded: 1096, students: "26,000", tier: "Elite",  courses: ["PPE", "CS", "Law"],         photo: "/images/universties/oxford2.avif" },
-  { rank: 5,  name: "Cambridge", full: "University of Cambridge",     city: "Cambridge", country: "United Kingdom", code: "GB", accept: "21%", founded: 1209, students: "24,000", tier: "Elite",  courses: ["Nat Sci", "Maths", "Eng"],  photo: "/images/universties/cambridge.avif" },
-  { rank: 6,  name: "Imperial",  full: "Imperial College London",     city: "London",    country: "United Kingdom", code: "GB", accept: "14%", founded: 1907, students: "22,000", tier: "Elite",  courses: ["Eng", "Med", "CS"],         photo: "/images/universties/imperial college 2.jpg" },
-  { rank: 18, name: "Toronto",   full: "University of Toronto",       city: "Toronto",   country: "Canada",         code: "CA", accept: "43%", founded: 1827, students: "97,000", tier: "Target", courses: ["Data Sci", "MBA", "Eng"],   photo: "/images/universties/toronto.jpg" },
-  { rank: 19, name: "Sydney",    full: "University of Sydney",        city: "Sydney",    country: "Australia",      code: "AU", accept: "30%", founded: 1850, students: "73,000", tier: "Target", courses: ["BArch", "Law", "Med"],      photo: "/images/universties/sydney 2.jpg" },
-  { rank: 27, name: "TU Munich", full: "Technical University Munich", city: "Munich",    country: "Germany",        code: "DE", accept: "8%",  founded: 1868, students: "48,000", tier: "Elite",  courses: ["Auto Eng", "AI", "Robo"],   photo: "/images/universties/tu 2.jpg" },
-  { rank: 34, name: "Trinity",   full: "Trinity College Dublin",      city: "Dublin",    country: "Ireland",        code: "IE", accept: "33%", founded: 1592, students: "20,000", tier: "Target", courses: ["Pharma", "Eng Lit", "BBA"], photo: "/images/universties/trinity.jpg" },
-  { rank: 55, name: "Edinburgh", full: "University of Edinburgh",     city: "Edinburgh", country: "United Kingdom", code: "GB", accept: "52%", founded: 1583, students: "47,000", tier: "Broad",  courses: ["AI", "Finance", "Vet"],     photo: "/images/universties/edinburg.jpg" },
+  // UK
+  { name: "Liverpool",      full: "University of Liverpool",                   city: "Liverpool",  country: "United Kingdom", code: "GB", accept: "69%", founded: 1881, students: "22,000", tier: "Target", courses: ["Medicine", "Law", "Engineering"],      photo: "/images/universties/liverpool.jpg" },
+  { name: "Surrey",         full: "University of Surrey",                      city: "Guildford",  country: "United Kingdom", code: "GB", accept: "71%", founded: 1966, students: "16,000", tier: "Target", courses: ["Business", "Engineering", "Computing"], photo: "/images/universties/surrey.jpg" },
+  { name: "Queen's Belfast",full: "Queen's University Belfast",                city: "Belfast",    country: "United Kingdom", code: "GB", accept: "63%", founded: 1845, students: "24,000", tier: "Target", courses: ["Law", "Medicine", "Finance"],           photo: "/images/universties/queens-belfast.jpg" },
+  { name: "Heriot-Watt",    full: "Heriot-Watt University",                    city: "Edinburgh",  country: "United Kingdom", code: "GB", accept: "74%", founded: 1821, students: "10,000", tier: "Target", courses: ["Actuarial Sci", "Engineering", "MBA"],  photo: "/images/universties/heriot-watt.webp" },
+  { name: "Aston",          full: "Aston University",                          city: "Birmingham", country: "United Kingdom", code: "GB", accept: "72%", founded: 1895, students: "15,000", tier: "Target", courses: ["Business", "Pharmacy", "CS"],           photo: "/images/universties/aston.jpg" },
+  // Germany
+  { name: "Constructor",    full: "Constructor University",                    city: "Bremen",     country: "Germany",        code: "DE", accept: "60%", founded: 2001, students: "1,500",  tier: "Target", courses: ["CS", "Data Science", "Business"],       photo: "/images/universties/constructor.webp" },
+  { name: "GISMA",          full: "GISMA Business School",                     city: "Berlin",     country: "Germany",        code: "DE", accept: "65%", founded: 1999, students: "3,000",  tier: "Target", courses: ["MBA", "Finance", "Marketing"],          photo: "/images/universties/GISMA.webp" },
+  { name: "UEAS",           full: "University of Europe for Applied Sciences", city: "Berlin",     country: "Germany",        code: "DE", accept: "70%", founded: 1994, students: "5,000",  tier: "Broad",  courses: ["Design", "Business", "Sports Mgmt"],    photo: "/images/universties/ueas.png" },
+  // France
+  { name: "KEDGE",          full: "KEDGE Business School",                     city: "Bordeaux",   country: "France",         code: "FR", accept: "55%", founded: 2013, students: "12,000", tier: "Target", courses: ["MBA", "Finance", "Supply Chain"],       photo: "/images/universties/kedge.jpeg" },
+  { name: "INSEEC",         full: "INSEEC Business School",                    city: "Paris",      country: "France",         code: "FR", accept: "60%", founded: 1975, students: "17,000", tier: "Target", courses: ["Luxury Mgmt", "Finance", "Marketing"],  photo: "/images/universties/inseec.webp" },
+  { name: "ISC Paris",      full: "ISC Paris Business School",                 city: "Paris",      country: "France",         code: "FR", accept: "58%", founded: 1963, students: "3,500",  tier: "Target", courses: ["International Biz", "Finance", "HR"],   photo: "https://images.unsplash.com/photo-1520939817895-060bdaf4fe1b?w=1200&q=80" },
+  // Ireland
+  { name: "UCD",            full: "University College Dublin",                 city: "Dublin",     country: "Ireland",        code: "IE", accept: "55%", founded: 1854, students: "33,000", tier: "Target", courses: ["Business", "Engineering", "Medicine"],  photo: "/images/universties/ucd.webp" },
+  { name: "UCC",            full: "University College Cork",                   city: "Cork",       country: "Ireland",        code: "IE", accept: "57%", founded: 1845, students: "24,000", tier: "Target", courses: ["Pharmacy", "Law", "Business"],          photo: "/images/universties/ucc.jpg" },
+  // Australia
+  { name: "Melbourne",      full: "University of Melbourne",                   city: "Melbourne",  country: "Australia",      code: "AU", accept: "70%", founded: 1853, students: "52,000", tier: "Elite",  courses: ["Medicine", "Law", "Engineering"],      photo: "/images/universties/melbourne.jpg" },
+  { name: "Sydney",         full: "University of Sydney",                      city: "Sydney",     country: "Australia",      code: "AU", accept: "30%", founded: 1850, students: "73,000", tier: "Elite",  courses: ["Architecture", "Law", "Medicine"],      photo: "/images/universties/sydney.jpg" },
+  // Canada
+  { name: "Waterloo",       full: "University of Waterloo",                    city: "Waterloo",   country: "Canada",         code: "CA", accept: "53%", founded: 1957, students: "42,000", tier: "Target", courses: ["CS", "Engineering", "Math"],            photo: "/images/universties/waterloo.png" },
+  { name: "Alberta",        full: "University of Alberta",                     city: "Edmonton",   country: "Canada",         code: "CA", accept: "58%", founded: 1908, students: "40,000", tier: "Target", courses: ["Engineering", "Business", "Medicine"],  photo: "/images/universties/alberta.png" },
 ];
 
 const TIER_COLOR: Record<Uni["tier"], string> = {
@@ -38,7 +52,40 @@ const TIER_COLOR: Record<Uni["tier"], string> = {
 
 export function FeaturedUniversities() {
   const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const listRef = useRef<HTMLUListElement>(null);
   const uni = UNIS[active];
+
+  const scrollToItem = useCallback((i: number) => {
+    const list = listRef.current;
+    if (!list) return;
+    const el = list.children[i] as HTMLElement | undefined;
+    if (!el) return;
+    const listTop = list.scrollTop;
+    const listBottom = listTop + list.clientHeight;
+    const elTop = el.offsetTop;
+    const elBottom = elTop + el.clientHeight;
+    if (elTop < listTop || elBottom > listBottom) {
+      list.scrollTo({ top: elTop - list.clientHeight / 2 + el.clientHeight / 2, behavior: "smooth" });
+    }
+  }, []);
+
+  const goTo = useCallback((i: number) => {
+    setActive(i);
+    scrollToItem(i);
+  }, [scrollToItem]);
+
+  useEffect(() => {
+    if (paused) return;
+    const id = setInterval(() => {
+      setActive((prev) => {
+        const next = (prev + 1) % UNIS.length;
+        scrollToItem(next);
+        return next;
+      });
+    }, 2500);
+    return () => clearInterval(id);
+  }, [paused, scrollToItem]);
 
   return (
     <section
@@ -90,7 +137,7 @@ export function FeaturedUniversities() {
             <div className="relative" style={{ aspectRatio: "5/4", maxHeight: "420px" }}>
               {UNIS.map((u, i) => (
                 <div
-                  key={u.rank}
+                  key={u.name}
                   className="absolute inset-0 transition-opacity duration-500"
                   style={{ opacity: i === active ? 1 : 0 }}
                 >
@@ -115,7 +162,7 @@ export function FeaturedUniversities() {
                   className="font-mono text-[9px] tracking-[0.25em] uppercase px-2 py-1"
                   style={{ background: "rgba(14,14,16,0.6)", color: "#F6F2EA", backdropFilter: "blur(8px)" }}
                 >
-                  #{String(uni.rank).padStart(3, "0")}
+                  {String(active + 1).padStart(2, "0")}/{String(UNIS.length).padStart(2, "0")}
                 </span>
                 <span
                   className="font-mono text-[9px] tracking-[0.25em] uppercase font-bold px-2 py-1"
@@ -145,9 +192,9 @@ export function FeaturedUniversities() {
             {/* Compact meta strip */}
             <div className="mt-3 grid grid-cols-3 text-center" style={{ borderTop: "1px solid rgba(246,242,234,0.08)" }}>
               {([
-                ["Founded", String(uni.founded)],
+                ["City", uni.city],
                 ["Students", uni.students],
-                ["Admit", uni.accept],
+                ["Est.", String(uni.founded)],
               ] as const).map(([label, value], idx) => (
                 <div
                   key={label}
@@ -178,8 +225,8 @@ export function FeaturedUniversities() {
             </div>
           </div>
 
-          {/* RIGHT — dense index list */}
-          <div className="col-span-5 flex flex-col">
+          {/* RIGHT — scrollable index list */}
+          <div className="col-span-5 flex flex-col" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
             <div className="flex items-center gap-2 mb-3">
               <p className="font-mono text-[9px] tracking-[0.3em] uppercase" style={{ color: "rgba(246,242,234,0.4)" }}>
                 Index
@@ -190,70 +237,74 @@ export function FeaturedUniversities() {
               </p>
             </div>
 
-            <ul>
-              {UNIS.map((u, i) => {
-                const isActive = i === active;
-                return (
-                  <li key={u.rank}>
-                    <button
-                      type="button"
-                      onMouseEnter={() => setActive(i)}
-                      onFocus={() => setActive(i)}
-                      onClick={() => setActive(i)}
-                      className="w-full flex items-center gap-3 py-3 text-left group"
-                      style={{
-                        borderTop: "1px solid rgba(246,242,234,0.08)",
-                        borderBottom: i === UNIS.length - 1 ? "1px solid rgba(246,242,234,0.08)" : undefined,
-                      }}
-                    >
-                      <span
-                        className="font-mono text-[10px] tracking-[0.2em] tabular-nums"
-                        style={{ color: isActive ? "#C2410C" : "rgba(246,242,234,0.3)", minWidth: "22px" }}
-                      >
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
+            {/* Scrollable list — height matches photo card */}
+            <div className="relative flex-1" style={{ maxHeight: "420px" }}>
+              {/* Fade at bottom to hint scroll */}
+              <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-12 z-10"
+                style={{ background: "linear-gradient(to bottom, transparent, #0E0E10)" }} />
 
-                      <p
-                        className="flex-1 font-sans font-black uppercase tracking-[-0.015em] leading-none transition-colors"
+              <ul
+                ref={listRef}
+                className="h-full overflow-y-auto"
+                style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+              >
+                {UNIS.map((u, i) => {
+                  const isActive = i === active;
+                  return (
+                    <li key={u.name}>
+                      <button
+                        type="button"
+                        onMouseEnter={() => goTo(i)}
+                        onFocus={() => goTo(i)}
+                        onClick={() => goTo(i)}
+                        className="w-full flex items-center gap-3 py-3 text-left"
                         style={{
-                          fontSize: "clamp(0.95rem, 1.3vw, 1.15rem)",
-                          color: isActive ? "#F6F2EA" : "rgba(246,242,234,0.5)",
+                          borderTop: "1px solid rgba(246,242,234,0.08)",
+                          borderBottom: i === UNIS.length - 1 ? "1px solid rgba(246,242,234,0.08)" : undefined,
                         }}
                       >
-                        {u.name}
-                      </p>
+                        <span
+                          className="font-mono text-[10px] tracking-[0.2em] tabular-nums shrink-0"
+                          style={{ color: isActive ? "#C2410C" : "rgba(246,242,234,0.3)", minWidth: "22px" }}
+                        >
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
 
-                      <span
-                        className="font-mono text-[9px] tracking-[0.2em] uppercase"
-                        style={{ color: isActive ? "rgba(246,242,234,0.5)" : "rgba(246,242,234,0.25)" }}
-                      >
-                        {u.code}
-                      </span>
+                        <p
+                          className="flex-1 font-sans font-black uppercase tracking-[-0.015em] leading-none transition-colors truncate"
+                          style={{
+                            fontSize: "clamp(0.85rem, 1.1vw, 1rem)",
+                            color: isActive ? "#F6F2EA" : "rgba(246,242,234,0.5)",
+                          }}
+                        >
+                          {u.name}
+                        </p>
 
-                      <span
-                        className="font-mono text-[10px] tracking-[0.2em] tabular-nums"
-                        style={{ color: isActive ? "rgba(246,242,234,0.7)" : "rgba(246,242,234,0.25)", minWidth: "32px", textAlign: "right" }}
-                      >
-                        #{u.rank}
-                      </span>
+                        <span
+                          className="font-mono text-[9px] tracking-[0.2em] uppercase shrink-0"
+                          style={{ color: isActive ? "rgba(246,242,234,0.5)" : "rgba(246,242,234,0.25)" }}
+                        >
+                          {u.code}
+                        </span>
 
-                      <span
-                        className="block transition-all duration-500"
-                        style={{
-                          width: isActive ? "20px" : "0px",
-                          height: "1px",
-                          background: "#C2410C",
-                        }}
-                      />
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
+                        <span
+                          className="block shrink-0 transition-all duration-500"
+                          style={{
+                            width: isActive ? "20px" : "0px",
+                            height: "1px",
+                            background: "#C2410C",
+                          }}
+                        />
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
 
             <a
               href="/universities"
-              className="mt-5 inline-flex items-center justify-between w-full px-4 py-3 group"
+              className="mt-4 inline-flex items-center justify-between w-full px-4 py-3 group"
               style={{ background: "#C2410C", color: "#0E0E10" }}
             >
               <span className="font-sans font-black uppercase tracking-[-0.01em] text-[0.95rem]">
@@ -274,7 +325,7 @@ export function FeaturedUniversities() {
           >
             {UNIS.map((u) => (
               <a
-                key={u.rank}
+                key={u.name}
                 href="/universities"
                 className="relative flex-none snap-start overflow-hidden"
                 style={{ width: "78vw", maxWidth: "320px", aspectRatio: "4/5" }}
@@ -295,7 +346,7 @@ export function FeaturedUniversities() {
                     className="font-mono text-[9px] tracking-[0.25em] uppercase px-2 py-0.5"
                     style={{ background: "rgba(14,14,16,0.6)", color: "#F6F2EA", backdropFilter: "blur(6px)" }}
                   >
-                    #{String(u.rank).padStart(3, "0")}
+                    {u.code}
                   </span>
                   <span
                     className="font-mono text-[9px] tracking-[0.22em] uppercase font-bold px-2 py-0.5"
@@ -338,7 +389,7 @@ export function FeaturedUniversities() {
               }}
             >
               <p className="font-mono text-[9px] tracking-[0.25em] uppercase text-center" style={{ color: "rgba(246,242,234,0.45)" }}>
-                492 more<br />universities
+                More<br />universities
               </p>
               <span
                 className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 font-mono text-[9px] tracking-[0.2em] uppercase font-bold"

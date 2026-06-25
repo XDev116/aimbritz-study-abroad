@@ -3,12 +3,23 @@ import Image from "next/image";
 /* ── partner logos (public/images/Partnering Universities/) ──────── */
 const DIR = "/images/Partnering Universities";
 const logos = [
-  { src: `${DIR}/demontfort.png`, alt: "De Montfort University" },
-  { src: `${DIR}/leicester.png`, alt: "University of Leicester" },
-  { src: `${DIR}/greenwich.png`, alt: "University of Greenwich" },
-  { src: `${DIR}/teesside.png`, alt: "Teesside University" },
-  { src: `${DIR}/uws.png`, alt: "University of the West of Scotland" },
-  { src: `${DIR}/coventry.png`, alt: "Coventry University" },
+  { src: `${DIR}/liverpool.png`,      alt: "University of Liverpool" },
+  { src: `${DIR}/surrey.png`,         alt: "University of Surrey" },
+  { src: `${DIR}/queens-belfast.png`, alt: "Queen's University Belfast" },
+  { src: `${DIR}/heriot-watt.png`,    alt: "Heriot-Watt University" },
+  { src: `${DIR}/aston.png`,          alt: "Aston University" },
+  { src: `${DIR}/constructor.svg`,    alt: "Constructor University" },
+  { src: `${DIR}/kedge-dark.svg`,     alt: "KEDGE Business School" },
+  { src: `${DIR}/INSEEC.png`,         alt: "INSEEC Business School" },
+  { src: `${DIR}/gisma.png`,          alt: "GISMA Business School" },
+  { src: `${DIR}/ueas.png`,           alt: "University of Europe for Applied Sciences" },
+  { src: `${DIR}/isc-paris.png`,      alt: "ISC Paris" },
+  { src: `${DIR}/ucd.png`,            alt: "University College Dublin" },
+  { src: `${DIR}/ucc.png`,            alt: "University College Cork" },
+  { src: `${DIR}/melbourne.png`,      alt: "University of Melbourne" },
+  { src: `${DIR}/sydney.png`,         alt: "University of Sydney" },
+  { src: `${DIR}/waterloo.png`,       alt: "University of Waterloo" },
+  { src: `${DIR}/alberta.png`,        alt: "University of Alberta" },
 ];
 
 /* Double the array so the strip can loop seamlessly */

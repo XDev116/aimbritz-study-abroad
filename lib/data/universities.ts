@@ -29,6 +29,7 @@ export interface University {
   };
   campusLife: string;
   scholarships: string[];
+  isPartner?: boolean;
 }
 
 export const universities: University[] = [
@@ -38,6 +39,7 @@ export const universities: University[] = [
     slug: "liverpool",
     country: "United Kingdom",
     countryCode: "GB",
+    isPartner: true,
     city: "Liverpool",
     description: "The University of Liverpool is a prestigious Russell Group university with a rich history of academic excellence and groundbreaking research. Founded in 1881, it was the first university to establish departments in oceanography, civic design, architecture, and biochemistry. Liverpool offers world-class facilities and strong industry connections.",
     logo: "🏛️",
@@ -115,6 +117,7 @@ export const universities: University[] = [
     slug: "queens-belfast",
     country: "United Kingdom",
     countryCode: "GB",
+    isPartner: true,
     city: "Belfast",
     description: "Queen's University Belfast is a member of the prestigious Russell Group and one of the UK's leading research-intensive universities. Founded in 1845, it combines world-class research with outstanding teaching quality. The university is known for its welcoming atmosphere and excellent value for money.",
     logo: "👑",
@@ -269,6 +272,7 @@ export const universities: University[] = [
     slug: "aston",
     country: "United Kingdom",
     countryCode: "GB",
+    isPartner: true,
     city: "Birmingham",
     description: "Aston University is a leading university located in the heart of Birmingham, known for its strong links with industry and excellent graduate employment rates. With a focus on business, engineering, and health sciences, Aston provides career-focused education with integrated placement opportunities.",
     logo: "🔬",
@@ -808,6 +812,7 @@ export const universities: University[] = [
     slug: "melbourne",
     country: "Australia",
     countryCode: "AU",
+    isPartner: true,
     city: "Melbourne, VIC",
     description: "The University of Melbourne is Australia's leading university and consistently ranks among the world's top 40 institutions. Known for research excellence, innovative teaching, and strong alumni network, Melbourne offers a comprehensive range of programs in one of the world's most liveable cities.",
     logo: "🦘",
@@ -1193,6 +1198,7 @@ export const universities: University[] = [
     slug: "ue-germany",
     country: "Germany",
     countryCode: "DE",
+    isPartner: true,
     city: "Berlin, Hamburg, Iserlohn",
     description: "The University of Europe for Applied Sciences (UE) is a private, state-accredited university offering practice-oriented programs taught entirely in English. With campuses in Berlin, Hamburg, and Iserlohn, UE focuses on business, design, technology, and sports, preparing students for global careers.",
     logo: "🇪🇺",
@@ -1799,6 +1805,7 @@ export const universities: University[] = [
     slug: "waterloo",
     country: "Canada",
     countryCode: "CA",
+    isPartner: true,
     city: "Waterloo",
     description: "The University of Waterloo is Canada's top innovation university, famous for its world-leading co-operative education program — the largest of its kind globally. Waterloo graduates are highly sought after by Silicon Valley and global tech companies, with particular strength in computer science, engineering, and mathematics.",
     logo: "💻",
@@ -1949,6 +1956,7 @@ export const universities: University[] = [
     slug: "ucd",
     country: "Ireland",
     countryCode: "IE",
+    isPartner: true,
     city: "Dublin",
     description: "University College Dublin (UCD) is Ireland's largest university and a member of the prestigious Universitas 21 network. With a modern parkland campus in south Dublin, UCD is known for its strong business school (Smurfit), engineering programs, and global outlook — over 30% of its students are international, from 139 countries.",
     logo: "🎓",
@@ -2316,6 +2324,276 @@ export const universities: University[] = [
       "Erasmus+ for European students",
       "Industry-sponsored research funding"
     ]
+  },
+  {
+    id: "surrey",
+    name: "University of Surrey",
+    slug: "surrey",
+    country: "United Kingdom",
+    countryCode: "GB",
+    isPartner: true,
+    city: "Guildford",
+    description: "The University of Surrey is a leading research university known for its strong industry links, professional training placements, and excellent graduate employment rates. Located in Guildford, 30 minutes from London.",
+    logo: "🏛️",
+    ranking: 0,
+    website: "https://www.surrey.ac.uk",
+    established: 1966,
+    type: "Public",
+    courses: [
+      { id: "surrey-1", name: "Business Management", degree: "Bachelor", duration: "3-4 years", tuitionFee: 22500, currency: "GBP", intakeDates: ["September"] },
+      { id: "surrey-2", name: "Computer Science", degree: "Bachelor", duration: "3-4 years", tuitionFee: 24500, currency: "GBP", intakeDates: ["September"] },
+      { id: "surrey-3", name: "MBA", degree: "Master", duration: "1 year", tuitionFee: 28000, currency: "GBP", intakeDates: ["September", "January"] }
+    ],
+    admissionRequirements: {
+      bachelor: ["A-Levels ABB or equivalent", "IELTS 6.0 overall", "Personal statement", "Academic reference"],
+      master: ["Bachelor's 2:1 or equivalent", "IELTS 6.5 overall", "Statement of purpose", "Two references"],
+      phd: ["Master's degree", "Research proposal", "IELTS 6.5", "Supervisor agreement"]
+    },
+    campusLife: "Surrey's campus is set on beautiful grounds in Guildford with excellent sports facilities, a vibrant student union, and easy access to London for internships and cultural experiences.",
+    scholarships: ["Surrey Excellence Scholarship", "International Study Grant", "Santander Scholarship"]
+  },
+  {
+    id: "heriot-watt",
+    name: "Heriot-Watt University",
+    slug: "heriot-watt",
+    country: "United Kingdom",
+    countryCode: "GB",
+    isPartner: true,
+    city: "Edinburgh",
+    description: "Heriot-Watt University is a world-leading university in research and education in science, engineering, design, business and languages, with campuses in Edinburgh, Dubai, and Malaysia.",
+    logo: "🏛️",
+    ranking: 0,
+    website: "https://www.hw.ac.uk",
+    established: 1821,
+    type: "Public",
+    courses: [
+      { id: "hw-1", name: "Actuarial Science", degree: "Bachelor", duration: "4 years", tuitionFee: 22000, currency: "GBP", intakeDates: ["September"] },
+      { id: "hw-2", name: "Engineering", degree: "Bachelor", duration: "4 years", tuitionFee: 23500, currency: "GBP", intakeDates: ["September"] },
+      { id: "hw-3", name: "MBA", degree: "Master", duration: "1 year", tuitionFee: 25000, currency: "GBP", intakeDates: ["September", "January"] }
+    ],
+    admissionRequirements: {
+      bachelor: ["A-Levels ABB or equivalent", "IELTS 6.0 overall", "Personal statement", "Academic reference"],
+      master: ["Bachelor's 2:1 or equivalent", "IELTS 6.5 overall", "Statement of purpose", "Two references"],
+      phd: ["Master's degree", "Research proposal", "IELTS 6.5", "Supervisor agreement"]
+    },
+    campusLife: "Heriot-Watt's Edinburgh campus blends historic architecture with modern research facilities. The international campus environment means students from over 140 nationalities study together.",
+    scholarships: ["Heriot-Watt Excellence Award", "International Scholarship", "Sports Scholarship"]
+  },
+  {
+    id: "constructor",
+    name: "Constructor University",
+    slug: "constructor",
+    country: "Germany",
+    countryCode: "DE",
+    isPartner: true,
+    city: "Bremen",
+    description: "Constructor University (formerly Jacobs University) is a private, English-language research university in Bremen offering internationally recognised degrees with a strong focus on STEM, data science, and business.",
+    logo: "🏛️",
+    ranking: 0,
+    website: "https://constructor.university",
+    established: 2001,
+    type: "Private",
+    courses: [
+      { id: "cu-1", name: "Computer Science", degree: "Bachelor", duration: "3 years", tuitionFee: 20000, currency: "EUR", intakeDates: ["September"] },
+      { id: "cu-2", name: "Data Science", degree: "Master", duration: "2 years", tuitionFee: 22000, currency: "EUR", intakeDates: ["September"] },
+      { id: "cu-3", name: "Business Administration", degree: "Bachelor", duration: "3 years", tuitionFee: 20000, currency: "EUR", intakeDates: ["September"] }
+    ],
+    admissionRequirements: {
+      bachelor: ["High school diploma with strong grades", "IELTS 6.0 overall", "Motivation letter", "Academic reference"],
+      master: ["Bachelor's degree", "IELTS 6.5 overall", "Statement of purpose", "Two references"],
+      phd: ["Master's degree", "Research proposal", "IELTS 6.5", "Supervisor agreement"]
+    },
+    campusLife: "Constructor University offers a fully residential campus experience in Bremen with students from over 100 countries, creating a truly international environment.",
+    scholarships: ["Merit Scholarship", "Need-based Financial Aid", "DAAD Scholarship"]
+  },
+  {
+    id: "gisma",
+    name: "GISMA Business School",
+    slug: "gisma",
+    country: "Germany",
+    countryCode: "DE",
+    isPartner: true,
+    city: "Berlin",
+    description: "GISMA Business School is one of Germany's leading private business schools, offering MBA and master's programmes in Berlin with strong industry connections and career support.",
+    logo: "🏛️",
+    ranking: 0,
+    website: "https://www.gisma.com",
+    established: 1999,
+    type: "Private",
+    courses: [
+      { id: "gisma-1", name: "MBA", degree: "Master", duration: "1 year", tuitionFee: 18000, currency: "EUR", intakeDates: ["September", "January"] },
+      { id: "gisma-2", name: "Finance", degree: "Master", duration: "1 year", tuitionFee: 16000, currency: "EUR", intakeDates: ["September", "January"] },
+      { id: "gisma-3", name: "Marketing", degree: "Master", duration: "1 year", tuitionFee: 16000, currency: "EUR", intakeDates: ["September", "January"] }
+    ],
+    admissionRequirements: {
+      bachelor: ["High school diploma", "IELTS 6.0 overall", "Motivation letter"],
+      master: ["Bachelor's degree", "IELTS 6.5 overall", "Statement of purpose", "Work experience preferred"],
+      phd: ["Master's degree", "Research proposal", "IELTS 6.5"]
+    },
+    campusLife: "GISMA's Berlin campus puts students at the heart of Europe's startup capital, with networking events, company visits, and a diverse international cohort.",
+    scholarships: ["GISMA Merit Award", "Early Bird Discount", "Alumni Referral Scholarship"]
+  },
+  {
+    id: "kedge",
+    name: "KEDGE Business School",
+    slug: "kedge",
+    country: "France",
+    countryCode: "FR",
+    isPartner: true,
+    city: "Bordeaux",
+    description: "KEDGE Business School is one of France's top business schools with campuses in Bordeaux, Marseille, Paris, and internationally. Triple-accredited (AACSB, EQUIS, AMBA).",
+    logo: "🏛️",
+    ranking: 0,
+    website: "https://www.kedge.edu",
+    established: 2013,
+    type: "Private",
+    courses: [
+      { id: "kedge-1", name: "MBA", degree: "Master", duration: "1 year", tuitionFee: 22000, currency: "EUR", intakeDates: ["September", "January"] },
+      { id: "kedge-2", name: "Finance", degree: "Master", duration: "2 years", tuitionFee: 18000, currency: "EUR", intakeDates: ["September"] },
+      { id: "kedge-3", name: "Supply Chain Management", degree: "Master", duration: "2 years", tuitionFee: 18000, currency: "EUR", intakeDates: ["September"] }
+    ],
+    admissionRequirements: {
+      bachelor: ["Baccalaureate or equivalent", "IELTS 6.0", "Motivation letter", "Interview"],
+      master: ["Bachelor's degree", "IELTS 6.5", "GMAT/GRE recommended", "Professional experience"],
+      phd: ["Master's degree", "Research proposal", "IELTS 7.0"]
+    },
+    campusLife: "KEDGE offers a dynamic campus life with student associations, international exchange programmes, and strong ties to the wine, maritime, and luxury industries in Bordeaux.",
+    scholarships: ["Excellence Scholarship", "Social Scholarship", "International Merit Award"]
+  },
+  {
+    id: "inseec",
+    name: "INSEEC Business School",
+    slug: "inseec",
+    country: "France",
+    countryCode: "FR",
+    isPartner: true,
+    city: "Paris",
+    description: "INSEEC Business School is one of France's largest private business schools with campuses in Paris, Bordeaux, Lyon, and London. Known for luxury management, finance, and communication programmes.",
+    logo: "🏛️",
+    ranking: 0,
+    website: "https://www.inseec.com",
+    established: 1975,
+    type: "Private",
+    courses: [
+      { id: "inseec-1", name: "Luxury Brand Management", degree: "Master", duration: "2 years", tuitionFee: 16000, currency: "EUR", intakeDates: ["September", "January"] },
+      { id: "inseec-2", name: "Finance", degree: "Master", duration: "2 years", tuitionFee: 15000, currency: "EUR", intakeDates: ["September"] },
+      { id: "inseec-3", name: "Marketing & Communication", degree: "Master", duration: "2 years", tuitionFee: 15000, currency: "EUR", intakeDates: ["September"] }
+    ],
+    admissionRequirements: {
+      bachelor: ["Baccalaureate or equivalent", "IELTS 5.5", "Motivation letter"],
+      master: ["Bachelor's degree", "IELTS 6.0", "Statement of purpose", "Interview"],
+      phd: ["Master's degree", "Research proposal", "IELTS 6.5"]
+    },
+    campusLife: "INSEEC's Paris campus is located in the heart of the city, giving students access to France's business, luxury, and cultural capital with a vibrant student community.",
+    scholarships: ["Merit Scholarship", "Social Scholarship", "International Award"]
+  },
+  {
+    id: "isc-paris",
+    name: "ISC Paris Business School",
+    slug: "isc-paris",
+    country: "France",
+    countryCode: "FR",
+    isPartner: true,
+    city: "Paris",
+    description: "ISC Paris is a leading French Grande École business school with triple accreditation. Known for its international programmes, strong alumni network, and focus on entrepreneurship and finance.",
+    logo: "🏛️",
+    ranking: 0,
+    website: "https://www.iscparis.com",
+    established: 1963,
+    type: "Private",
+    courses: [
+      { id: "isc-1", name: "International Business", degree: "Bachelor", duration: "3 years", tuitionFee: 12000, currency: "EUR", intakeDates: ["September"] },
+      { id: "isc-2", name: "Finance", degree: "Master", duration: "2 years", tuitionFee: 14000, currency: "EUR", intakeDates: ["September"] },
+      { id: "isc-3", name: "Human Resources", degree: "Master", duration: "2 years", tuitionFee: 14000, currency: "EUR", intakeDates: ["September"] }
+    ],
+    admissionRequirements: {
+      bachelor: ["Baccalaureate or equivalent", "IELTS 5.5", "Motivation letter", "Interview"],
+      master: ["Bachelor's degree", "IELTS 6.0", "Statement of purpose", "Interview"],
+      phd: ["Master's degree", "Research proposal", "IELTS 6.5"]
+    },
+    campusLife: "ISC Paris offers a lively campus in central Paris with strong student associations, international exchange partnerships with 200+ universities, and an active alumni network of 35,000.",
+    scholarships: ["Excellence Award", "International Scholarship", "Social Grant"]
+  },
+  {
+    id: "ucc",
+    name: "University College Cork",
+    slug: "ucc",
+    country: "Ireland",
+    countryCode: "IE",
+    isPartner: true,
+    city: "Cork",
+    description: "University College Cork is one of Ireland's oldest and most prestigious universities, a member of the Irish Universities Association. Known for pharmacy, law, medicine, and business programmes.",
+    logo: "🏛️",
+    ranking: 0,
+    website: "https://www.ucc.ie",
+    established: 1845,
+    type: "Public",
+    courses: [
+      { id: "ucc-1", name: "Pharmacy", degree: "Bachelor", duration: "5 years", tuitionFee: 18000, currency: "EUR", intakeDates: ["September"] },
+      { id: "ucc-2", name: "Law", degree: "Bachelor", duration: "4 years", tuitionFee: 16000, currency: "EUR", intakeDates: ["September"] },
+      { id: "ucc-3", name: "Business Information Systems", degree: "Master", duration: "1 year", tuitionFee: 17000, currency: "EUR", intakeDates: ["September"] }
+    ],
+    admissionRequirements: {
+      bachelor: ["Leaving Certificate or equivalent", "IELTS 6.0", "Personal statement", "Academic reference"],
+      master: ["Bachelor's 2:1 or equivalent", "IELTS 6.5", "Statement of purpose", "Two references"],
+      phd: ["Master's degree", "Research proposal", "IELTS 6.5", "Supervisor agreement"]
+    },
+    campusLife: "UCC's historic campus in Cork city blends Victorian architecture with modern facilities. Cork is Ireland's second city with a vibrant food, music, and arts scene.",
+    scholarships: ["UCC International Scholarship", "Government of Ireland Fellowship", "Merit Award"]
+  },
+  {
+    id: "sydney",
+    name: "University of Sydney",
+    slug: "sydney",
+    country: "Australia",
+    countryCode: "AU",
+    isPartner: true,
+    city: "Sydney",
+    description: "The University of Sydney is Australia's first university and one of the world's leading research universities. Located in the heart of Sydney, it offers over 400 courses across all disciplines.",
+    logo: "🏛️",
+    ranking: 0,
+    website: "https://www.sydney.edu.au",
+    established: 1850,
+    type: "Public",
+    courses: [
+      { id: "sydney-1", name: "Architecture", degree: "Bachelor", duration: "3 years", tuitionFee: 48000, currency: "AUD", intakeDates: ["February", "July"] },
+      { id: "sydney-2", name: "Law", degree: "Bachelor", duration: "4 years", tuitionFee: 49000, currency: "AUD", intakeDates: ["February"] },
+      { id: "sydney-3", name: "MBA", degree: "Master", duration: "1.5 years", tuitionFee: 55000, currency: "AUD", intakeDates: ["February", "July"] }
+    ],
+    admissionRequirements: {
+      bachelor: ["ATAR 85+ or equivalent", "IELTS 6.5 overall", "Personal statement", "Academic reference"],
+      master: ["Bachelor's credit average or equivalent", "IELTS 6.5-7.0", "Statement of purpose", "Two references"],
+      phd: ["Master's degree or Honours", "Research proposal", "IELTS 7.0", "Supervisor agreement"]
+    },
+    campusLife: "Sydney's sandstone campus is one of the most beautiful in the world. Students enjoy world-class sports facilities, over 200 clubs and societies, and the vibrant Sydney lifestyle right at their doorstep.",
+    scholarships: ["Sydney Scholars Award", "International Merit Scholarship", "Faculty Scholarship"]
+  },
+  {
+    id: "alberta",
+    name: "University of Alberta",
+    slug: "alberta",
+    country: "Canada",
+    countryCode: "CA",
+    isPartner: true,
+    city: "Edmonton",
+    description: "The University of Alberta is one of Canada's top five research universities, consistently ranked among the world's top 100. Known for engineering, medicine, business, and energy research.",
+    logo: "🏛️",
+    ranking: 0,
+    website: "https://www.ualberta.ca",
+    established: 1908,
+    type: "Public",
+    courses: [
+      { id: "alberta-1", name: "Engineering", degree: "Bachelor", duration: "4 years", tuitionFee: 32000, currency: "CAD", intakeDates: ["September"] },
+      { id: "alberta-2", name: "Business Administration", degree: "Bachelor", duration: "4 years", tuitionFee: 30000, currency: "CAD", intakeDates: ["September", "January"] },
+      { id: "alberta-3", name: "Medicine", degree: "Master", duration: "2 years", tuitionFee: 28000, currency: "CAD", intakeDates: ["September"] }
+    ],
+    admissionRequirements: {
+      bachelor: ["High school diploma with 70%+ average", "IELTS 6.5 overall", "Personal statement", "Academic reference"],
+      master: ["Bachelor's 3.0 GPA or equivalent", "IELTS 6.5", "Statement of purpose", "Two references"],
+      phd: ["Master's degree", "Research proposal", "IELTS 6.5", "Supervisor agreement"]
+    },
+    campusLife: "U of A's campus in Edmonton is one of Canada's most beautiful, with over 900 clubs, top-tier sports facilities, and a thriving arts and culture scene in a city with a low cost of living.",
+    scholarships: ["International Student Scholarship", "Provost Award", "Faculty-specific Scholarships"]
   }
 ];
 

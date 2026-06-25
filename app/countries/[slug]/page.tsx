@@ -4,12 +4,29 @@ import type { Metadata } from "next";
 import { ArrowRight } from "lucide-react";
 import { getAllCountrySlugs, getCountryBySlug } from "@/lib/data/countries";
 import { getUniversitiesByCountry } from "@/lib/data/universities";
+import { UniversitiesGrid } from "@/components/country/universities-grid";
 
 interface CountryPageProps {
-  params: Promise<{
-    slug: string;
-  }>;
+  params: Promise<{ slug: string }>;
 }
+
+const PHOTOS: Record<string, string> = {
+  uk:           "https://images.unsplash.com/photo-1486299267070-83823f5448dd?w=1600&q=85",
+  australia:    "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=1600&q=85",
+  "new-zealand":"https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=1600&q=85",
+  ireland:      "https://images.unsplash.com/photo-1590089415225-401ed6f9db8e?w=1600&q=85",
+  usa:          "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1600&q=85",
+  canada:       "https://images.unsplash.com/photo-1517935706615-2717063c2225?w=1600&q=85",
+  germany:      "https://images.unsplash.com/photo-1528728329032-2972f65dfb3f?w=1600&q=85",
+  france:       "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1600&q=85",
+  dubai:        "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1600&q=85",
+  malaysia:     "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=1600&q=85",
+  singapore:    "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1600&q=85",
+  mauritius:    "https://images.unsplash.com/photo-1589197331516-4d84b72ebde3?w=1600&q=85",
+  georgia:      "https://images.unsplash.com/photo-1565008576549-57569a49371d?w=1600&q=85",
+  austria:      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=85",
+};
+
 
 export async function generateStaticParams() {
   return getAllCountrySlugs().map((slug) => ({ slug }));
@@ -30,306 +47,170 @@ export default async function CountryPage({ params }: CountryPageProps) {
   const country = getCountryBySlug(slug);
   if (!country) notFound();
 
-  const universities = getUniversitiesByCountry(country.code);
+  const universities = getUniversitiesByCountry(country.code)
+    .sort((a, b) => (b.isPartner ? 1 : 0) - (a.isPartner ? 1 : 0));
+  const photo = PHOTOS[slug];
 
   return (
-    <div style={{ background: "transparent", color: "var(--ink)", minHeight: "100vh" }}>
+    <div style={{ background: "var(--paper)", color: "var(--ink)", minHeight: "100vh" }}>
 
-      {/* ── Hero ── */}
-      <div
-        className="max-w-[1280px] mx-auto px-5 md:px-8"
-        style={{ paddingTop: "clamp(72px,9vw,130px)", paddingBottom: "clamp(48px,6vw,80px)" }}
-      >
-        {/* Breadcrumb eyebrow */}
-        <div className="flex items-center gap-3 mb-5">
-          <span
-            className="font-mono font-bold text-[10px] tracking-[0.18em] px-1.5 py-0.5"
-            style={{ background: "var(--ink)", color: "var(--paper)" }}
-          >
-            {country.code}
-          </span>
-          <nav className="font-mono text-[10px] tracking-[0.25em] uppercase" style={{ color: "var(--ink-3)" }}>
+      {/* ── HERO — tall, full-bleed ── */}
+      <div className="relative w-full" style={{ height: "clamp(360px, 45vw, 420px)" }}>
+        {photo && (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img src={photo} alt={country.name} className="absolute inset-0 w-full h-full object-cover" />
+        )}
+        {/* Strong bottom fade, gentle top fade */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(5,5,7,0.96) 0%, rgba(5,5,7,0.55) 45%, rgba(5,5,7,0.15) 100%)" }} />
+
+        {/* Breadcrumb */}
+        <div className="absolute top-0 left-0 right-0 pt-20 md:pt-24 px-5 md:px-10">
+          <nav className="font-mono text-[10px] tracking-[0.25em] uppercase" style={{ color: "rgba(246,242,234,0.4)" }}>
             <Link href="/" className="hover:opacity-70 transition-opacity">Home</Link>
-            <span className="mx-2">/</span>
+            <span className="mx-2 opacity-40">/</span>
             <Link href="/countries" className="hover:opacity-70 transition-opacity">Countries</Link>
-            <span className="mx-2">/</span>
-            <span style={{ color: "var(--ink)" }}>{country.name}</span>
+            <span className="mx-2 opacity-40">/</span>
+            <span style={{ color: "rgba(246,242,234,0.8)" }}>{country.name}</span>
           </nav>
         </div>
 
-        <h1
-          className="font-sans font-black uppercase tracking-[-0.03em] leading-[0.9] mb-6"
-          style={{ fontSize: "clamp(2.8rem,7vw,6rem)", color: "var(--ink)" }}
-        >
-          Study in{" "}
-          <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>
-            {country.name}
-          </span>
-        </h1>
-        <p
-          className="font-sans max-w-2xl"
-          style={{ fontSize: "clamp(1rem,1.2vw,1.15rem)", lineHeight: 1.6, color: "var(--ink-3)" }}
-        >
-          {country.description}
-        </p>
-      </div>
-
-      {/* ── Stats Bar ── */}
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 pb-20">
-        <div
-          className="grid grid-cols-2 md:grid-cols-4 text-center"
-          style={{ border: "1px solid var(--hairline)" }}
-        >
-          {([
-            [String(country.universitiesCount) + "+", "Universities"],
-            ["1000+", "Programs"],
-            ["2\u20133/yr", "Intakes"],
-            ["Yes", "Work Rights"],
-          ] as const).map(([val, label], i) => (
-            <div
-              key={label}
-              className="py-10 px-4"
-              style={{
-                borderRight: i < 3 ? "1px solid var(--hairline)" : undefined,
-                borderBottom: i < 2 ? "1px solid var(--hairline)" : undefined,
-              }}
-            >
-              <p
-                className="font-sans font-black tabular-nums leading-none mb-2"
-                style={{ fontSize: "clamp(1.8rem,3.5vw,3rem)", color: "var(--ink)" }}
-              >
-                {val}
-              </p>
-              <p className="font-mono text-[10px] tracking-[0.28em] uppercase" style={{ color: "var(--ink-4)" }}>
-                {label}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* ── Why Study Here + Visa/Cost ── */}
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 pb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          {/* Left — Benefits */}
-          <div>
-            <p className="font-mono text-[10px] tracking-[0.32em] uppercase mb-3" style={{ color: "var(--ember)" }}>
-              Why choose {country.name}
+        {/* Bottom — title + stats inline */}
+        <div className="absolute bottom-0 left-0 right-0 px-5 md:px-10 pb-8 md:pb-10">
+          <div className="max-w-[1280px] mx-auto">
+            <p className="font-mono text-[10px] tracking-[0.35em] uppercase mb-4 inline-flex items-center gap-2 px-3 py-1.5" style={{ background: "rgba(0,0,0,0.45)", backdropFilter: "blur(8px)", color: "rgba(246,242,234,0.9)", marginTop: "8px" }}>
+              {country.flag}&nbsp;&nbsp;{country.code} &middot; Study Destination
             </p>
-            <h2
-              className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92] mb-8"
-              style={{ fontSize: "clamp(1.8rem,3.5vw,2.8rem)", color: "var(--ink)" }}
+            <h1
+              className="font-sans font-black uppercase tracking-[-0.03em] leading-[0.88] mb-8"
+              style={{ fontSize: "clamp(2.8rem,6vw,5.5rem)", color: "#F6F2EA" }}
             >
-              Key{" "}
+              Study in{" "}
               <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>
-                Benefits
+                {country.name}
               </span>
-            </h2>
-            <ul className="flex flex-col gap-3">
-              {country.benefits.map((benefit, idx) => (
-                <li key={idx} className="flex items-start gap-3">
-                  <span
-                    className="shrink-0 mt-[7px]"
-                    style={{ width: 4, height: 4, background: "var(--ink-4)", display: "inline-block" }}
-                  />
-                  <span className="font-mono text-[11px] tracking-[0.06em] leading-relaxed" style={{ color: "var(--ink-3)" }}>
-                    {benefit}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
+            </h1>
 
-          {/* Right — Visa + Cost */}
-          <div className="grid grid-cols-1 gap-px" style={{ background: "var(--hairline)", alignSelf: "start" }}>
-            <div className="p-8" style={{ background: "var(--paper)" }}>
-              <p className="font-mono text-[10px] tracking-[0.28em] uppercase mb-3" style={{ color: "var(--ember)" }}>
-                Visa information
-              </p>
-              <p className="font-sans text-sm leading-relaxed" style={{ color: "var(--ink-3)" }}>
-                {country.visaInfo}
-              </p>
-            </div>
-            <div className="p-8" style={{ background: "var(--paper)" }}>
-              <p className="font-mono text-[10px] tracking-[0.28em] uppercase mb-3" style={{ color: "var(--ember)" }}>
-                Cost of living
-              </p>
-              <p className="font-sans text-sm leading-relaxed" style={{ color: "var(--ink-3)" }}>
-                {country.costOfLiving}
-              </p>
+            {/* Inline stat chips */}
+            <div className="flex flex-wrap gap-3">
+              {([
+                [String(country.universitiesCount) + "+ Unis", "Universities"],
+                ["1000+ Programs", "Programs"],
+                ["2–3 Intakes/yr", "Intakes"],
+                ["Work Rights", "Permitted"],
+              ] as const).map(([val]) => (
+                <span key={val} className="font-mono text-[9px] tracking-[0.22em] uppercase px-3 py-1.5" style={{ border: "1px solid rgba(246,242,234,0.2)", color: "rgba(246,242,234,0.65)", backdropFilter: "blur(6px)" }}>
+                  {val}
+                </span>
+              ))}
             </div>
           </div>
         </div>
       </div>
 
-      {/* ── Universities ── */}
-      {universities.length > 0 && (
-        <div style={{ background: "var(--paper-2)", borderTop: "1px solid var(--hairline)", borderBottom: "1px solid var(--hairline)" }}>
-          <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-20">
-            <div className="mb-10">
-              <p className="font-mono text-[10px] tracking-[0.32em] uppercase mb-3" style={{ color: "var(--ember)" }}>
-                Our partner universities
+      {/* ── WHY + BENEFITS + VISA/COST — dark section ── */}
+      <div style={{ background: "#0E0E10" }}>
+        <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-10 md:py-14">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14">
+
+            {/* Left — description + benefits */}
+            <div>
+              <p className="font-mono text-[10px] tracking-[0.32em] uppercase mb-4" style={{ color: "var(--ember)" }}>
+                Why {country.name}
               </p>
-              <h2
-                className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92]"
-                style={{ fontSize: "clamp(2rem,4vw,3.5rem)", color: "var(--ink)" }}
-              >
-                Top{" "}
-                <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>
-                  Universities
-                </span>
-              </h2>
-            </div>
-
-            <div
-              className="grid grid-cols-1 md:grid-cols-2 gap-px"
-              style={{ background: "var(--hairline)" }}
-            >
-              {universities.map((uni, idx) => (
-                <Link
-                  key={uni.id}
-                  href={`/universities/${uni.slug}`}
-                  className="group flex flex-col gap-4 p-8 transition-colors duration-300"
-                  style={{ background: "var(--paper-2)" }}
-                >
-                  {/* Number + ranking */}
-                  <div className="flex items-start justify-between">
-                    <span
-                      className="font-mono text-[10px] tracking-[0.28em] tabular-nums"
-                      style={{ color: "var(--ink-4)" }}
-                    >
-                      {String(idx + 1).padStart(2, "0")}
+              <p className="font-sans mb-10 leading-relaxed" style={{ fontSize: "clamp(0.95rem,1.1vw,1.05rem)", color: "rgba(246,242,234,0.6)" }}>
+                {country.description}
+              </p>
+              <ul className="flex flex-col">
+                {country.benefits.map((b, i) => (
+                  <li key={i} className="flex items-start gap-4 py-3.5" style={{ borderTop: "1px solid rgba(246,242,234,0.07)" }}>
+                    <span className="font-mono text-[9px] tracking-[0.2em] tabular-nums shrink-0 mt-0.5" style={{ color: "var(--ember)" }}>
+                      {String(i + 1).padStart(2, "0")}
                     </span>
-                    {uni.ranking > 0 && (
-                      <span
-                        className="font-mono text-[9px] tracking-[0.22em] uppercase px-2 py-0.5"
-                        style={{ border: "1px solid var(--hairline)", color: "var(--ink-3)" }}
-                      >
-                        #{uni.ranking}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Name + city */}
-                  <div>
-                    <h3
-                      className="font-sans font-black uppercase tracking-[-0.02em] mb-1 group-hover:text-[#C2410C] transition-colors"
-                      style={{ fontSize: "clamp(1.1rem,1.6vw,1.35rem)", color: "var(--ink)" }}
-                    >
-                      {uni.name}
-                    </h3>
-                    <p className="font-mono text-[10px] tracking-[0.18em] uppercase" style={{ color: "var(--ink-4)" }}>
-                      {uni.city} &middot; {uni.type}
-                    </p>
-                  </div>
-
-                  {/* Description */}
-                  <p className="font-sans text-sm leading-relaxed" style={{ color: "var(--ink-3)" }}>
-                    {uni.description.length > 120 ? uni.description.substring(0, 120) + "..." : uni.description}
-                  </p>
-
-                  {/* Course pills */}
-                  <div className="flex flex-wrap gap-1.5 mt-auto">
-                    {uni.courses.slice(0, 3).map((course) => (
-                      <span
-                        key={course.id}
-                        className="font-mono text-[9px] tracking-[0.18em] uppercase px-2 py-0.5"
-                        style={{ border: "1px solid var(--hairline)", color: "var(--ink-3)" }}
-                      >
-                        {course.name}
-                      </span>
-                    ))}
-                  </div>
-                </Link>
-              ))}
+                    <span className="font-mono text-[11px] tracking-[0.06em] leading-relaxed" style={{ color: "rgba(246,242,234,0.65)" }}>{b}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <div className="mt-8 text-center">
-              <Link
-                href="/universities"
-                className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.25em] uppercase transition-opacity hover:opacity-60"
-                style={{ color: "var(--ink-3)" }}
-              >
-                View all universities
-                <ArrowRight size={12} />
-              </Link>
+            {/* Right — Visa, Cost, Courses as dark panels */}
+            <div className="flex flex-col gap-px" style={{ background: "rgba(246,242,234,0.06)" }}>
+              <div className="p-7 md:p-8" style={{ background: "#0E0E10" }}>
+                <p className="font-mono text-[9px] tracking-[0.3em] uppercase mb-3" style={{ color: "var(--ember)" }}>Visa</p>
+                <p className="font-sans text-sm leading-relaxed" style={{ color: "rgba(246,242,234,0.55)" }}>{country.visaInfo}</p>
+              </div>
+              <div className="p-7 md:p-8" style={{ background: "#0E0E10" }}>
+                <p className="font-mono text-[9px] tracking-[0.3em] uppercase mb-3" style={{ color: "var(--ember)" }}>Cost of Living</p>
+                <p className="font-sans text-sm leading-relaxed" style={{ color: "rgba(246,242,234,0.55)" }}>{country.costOfLiving}</p>
+              </div>
+              <div className="p-7 md:p-8" style={{ background: "#0E0E10" }}>
+                <p className="font-mono text-[9px] tracking-[0.3em] uppercase mb-3" style={{ color: "var(--ember)" }}>Top Courses</p>
+                <div className="flex flex-wrap gap-2">
+                  {country.topCourses.map((c, i) => (
+                    <span key={i} className="font-mono text-[9px] tracking-[0.18em] uppercase px-2.5 py-1" style={{ border: "1px solid rgba(246,242,234,0.12)", color: "rgba(246,242,234,0.5)" }}>
+                      {c}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── PARTNER UNIVERSITIES ── */}
+      {universities.length > 0 && (
+        <div style={{ background: "var(--paper)" }}>
+          <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-16 md:py-24">
+            <div className="flex items-end justify-between mb-10 gap-6">
+              <div>
+                <p className="font-mono text-[10px] tracking-[0.32em] uppercase mb-2" style={{ color: "var(--ember)" }}>
+                  Partner Universities
+                </p>
+                <h2
+                  className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92]"
+                  style={{ fontSize: "clamp(1.8rem,3.5vw,3rem)", color: "var(--ink)" }}
+                >
+                  Where we{" "}
+                  <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>place students</span>
+                </h2>
+              </div>
+              <span className="font-mono text-[10px] tracking-[0.25em] uppercase shrink-0" style={{ color: "var(--ink-4)" }}>
+                {universities.length} institutions
+              </span>
+            </div>
+            <UniversitiesGrid universities={universities} />
           </div>
         </div>
       )}
 
-      {/* ── Popular Courses ── */}
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-20">
-        <div className="mb-10">
-          <p className="font-mono text-[10px] tracking-[0.32em] uppercase mb-3" style={{ color: "var(--ember)" }}>
-            What to study
-          </p>
-          <h2
-            className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92]"
-            style={{ fontSize: "clamp(2rem,4vw,3.5rem)", color: "var(--ink)" }}
-          >
-            Popular{" "}
-            <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>
-              Courses
-            </span>
-          </h2>
-        </div>
-
-        <div
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-px"
-          style={{ background: "var(--hairline)" }}
-        >
-          {country.topCourses.map((course, idx) => (
-            <div
-              key={idx}
-              className="flex items-center gap-4 p-6"
-              style={{ background: "var(--paper)" }}
-            >
-              <span
-                className="font-mono text-[10px] tracking-[0.28em] tabular-nums"
-                style={{ color: "var(--ink-4)" }}
-              >
-                {String(idx + 1).padStart(2, "0")}
-              </span>
-              <span
-                className="font-sans font-bold uppercase tracking-[-0.01em] text-sm"
-                style={{ color: "var(--ink)" }}
-              >
-                {course}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* ── CTA ── */}
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 pb-24">
-        <div
-          className="flex flex-col md:flex-row items-start md:items-end justify-between gap-8 p-10 md:p-14"
-          style={{ background: "var(--ink)", color: "var(--paper)" }}
-        >
-          <div>
-            <p className="font-mono text-[10px] tracking-[0.3em] uppercase mb-3" style={{ color: "var(--ember)" }}>
-              Get started
-            </p>
-            <h2
-              className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92]"
-              style={{ fontSize: "clamp(1.8rem,4vw,3.2rem)" }}
+      <div style={{ background: "#0E0E10" }}>
+        <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-16 md:py-24">
+          <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-10">
+            <div>
+              <p className="font-mono text-[10px] tracking-[0.3em] uppercase mb-4" style={{ color: "var(--ember)" }}>
+                Get started
+              </p>
+              <h2
+                className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.88]"
+                style={{ fontSize: "clamp(2rem,5vw,4rem)", color: "#F6F2EA" }}
+              >
+                Ready to study<br />
+                in{" "}
+                <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>
+                  {country.name}?
+                </span>
+              </h2>
+            </div>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-3 font-sans font-black uppercase tracking-[-0.01em] px-8 py-4 transition-opacity hover:opacity-80 shrink-0"
+              style={{ background: "var(--ember)", color: "#0E0E10", fontSize: "0.9rem" }}
             >
-              Ready to study in<br />
-              <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>
-                {country.name}?
-              </span>
-            </h2>
+              Schedule Free Consultation
+              <ArrowRight size={16} />
+            </Link>
           </div>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-3 font-sans font-black uppercase tracking-[-0.01em] px-7 py-4 transition-opacity hover:opacity-75 shrink-0"
-            style={{ background: "var(--paper)", color: "var(--ink)", fontSize: "0.9rem" }}
-          >
-            Schedule Free Consultation
-            <ArrowRight size={16} />
-          </Link>
         </div>
       </div>
     </div>

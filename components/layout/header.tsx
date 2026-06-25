@@ -6,14 +6,12 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const COUNTRIES = [
-  { code: "GB", name: "United Kingdom", unis: 142, slug: "uk" },
-  { code: "CA", name: "Canada", unis: 96, slug: "canada" },
-  { code: "AU", name: "Australia", unis: 68, slug: "australia" },
-  { code: "US", name: "United States", unis: 182, slug: "usa" },
-  { code: "IE", name: "Ireland", unis: 24, slug: "ireland" },
-  { code: "DE", name: "Germany", unis: 58, slug: "germany" },
-  { code: "FR", name: "France", unis: 41, slug: "france" },
-  { code: "NZ", name: "New Zealand", unis: 35, slug: "new-zealand" },
+  { code: "GB", name: "United Kingdom", unis: 5, slug: "uk" },
+  { code: "DE", name: "Germany",        unis: 3, slug: "germany" },
+  { code: "FR", name: "France",         unis: 3, slug: "france" },
+  { code: "IE", name: "Ireland",        unis: 2, slug: "ireland" },
+  { code: "AU", name: "Australia",      unis: 2, slug: "australia" },
+  { code: "CA", name: "Canada",         unis: 2, slug: "canada" },
 ];
 
 const SERVICES = [
@@ -157,9 +155,16 @@ export function Header() {
                     className="inline-flex items-center px-3 py-1.5 rounded-full font-mono text-[10px] tracking-[0.22em] uppercase font-bold"
                     style={{ background: "var(--ember)", color: "var(--ink)" }}
                   >
-                    Destinations · 14
+                    Destinations · 6
                   </span>
                   <h3 className="mt-4 font-serif italic text-4xl leading-tight">Where will next<br />year take you?</h3>
+                  <Link
+                    href="/countries"
+                    className="inline-flex items-center gap-2 mt-5 font-mono text-[10px] tracking-[0.22em] uppercase transition-opacity hover:opacity-60"
+                    style={{ color: "var(--ink-3)" }}
+                  >
+                    View all →
+                  </Link>
                 </div>
                 <div className="col-span-8 grid grid-cols-3 gap-x-8 gap-y-3">
                   {COUNTRIES.map((c) => (
