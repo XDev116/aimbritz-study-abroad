@@ -286,28 +286,33 @@ export default function UniversitiesPage() {
 
       {/* ── Filters ── */}
       <div className="sticky top-0 z-30 border-b" style={{ background: "rgba(252,252,250,0.95)", borderColor: "var(--hairline)", backdropFilter: "blur(12px)" }}>
-        <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-3 flex flex-col sm:flex-row gap-3 items-start sm:items-center">
-          {/* Search */}
-          <div className="relative w-full sm:w-64 shrink-0">
-            <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "var(--ink-4)" }} />
-            <input
-              type="text"
-              placeholder="Search universities..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-8 pr-3 py-2 font-mono text-[10px] tracking-[0.12em] outline-none"
-              style={{ border: "1px solid var(--hairline)", background: "transparent", color: "var(--ink)" }}
-            />
+        <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-3 flex flex-col gap-2.5">
+          {/* Search row — full width, count below on mobile */}
+          <div className="flex items-center gap-2">
+            <div className="relative flex-1">
+              <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "var(--ink-4)" }} />
+              <input
+                type="text"
+                placeholder="Search universities..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full pl-8 pr-3 py-2 font-mono text-[10px] tracking-[0.12em] outline-none"
+                style={{ border: "1px solid var(--hairline)", background: "transparent", color: "var(--ink)" }}
+              />
+            </div>
+            <span className="font-mono text-[9px] tracking-[0.2em] uppercase shrink-0" style={{ color: "var(--ink-4)" }}>
+              {filtered.length} shown
+            </span>
           </div>
 
-          {/* Country chips */}
-          <div className="flex gap-2 overflow-x-auto pb-1 sm:pb-0 flex-1" style={{ scrollbarWidth: "none" }}>
+          {/* Country chips — always wrap */}
+          <div className="flex flex-wrap gap-1.5">
             {countryList.map((c) => (
               <button
                 key={c}
                 type="button"
                 onClick={() => setCountry(c)}
-                className="shrink-0 font-mono text-[9px] tracking-[0.2em] uppercase px-3 py-1.5 transition-colors"
+                className="font-mono text-[9px] tracking-[0.18em] uppercase px-2.5 py-1 transition-colors"
                 style={{
                   border: "1px solid",
                   borderColor: country === c ? "var(--ember)" : "var(--hairline)",
@@ -319,11 +324,6 @@ export default function UniversitiesPage() {
               </button>
             ))}
           </div>
-
-          {/* Count */}
-          <span className="font-mono text-[9px] tracking-[0.2em] uppercase shrink-0" style={{ color: "var(--ink-4)" }}>
-            {filtered.length} shown
-          </span>
         </div>
       </div>
 
