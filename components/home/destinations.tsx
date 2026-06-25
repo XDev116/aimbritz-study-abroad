@@ -24,20 +24,12 @@ interface Country {
 }
 
 const COUNTRIES: Country[] = [
-  { code: "GB", name: "United Kingdom",  unis: 142, topCourse: "MSc Computer Science", cost: "£22k / yr",  intake: "Sept",   hero: "https://images.unsplash.com/photo-1486299267070-83823f5448dd?w=1600&q=80", shape: "tall",  w: 460 },
-  { code: "CA", name: "Canada",          unis: 96,  topCourse: "MS Data Science",      cost: "C$28k / yr", intake: "Sept",   hero: "https://images.unsplash.com/photo-1517935706615-2717063c2225?w=1600&q=80", shape: "tall",  w: 480 },
-  { code: "DE", name: "Germany",         unis: 58,  topCourse: "MS Automotive Eng",    cost: "€0 public",  intake: "Oct",    hero: "https://images.unsplash.com/photo-1528728329032-2972f65dfb3f?w=1200&q=80", shape: "half",  w: 340 },
-  { code: "FR", name: "France",          unis: 41,  topCourse: "MSc Business",         cost: "€12k / yr",  intake: "Sept",   hero: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1200&q=80", shape: "half",  w: 340 },
-  { code: "US", name: "United States",   unis: 182, topCourse: "MS Engineering",       cost: "$42k / yr",  intake: "Fall",   hero: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1600&q=80", shape: "tall",  w: 540 },
-  { code: "AU", name: "Australia",       unis: 68,  topCourse: "BArch",                cost: "A$34k / yr", intake: "Feb",    hero: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=1600&q=80", shape: "tall",  w: 420 },
-  { code: "IE", name: "Ireland",         unis: 24,  topCourse: "MSc Pharma",           cost: "€18k / yr",  intake: "Sept",   hero: "https://images.unsplash.com/photo-1590089415225-401ed6f9db8e?w=1200&q=80", shape: "half",  w: 380 },
-  { code: "AT", name: "Austria",         unis: 22,  topCourse: "MSc Engineering",      cost: "€1.5k / yr", intake: "Oct",    hero: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80", shape: "half",  w: 380 },
-  { code: "SG", name: "Singapore",       unis: 35,  topCourse: "MSc Finance",          cost: "S$25k / yr", intake: "Aug",    hero: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1200&q=80", shape: "half",  w: 360 },
-  { code: "AE", name: "Dubai (UAE)",     unis: 40,  topCourse: "MBA",                  cost: "AED 55k/yr", intake: "Sept",   hero: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1200&q=80", shape: "half",  w: 360 },
-  { code: "GE", name: "Georgia",         unis: 18,  topCourse: "MBBS / Medicine",      cost: "$4k / yr",   intake: "Sept",   hero: "https://images.unsplash.com/photo-1565008576549-57569a49371d?w=1600&q=80", shape: "tall",  w: 440 },
-  { code: "MY", name: "Malaysia",        unis: 50,  topCourse: "Business & IT",        cost: "MYR 30k/yr", intake: "Mar",    hero: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=1200&q=80", shape: "half",  w: 360 },
-  { code: "NZ", name: "New Zealand",     unis: 35,  topCourse: "Agriculture & IT",     cost: "NZ$30k/yr",  intake: "Feb",    hero: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=1200&q=80", shape: "half",  w: 360 },
-  { code: "MU", name: "Mauritius",       unis: 15,  topCourse: "Hospitality & Mgmt",   cost: "$6k / yr",   intake: "Jan",    hero: "https://images.unsplash.com/photo-1589197331516-4d84b72ebde3?w=1600&q=80", shape: "tall",  w: 420 },
+  { code: "GB", name: "United Kingdom",  unis: 5,  topCourse: "MSc Computer Science", cost: "£22k / yr",  intake: "Sept",   hero: "https://images.unsplash.com/photo-1486299267070-83823f5448dd?w=1600&q=80", shape: "tall",  w: 460 },
+  { code: "DE", name: "Germany",         unis: 3,  topCourse: "MSc Business",         cost: "€0 public",  intake: "Oct",    hero: "https://images.unsplash.com/photo-1528728329032-2972f65dfb3f?w=1200&q=80", shape: "half",  w: 340 },
+  { code: "FR", name: "France",          unis: 3,  topCourse: "MSc Business",         cost: "€12k / yr",  intake: "Sept",   hero: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1200&q=80", shape: "half",  w: 340 },
+  { code: "IE", name: "Ireland",         unis: 2,  topCourse: "MSc Pharma",           cost: "€18k / yr",  intake: "Sept",   hero: "https://images.unsplash.com/photo-1590089415225-401ed6f9db8e?w=1200&q=80", shape: "half",  w: 380 },
+  { code: "AU", name: "Australia",       unis: 2,  topCourse: "MSc Research",         cost: "A$34k / yr", intake: "Feb",    hero: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=1600&q=80", shape: "tall",  w: 420 },
+  { code: "CA", name: "Canada",          unis: 2,  topCourse: "MS Data Science",      cost: "C$28k / yr", intake: "Sept",   hero: "https://images.unsplash.com/photo-1517935706615-2717063c2225?w=1600&q=80", shape: "tall",  w: 480 },
 ];
 
 function buildColumns(countries: Country[]): Country[][] {

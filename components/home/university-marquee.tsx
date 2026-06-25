@@ -3,12 +3,29 @@ import Image from "next/image";
 /* ── partner logos (public/images/Partnering Universities/) ──────── */
 const DIR = "/images/Partnering Universities";
 const logos = [
-  { src: `${DIR}/demontfort.png`, alt: "De Montfort University" },
-  { src: `${DIR}/leicester.png`, alt: "University of Leicester" },
-  { src: `${DIR}/greenwich.png`, alt: "University of Greenwich" },
-  { src: `${DIR}/teesside.png`, alt: "Teesside University" },
-  { src: `${DIR}/uws.png`, alt: "University of the West of Scotland" },
-  { src: `${DIR}/coventry.png`, alt: "Coventry University" },
+  /* UK */
+  { src: `${DIR}/liverpool.png`,    alt: "University of Liverpool" },
+  { src: `${DIR}/surrey.png`,       alt: "University of Surrey" },
+  { src: `${DIR}/queens-belfast.png`, alt: "Queen's University Belfast" },
+  { src: `${DIR}/heriot-watt.png`,  alt: "Heriot-Watt University" },
+  { src: `${DIR}/aston.png`,        alt: "Aston University" },
+  /* Germany */
+  { src: `${DIR}/constructor.png`,  alt: "Constructor University" },
+  { src: `${DIR}/gisma.png`,        alt: "GISMA Business School" },
+  { src: `${DIR}/uea.png`,          alt: "University of Europe for Applied Sciences" },
+  /* France */
+  { src: `${DIR}/isc-paris.png`,    alt: "ISC Paris" },
+  { src: `${DIR}/inseec.png`,       alt: "INSEEC" },
+  { src: `${DIR}/kedge.png`,        alt: "Kedge Business School" },
+  /* Ireland */
+  { src: `${DIR}/ucd.png`,          alt: "University College Dublin" },
+  { src: `${DIR}/ucc.png`,          alt: "University College Cork" },
+  /* Australia */
+  { src: `${DIR}/melbourne.png`,    alt: "The University of Melbourne" },
+  { src: `${DIR}/sydney.png`,       alt: "The University of Sydney" },
+  /* Canada */
+  { src: `${DIR}/waterloo.png`,     alt: "University of Waterloo" },
+  { src: `${DIR}/alberta.png`,      alt: "University of Alberta" },
 ];
 
 /* Double the array so the strip can loop seamlessly */
