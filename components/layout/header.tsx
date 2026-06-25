@@ -6,12 +6,14 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const COUNTRIES = [
-  { code: "GB", name: "United Kingdom", unis: 5,  slug: "uk" },
-  { code: "DE", name: "Germany",        unis: 3,  slug: "germany" },
-  { code: "FR", name: "France",         unis: 3,  slug: "france" },
-  { code: "IE", name: "Ireland",        unis: 2,  slug: "ireland" },
-  { code: "AU", name: "Australia",      unis: 2,  slug: "australia" },
-  { code: "CA", name: "Canada",         unis: 2,  slug: "canada" },
+  { code: "GB", name: "United Kingdom", unis: 142, slug: "uk" },
+  { code: "CA", name: "Canada", unis: 96, slug: "canada" },
+  { code: "AU", name: "Australia", unis: 68, slug: "australia" },
+  { code: "US", name: "United States", unis: 182, slug: "usa" },
+  { code: "IE", name: "Ireland", unis: 24, slug: "ireland" },
+  { code: "DE", name: "Germany", unis: 58, slug: "germany" },
+  { code: "FR", name: "France", unis: 41, slug: "france" },
+  { code: "NZ", name: "New Zealand", unis: 35, slug: "new-zealand" },
 ];
 
 const SERVICES = [
