@@ -9,7 +9,6 @@ import {
   STORIES,
   STORY_COUNTRIES,
   STORY_DESTINATIONS,
-  STORY_REELS,
   type Story,
 } from "@/lib/data/stories";
 
@@ -99,82 +98,32 @@ export default function StoriesPage() {
   return (
     <div ref={rootRef} style={{ background: C.bg, color: C.ink }}>
       {/* ── Hero ── */}
-      <section className="px-5 md:px-8 pt-28 md:pt-36 pb-12 md:pb-16">
-        <div className="max-w-[1200px] mx-auto">
-          <p className="st-rev font-mono text-[10px] md:text-[11px] tracking-[0.3em] uppercase mb-5" style={{ color: C.faint }}>
-            Success stories / Since 2018
+      <section className="relative overflow-hidden flex flex-col justify-end px-5 md:px-8 pt-24 md:pt-0" style={{ background: "#0E0E10", minHeight: "clamp(420px,55vw,560px)" }}>
+        {/* Background — students walking on campus */}
+        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1600&q=80" alt="" aria-hidden
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          style={{ filter: "grayscale(0.3) contrast(1.1)", opacity: 0.45 }} />
+        <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(135deg, rgba(14,14,16,0.82) 0%, rgba(14,14,16,0.4) 55%, rgba(14,14,16,0.75) 100%)" }} />
+        <div className="relative max-w-[1200px] mx-auto w-full pb-10 md:pb-14 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+          <div>
+            <p className="st-rev font-mono text-[10px] tracking-[0.3em] uppercase mb-3" style={{ color: "rgba(246,242,234,0.4)" }}>
+              Success stories · Since 2018
+            </p>
+            <h1 className="st-rev font-sans font-black uppercase tracking-[-0.04em] leading-[0.88]" style={{ fontSize: "clamp(2.8rem,7vw,6.5rem)", color: "#F6F2EA" }}>
+              Real students.
+              <br />
+              <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>Real journeys.</span>
+            </h1>
+          </div>
+          <p className="st-rev font-mono text-[11px] leading-relaxed max-w-[220px] pb-1" style={{ color: "rgba(246,242,234,0.4)" }}>
+            Stories of students who took the leap — and landed exactly where they dreamed.
           </p>
-          <h1 className="st-rev font-sans font-black uppercase tracking-[-0.03em] leading-[0.95]" style={{ fontSize: "clamp(2.4rem, 8vw, 6.5rem)" }}>
-            Real students.
-            <br />
-            <span style={{ color: C.faint }}>Real journeys.</span>
-          </h1>
-        </div>
-      </section>
-
-      {/* ── Stories strip — Facebook-style rectangular story cards ── */}
-      <section className="px-5 md:px-8 py-10 md:py-14 border-y overflow-hidden" style={{ background: C.bg2, borderColor: C.line }}>
-        <div className="max-w-[1200px] mx-auto">
-          {/* header row */}
-          <div className="st-rev flex items-center justify-between gap-4 mb-6 md:mb-8">
-            <span className="font-mono text-[10px] md:text-[11px] tracking-[0.25em] uppercase font-bold">
-              Stories &middot; @aimbritz
-            </span>
-            <a href="https://www.instagram.com/aimbritz" target="_blank" rel="noopener noreferrer" className="font-mono text-[10px] tracking-[0.2em] uppercase pb-0.5 border-b" style={{ borderColor: C.ink }}>
-              See all &rarr;
-            </a>
-          </div>
-
-          {/* rectangular story cards (bigger, FB-style) */}
-          <div className="flex gap-3 md:gap-4 overflow-x-auto pb-2 -mx-1 px-1" style={{ scrollbarWidth: "none" }}>
-            {STORY_REELS.map((r, i) => (
-              <a
-                key={r.url}
-                href={r.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="st-rev group relative flex-none overflow-hidden rounded-xl"
-                style={{ width: "min(40vw, 150px)", aspectRatio: "9/14", background: C.card }}
-              >
-                <img src={r.thumb} alt={`Story ${i + 1}`} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                {/* avatar ring top-left (FB story marker) */}
-                <span
-                  className="absolute top-2.5 left-2.5 w-9 h-9 rounded-full p-[2px]"
-                  style={{ background: C.bg }}
-                >
-                  <span className="block w-full h-full rounded-full overflow-hidden" style={{ border: `2px solid ${C.ink}` }}>
-                    <img src={r.thumb} alt="" className="w-full h-full object-cover" />
-                  </span>
-                </span>
-                {/* gradient + label */}
-                <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent 45%)" }} />
-                <div className="absolute bottom-0 left-0 right-0 p-2.5">
-                  <p className="font-sans font-bold leading-tight" style={{ fontSize: "12px", color: "#fff" }}>
-                    Story {i + 1}
-                  </p>
-                </div>
-                {/* play glyph */}
-                <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center" style={{ background: "rgba(255,255,255,0.22)", backdropFilter: "blur(6px)" }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z" /></svg>
-                </span>
-              </a>
-            ))}
-          </div>
         </div>
       </section>
 
       {/* ── Transformation spotlights ── */}
-      <section className="px-5 md:px-8 py-16 md:py-24">
+      <section className="px-5 md:px-8 pt-6 pb-16 md:pb-24">
         <div className="max-w-[1200px] mx-auto">
-          <p className="st-rev font-mono text-[10px] md:text-[11px] tracking-[0.3em] uppercase mb-3" style={{ color: C.faint }}>
-            The transformation
-          </p>
-          <h2 className="st-rev font-sans font-black uppercase tracking-[-0.03em] leading-[0.95] mb-12 md:mb-16" style={{ fontSize: "clamp(1.8rem, 5vw, 3.6rem)" }}>
-            Where they started.
-            <br />
-            <span style={{ color: C.faint }}>Where they are now.</span>
-          </h2>
-
           <div className="flex flex-col gap-10 md:gap-24">
             {featured.map((s, i) => {
               const flip = i % 2 === 1;
@@ -290,18 +239,37 @@ export default function StoriesPage() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="px-5 md:px-8 py-16 md:py-24 border-t" style={{ borderColor: C.line, background: C.bg2 }}>
-        <div className="max-w-[1200px] mx-auto text-center">
-          <h2 className="font-sans font-black uppercase tracking-[-0.03em] leading-[0.95]" style={{ fontSize: "clamp(2rem, 6vw, 4.5rem)" }}>
-            Your story is next.
-          </h2>
-          <p className="mt-6 max-w-md mx-auto text-[15px] leading-relaxed" style={{ color: C.muted }}>
-            Book a free 30-minute session and get a shortlist of five universities matched to your profile.
-          </p>
-          <Link href="/contact" className="mt-9 inline-flex items-center gap-2 rounded-full px-8 py-4 text-[13px] font-semibold transition-transform hover:scale-[1.04]" style={{ background: C.ink, color: C.bg }}>
-            Book free session
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M7 17L17 7M17 7H8M17 7V16" /></svg>
-          </Link>
+      <section className="max-w-[1280px] mx-auto px-5 md:px-8 py-20 md:py-28">
+        <div
+          className="relative overflow-hidden flex flex-col md:flex-row items-start md:items-end justify-between gap-8 p-10 md:p-16"
+          style={{ background: "var(--ink)", color: "var(--paper)" }}
+        >
+          <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&q=80" alt="" aria-hidden
+            className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
+            style={{ filter: "grayscale(0.4) contrast(1.1)", opacity: 0.25 }} />
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
+            backgroundImage: "linear-gradient(rgba(248,244,235,1) 1px, transparent 1px), linear-gradient(90deg, rgba(248,244,235,1) 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
+          }} />
+          <div className="relative">
+            <p className="font-mono text-[10px] tracking-[0.3em] uppercase mb-4" style={{ color: "var(--ember)" }}>Get started — it&apos;s free</p>
+            <h2 className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92]" style={{ fontSize: "clamp(2rem,5vw,4rem)" }}>
+              Ready to begin<br />
+              <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>your journey?</span>
+            </h2>
+            <p className="mt-5 text-[14px] leading-relaxed max-w-md" style={{ color: "rgba(246,242,234,0.5)" }}>
+              One free call. A plan built around you. No pressure, no obligation.
+            </p>
+          </div>
+          <div className="relative flex flex-col sm:flex-row gap-4 shrink-0">
+            <Link href="/contact" className="inline-flex items-center gap-3 font-sans font-black uppercase tracking-[-0.01em] px-7 py-4 transition-opacity hover:opacity-80" style={{ background: "var(--ember)", color: "var(--ink)", fontSize: "0.85rem" }}>
+              Free consultation
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M7 17L17 7M17 7H8M17 7V16" /></svg>
+            </Link>
+            <a href="tel:+919747277233" className="inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.2em] uppercase px-7 py-4 transition-opacity hover:opacity-70" style={{ border: "1px solid rgba(246,242,234,0.2)", color: "rgba(246,242,234,0.7)" }}>
+              Call us now
+            </a>
+          </div>
         </div>
       </section>
 

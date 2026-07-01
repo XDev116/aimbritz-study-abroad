@@ -5,16 +5,17 @@ import { ReelsEditorial } from "@/components/home/reels-editorial";
 import { CeoModule } from "@/components/home/ceo-module";
 import { CtaBold } from "@/components/home/cta-bold";
 import { UniversityMarquee } from "@/components/home/university-marquee";
+import { AimedicosBanner } from "@/components/home/aimmedicos-banner";
 
 export default function HomePage() {
   return (
     <>
-      {/* Combined Hero → Promise: hero shrinks into card, fades, signature takes over */}
       <BrandPromise />
       <Destinations />
       <FeaturedUniversities />
       <ReelsEditorial />
       <CeoModule />
+      <AimedicosBanner />
       <UniversityMarquee />
       <CtaBold />
     </>

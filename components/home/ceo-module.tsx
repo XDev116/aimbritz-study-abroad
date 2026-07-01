@@ -60,7 +60,7 @@ export function CeoModule() {
       }}
     >
 
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 grid grid-cols-12 gap-10 items-center">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-10 grid grid-cols-12 gap-10 items-center">
         {/* Left column -- text + tips */}
         <div className="col-span-12 lg:col-span-7">
           <p className="ceo-reveal t-eyebrow text-ember mb-8">Meet your guide</p>
@@ -89,7 +89,7 @@ export function CeoModule() {
 
           {/* Advisor tips box with corner brackets */}
           <div
-            className="ceo-reveal mt-10 relative p-7"
+            className="ceo-reveal mt-10 relative p-4 sm:p-7"
             style={{
               background: "var(--paper-3)",
               border: "1px solid var(--hairline)",
@@ -151,7 +151,7 @@ export function CeoModule() {
             }}
           >
             <img
-              src="/images/team/alameen.png"
+              src="/images/team/alameen.webp"
               alt="Al Ameen, Founder & CEO"
               className="absolute inset-0 w-full h-full object-cover"
             />

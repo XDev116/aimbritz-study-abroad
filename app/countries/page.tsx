@@ -40,14 +40,18 @@ export default function CountriesPage() {
 
       {/* ── Dark hero header ── */}
       <div
-        className="relative w-full flex flex-col justify-end px-5 md:px-10"
+        className="relative w-full overflow-hidden flex flex-col justify-end px-5 md:px-10 pt-24 md:pt-0"
         style={{
           background: "#0E0E10",
-          paddingTop: "clamp(100px,12vw,160px)",
-          paddingBottom: "clamp(40px,5vw,72px)",
+          minHeight: "clamp(420px,55vw,560px)",
         }}
       >
-        <div className="max-w-[1280px] mx-auto w-full">
+        {/* Background — world map / globe scene */}
+        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1600&q=80" alt="" aria-hidden
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          style={{ filter: "grayscale(0.3) contrast(1.1)", opacity: 0.45 }} />
+        <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(135deg, rgba(14,14,16,0.82) 0%, rgba(14,14,16,0.4) 55%, rgba(14,14,16,0.75) 100%)" }} />
+        <div className="relative max-w-[1280px] mx-auto w-full pb-10 md:pb-14">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div>
               <p className="font-mono text-[10px] tracking-[0.32em] uppercase mb-4" style={{ color: "var(--ember)" }}>
@@ -99,14 +103,17 @@ export default function CountriesPage() {
           Partner Destinations
         </p>
 
-        {/* Row 1: UK wide + Germany tall — fixed height so no gap */}
-        <div className="grid grid-cols-3 gap-3 md:gap-4 mb-3 md:mb-4" style={{ height: "clamp(220px,35vw,480px)" }}>
+        {/* Row 1: UK wide + Germany — stacked on mobile, side-by-side on desktop */}
+        <div className="flex flex-col md:grid md:grid-cols-3 gap-3 md:gap-4 mb-3 md:mb-4" style={{ gridAutoRows: "clamp(220px,35vw,480px)" }}>
           {orderedCountries.slice(0, 2).map((country, idx) => (
             <Link
               key={country.slug}
               href={`/countries/${country.slug}`}
-              className="group relative overflow-hidden block h-full"
-              style={{ gridColumn: idx === 0 ? "span 2" : "span 1" }}
+              className={`group relative overflow-hidden block md:h-full ${idx === 0 ? "" : "h-[clamp(180px,45vw,340px)]"}`}
+              style={{
+                gridColumn: idx === 0 ? "span 2" : "span 1",
+                ...(idx === 0 ? { height: "clamp(220px,35vw,480px)" } : {}),
+              }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={PHOTOS[country.slug] ?? PHOTOS.uk} alt={country.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
@@ -115,7 +122,7 @@ export default function CountriesPage() {
               <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6" style={{ color: "#F6F2EA" }}>
                 <p className="font-mono text-[9px] tracking-[0.22em] uppercase mb-1.5" style={{ color: "rgba(246,242,234,0.55)" }}>{country.universitiesCount}+ unis · {country.topCourses[0]}</p>
                 <div className="flex items-end justify-between gap-4">
-                  <h2 className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92]" style={{ fontSize: idx === 0 ? "clamp(1.8rem,3.5vw,3rem)" : "clamp(1.3rem,2vw,1.8rem)" }}>{country.name}</h2>
+                  <h2 className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92]" style={{ fontSize: idx === 0 ? "clamp(1.8rem,3.5vw,3rem)" : "clamp(1.3rem,2.5vw,1.8rem)" }}>{country.name}</h2>
                   <span className="shrink-0 flex items-center gap-1.5 font-mono text-[9px] tracking-[0.2em] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ color: "var(--ember)" }}>Explore <ArrowRight size={10} /></span>
                 </div>
               </div>
@@ -205,36 +212,40 @@ export default function CountriesPage() {
         </div>
       </div>
 
-      {/* ── Bottom CTA ── */}
-      <div className="max-w-[1280px] mx-auto px-5 md:px-8 pb-16 md:pb-24">
+      {/* ── CTA ── */}
+      <section className="max-w-[1280px] mx-auto px-5 md:px-8 py-20 md:py-28">
         <div
-          className="flex flex-col md:flex-row items-start md:items-end justify-between gap-8 p-10 md:p-14"
+          className="relative overflow-hidden flex flex-col md:flex-row items-start md:items-end justify-between gap-8 p-10 md:p-16"
           style={{ background: "var(--ink)", color: "var(--paper)" }}
         >
-          <div>
-            <p className="font-mono text-[10px] tracking-[0.3em] uppercase mb-3" style={{ color: "var(--ember)" }}>
-              Need help deciding?
-            </p>
-            <h2
-              className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92]"
-              style={{ fontSize: "clamp(1.8rem,4vw,3.2rem)" }}
-            >
-              Can&apos;t decide<br />
-              <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>
-                where to study?
-              </span>
+          <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&q=80" alt="" aria-hidden
+            className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
+            style={{ filter: "grayscale(0.4) contrast(1.1)", opacity: 0.25 }} />
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
+            backgroundImage: "linear-gradient(rgba(248,244,235,1) 1px, transparent 1px), linear-gradient(90deg, rgba(248,244,235,1) 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
+          }} />
+          <div className="relative">
+            <p className="font-mono text-[10px] tracking-[0.3em] uppercase mb-4" style={{ color: "var(--ember)" }}>Get started — it&apos;s free</p>
+            <h2 className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92]" style={{ fontSize: "clamp(2rem,5vw,4rem)" }}>
+              Ready to begin<br />
+              <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>your journey?</span>
             </h2>
+            <p className="mt-5 text-[14px] leading-relaxed max-w-md" style={{ color: "rgba(246,242,234,0.5)" }}>
+              One free call. A plan built around you. No pressure, no obligation.
+            </p>
           </div>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-3 font-sans font-black uppercase tracking-[-0.01em] px-7 py-4 transition-opacity hover:opacity-75 shrink-0"
-            style={{ background: "var(--paper)", color: "var(--ink)", fontSize: "0.9rem" }}
-          >
-            Get Free Consultation
-            <ArrowRight size={16} />
-          </Link>
+          <div className="relative flex flex-col sm:flex-row gap-4 shrink-0">
+            <Link href="/contact" className="inline-flex items-center gap-3 font-sans font-black uppercase tracking-[-0.01em] px-7 py-4 transition-opacity hover:opacity-80" style={{ background: "var(--ember)", color: "var(--ink)", fontSize: "0.85rem" }}>
+              Free consultation
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M7 17L17 7M17 7H8M17 7V16" /></svg>
+            </Link>
+            <a href="tel:+919747277233" className="inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.2em] uppercase px-7 py-4 transition-opacity hover:opacity-70" style={{ border: "1px solid rgba(246,242,234,0.2)", color: "rgba(246,242,234,0.7)" }}>
+              Call us now
+            </a>
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

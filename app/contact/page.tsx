@@ -41,21 +41,51 @@ const MAPS = [
   },
 ];
 
+const EMPTY = { name: "", email: "", phone: "", country: "", message: "" };
+
+function validate(form: typeof EMPTY) {
+  const errors: Partial<typeof EMPTY> = {};
+  if (!form.name.trim()) errors.name = "Name is required";
+  if (!form.email.trim()) errors.email = "Email is required";
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errors.email = "Enter a valid email";
+  if (!form.phone.trim()) errors.phone = "Phone is required";
+  else if (!/^\+?[\d\s\-()]{7,15}$/.test(form.phone)) errors.phone = "Enter a valid phone number";
+  if (!form.message.trim()) errors.message = "Please tell us your goals";
+  return errors;
+}
+
 export default function ContactPage() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const [form, setForm] = useState({ name: "", email: "", phone: "", country: "", message: "" });
-  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState(EMPTY);
+  const [errors, setErrors] = useState<Partial<typeof EMPTY>>({});
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setForm({ name: "", email: "", phone: "", country: "", message: "" });
-    }, 3500);
+  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setForm((f) => ({ ...f, [name]: value }));
+    if (errors[name as keyof typeof EMPTY]) {
+      setErrors((err) => ({ ...err, [name]: undefined }));
+    }
   };
-  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const errs = validate(form);
+    if (Object.keys(errs).length) { setErrors(errs); return; }
+    setStatus("sending");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error("Failed");
+      setStatus("sent");
+      setForm(EMPTY);
+    } catch {
+      setStatus("error");
+    }
+  };
 
   useLayoutEffect(() => {
     const root = rootRef.current;
@@ -127,33 +157,47 @@ export default function ContactPage() {
         <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
           {/* Form */}
           <div className="lg:col-span-7 ct-rev">
-            {submitted ? (
+            {status === "sent" ? (
               <div className="rounded-2xl p-10 text-center" style={{ background: C.bg2, border: `1px solid ${C.line}` }}>
                 <div className="text-5xl mb-4">✦</div>
                 <h3 className="font-sans font-black uppercase tracking-[-0.02em] text-2xl mb-2">Message sent</h3>
                 <p className="text-[15px]" style={{ color: C.muted }}>
                   Thanks — we&apos;ve got it and will reply within 24 hours.
                 </p>
+                <button onClick={() => setStatus("idle")} className="mt-6 font-mono text-[11px] tracking-[0.2em] uppercase underline" style={{ color: C.faint }}>
+                  Send another
+                </button>
               </div>
             ) : (
-              <form onSubmit={onSubmit} className="space-y-7">
+              <form onSubmit={onSubmit} noValidate className="space-y-7">
+                {status === "error" && (
+                  <div className="px-4 py-3 rounded text-[13px]" style={{ background: "#fef2f2", border: "1px solid #fecaca", color: "#b91c1c" }}>
+                    Something went wrong — please try again or call us directly.
+                  </div>
+                )}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
                   <div>
                     <label htmlFor="name" className={labelCls} style={{ color: C.muted }}>Full name *</label>
-                    <input id="name" name="name" required value={form.name} onChange={onChange} placeholder="Your name"
-                      className="w-full py-2.5 text-[15px] outline-none placeholder:opacity-60" style={fieldStyle} />
+                    <input id="name" name="name" value={form.name} onChange={onChange} placeholder="Your name"
+                      className="w-full py-2.5 text-[15px] outline-none placeholder:opacity-60"
+                      style={{ ...fieldStyle, borderBottomColor: errors.name ? "#ef4444" : undefined }} />
+                    {errors.name && <p className="mt-1.5 text-[11px] font-mono" style={{ color: "#ef4444" }}>{errors.name}</p>}
                   </div>
                   <div>
                     <label htmlFor="email" className={labelCls} style={{ color: C.muted }}>Email *</label>
-                    <input id="email" name="email" type="email" required value={form.email} onChange={onChange} placeholder="you@email.com"
-                      className="w-full py-2.5 text-[15px] outline-none placeholder:opacity-60" style={fieldStyle} />
+                    <input id="email" name="email" type="email" value={form.email} onChange={onChange} placeholder="you@email.com"
+                      className="w-full py-2.5 text-[15px] outline-none placeholder:opacity-60"
+                      style={{ ...fieldStyle, borderBottomColor: errors.email ? "#ef4444" : undefined }} />
+                    {errors.email && <p className="mt-1.5 text-[11px] font-mono" style={{ color: "#ef4444" }}>{errors.email}</p>}
                   </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
                   <div>
                     <label htmlFor="phone" className={labelCls} style={{ color: C.muted }}>Phone *</label>
-                    <input id="phone" name="phone" required value={form.phone} onChange={onChange} placeholder="+91 …"
-                      className="w-full py-2.5 text-[15px] outline-none placeholder:opacity-60" style={fieldStyle} />
+                    <input id="phone" name="phone" value={form.phone} onChange={onChange} placeholder="+91 97472 77233"
+                      className="w-full py-2.5 text-[15px] outline-none placeholder:opacity-60"
+                      style={{ ...fieldStyle, borderBottomColor: errors.phone ? "#ef4444" : undefined }} />
+                    {errors.phone && <p className="mt-1.5 text-[11px] font-mono" style={{ color: "#ef4444" }}>{errors.phone}</p>}
                   </div>
                   <div>
                     <label htmlFor="country" className={labelCls} style={{ color: C.muted }}>Destination of interest</label>
@@ -162,15 +206,26 @@ export default function ContactPage() {
                   </div>
                 </div>
                 <div>
-                  <label htmlFor="message" className={labelCls} style={{ color: C.muted }}>Message</label>
+                  <label htmlFor="message" className={labelCls} style={{ color: C.muted }}>Message *</label>
                   <textarea id="message" name="message" rows={4} value={form.message} onChange={onChange} placeholder="Tell us about your goals…"
-                    className="w-full py-2.5 text-[15px] outline-none resize-none placeholder:opacity-60" style={fieldStyle} />
+                    className="w-full py-2.5 text-[15px] outline-none resize-none placeholder:opacity-60"
+                    style={{ ...fieldStyle, borderBottomColor: errors.message ? "#ef4444" : undefined }} />
+                  {errors.message && <p className="mt-1.5 text-[11px] font-mono" style={{ color: "#ef4444" }}>{errors.message}</p>}
                 </div>
-                <button type="submit"
-                  className="inline-flex items-center gap-2 rounded-full px-8 py-4 text-[13px] font-semibold transition-transform hover:scale-[1.03]"
+                <button type="submit" disabled={status === "sending"}
+                  className="inline-flex items-center gap-2 rounded-full px-8 py-4 text-[13px] font-semibold transition-all hover:scale-[1.03] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
                   style={{ background: C.ink, color: C.bg }}>
-                  Send message
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M7 17L17 7M17 7H8M17 7V16" /></svg>
+                  {status === "sending" ? (
+                    <>
+                      <svg className="animate-spin" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                      Sending…
+                    </>
+                  ) : (
+                    <>
+                      Send message
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M7 17L17 7M17 7H8M17 7V16" /></svg>
+                    </>
+                  )}
                 </button>
               </form>
             )}

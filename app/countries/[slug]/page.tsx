@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { ArrowRight } from "lucide-react";
 import { getAllCountrySlugs, getCountryBySlug } from "@/lib/data/countries";
 import { getUniversitiesByCountry } from "@/lib/data/universities";
 import { UniversitiesGrid } from "@/components/country/universities-grid";
@@ -184,35 +183,42 @@ export default async function CountryPage({ params }: CountryPageProps) {
       )}
 
       {/* ── CTA ── */}
-      <div style={{ background: "#0E0E10" }}>
-        <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-16 md:py-24">
-          <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-10">
-            <div>
-              <p className="font-mono text-[10px] tracking-[0.3em] uppercase mb-4" style={{ color: "var(--ember)" }}>
-                Get started
-              </p>
-              <h2
-                className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.88]"
-                style={{ fontSize: "clamp(2rem,5vw,4rem)", color: "#F6F2EA" }}
-              >
-                Ready to study<br />
-                in{" "}
-                <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>
-                  {country.name}?
-                </span>
-              </h2>
-            </div>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-3 font-sans font-black uppercase tracking-[-0.01em] px-8 py-4 transition-opacity hover:opacity-80 shrink-0"
-              style={{ background: "var(--ember)", color: "#0E0E10", fontSize: "0.9rem" }}
-            >
-              Schedule Free Consultation
-              <ArrowRight size={16} />
+      <section className="max-w-[1280px] mx-auto px-5 md:px-10 py-20 md:py-28">
+        <div
+          className="relative overflow-hidden flex flex-col md:flex-row items-start md:items-end justify-between gap-8 p-10 md:p-16"
+          style={{ background: "var(--ink)", color: "var(--paper)" }}
+        >
+          <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&q=80" alt="" aria-hidden
+            className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
+            style={{ filter: "grayscale(0.4) contrast(1.1)", opacity: 0.25 }} />
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
+            backgroundImage: "linear-gradient(rgba(248,244,235,1) 1px, transparent 1px), linear-gradient(90deg, rgba(248,244,235,1) 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
+          }} />
+          <div className="relative">
+            <p className="font-mono text-[10px] tracking-[0.3em] uppercase mb-4" style={{ color: "var(--ember)" }}>Get started — it&apos;s free</p>
+            <h2 className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92]" style={{ fontSize: "clamp(2rem,5vw,4rem)" }}>
+              Ready to study<br />
+              in{" "}
+              <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>
+                {country.name}?
+              </span>
+            </h2>
+            <p className="mt-5 text-[14px] leading-relaxed max-w-md" style={{ color: "rgba(246,242,234,0.5)" }}>
+              One free call. A plan built around you. No pressure, no obligation.
+            </p>
+          </div>
+          <div className="relative flex flex-col sm:flex-row gap-4 shrink-0">
+            <Link href="/contact" className="inline-flex items-center gap-3 font-sans font-black uppercase tracking-[-0.01em] px-7 py-4 transition-opacity hover:opacity-80" style={{ background: "var(--ember)", color: "var(--ink)", fontSize: "0.85rem" }}>
+              Free consultation
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M7 17L17 7M17 7H8M17 7V16" /></svg>
             </Link>
+            <a href="tel:+919747277233" className="inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.2em] uppercase px-7 py-4 transition-opacity hover:opacity-70" style={{ border: "1px solid rgba(246,242,234,0.2)", color: "rgba(246,242,234,0.7)" }}>
+              Call us now
+            </a>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

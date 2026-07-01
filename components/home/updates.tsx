@@ -70,7 +70,7 @@ export function Updates() {
             <em className="font-serif italic text-ember">explained.</em>
           </h2>
           <a
-            href="https://www.youtube.com/@aimbritz"
+            href="https://www.youtube.com/@AimbritzStudyAbroad"
             target="_blank"
             rel="noopener noreferrer"
             data-cursor-label="YouTube"

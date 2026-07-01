@@ -1,25 +1,23 @@
 import Image from "next/image";
 
-/* ── partner logos (public/images/Partnering Universities/) ──────── */
 const DIR = "/images/Partnering Universities";
 const logos = [
-  { src: `${DIR}/liverpool.png`,      alt: "University of Liverpool" },
-  { src: `${DIR}/surrey.png`,         alt: "University of Surrey" },
-  { src: `${DIR}/queens-belfast.png`, alt: "Queen's University Belfast" },
-  { src: `${DIR}/heriot-watt.png`,    alt: "Heriot-Watt University" },
-  { src: `${DIR}/aston.png`,          alt: "Aston University" },
-  { src: `${DIR}/constructor.svg`,    alt: "Constructor University" },
-  { src: `${DIR}/kedge-dark.svg`,     alt: "KEDGE Business School" },
-  { src: `${DIR}/INSEEC.png`,         alt: "INSEEC Business School" },
-  { src: `${DIR}/gisma.png`,          alt: "GISMA Business School" },
-  { src: `${DIR}/ueas.png`,           alt: "University of Europe for Applied Sciences" },
-  { src: `${DIR}/isc-paris.png`,      alt: "ISC Paris" },
-  { src: `${DIR}/ucd.png`,            alt: "University College Dublin" },
-  { src: `${DIR}/ucc.png`,            alt: "University College Cork" },
-  { src: `${DIR}/melbourne.png`,      alt: "University of Melbourne" },
-  { src: `${DIR}/sydney.png`,         alt: "University of Sydney" },
-  { src: `${DIR}/waterloo.png`,       alt: "University of Waterloo" },
-  { src: `${DIR}/alberta.png`,        alt: "University of Alberta" },
+  { src: `${DIR}/liverpool.webp`,       alt: "University of Liverpool" },
+  { src: `${DIR}/surrey.webp`,          alt: "University of Surrey" },
+  { src: `${DIR}/queens-belfast.webp`,  alt: "Queen's University Belfast" },
+  { src: `${DIR}/heriot-watt.webp`,     alt: "Heriot-Watt University" },
+  { src: `${DIR}/aston.webp`,           alt: "Aston University" },
+  { src: `${DIR}/constructor.svg`,      alt: "Constructor University" },
+  { src: `${DIR}/kedge-dark.svg`,       alt: "KEDGE Business School" },
+  { src: `${DIR}/INSEEC.webp`,          alt: "INSEEC Business School" },
+  { src: `${DIR}/gisma.webp`,           alt: "GISMA Business School" },
+  { src: `${DIR}/ueas.webp`,            alt: "University of Europe for Applied Sciences" },
+  { src: `${DIR}/ucd.webp`,             alt: "University College Dublin" },
+  { src: `${DIR}/ucc.webp`,             alt: "University College Cork" },
+  { src: `${DIR}/melbourne.webp`,       alt: "University of Melbourne" },
+  { src: `${DIR}/sydney.webp`,          alt: "University of Sydney" },
+  { src: `${DIR}/waterloo.webp`,        alt: "University of Waterloo" },
+  { src: `${DIR}/alberta.webp`,         alt: "University of Alberta" },
 ];
 
 /* Double the array so the strip can loop seamlessly */

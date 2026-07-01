@@ -53,107 +53,128 @@ export function BrandPromise() {
     const paths = Array.from(svg.querySelectorAll<SVGPathElement>("path"));
     if (!paths.length) return;
 
-    const isMobile = window.innerWidth < 1024;
+    // On every mount (including navigation-back), force scroll to top so the
+    // mid-section snap never falsely triggers on page entry.
+    const lenis = (window as any).__lenis;
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
 
-    const ctx = gsap.context(() => {
-      // Flow color override (both mobile + desktop)
-      ScrollTrigger.create({
-        trigger: outer,
-        start: "top 80%",
-        end: "bottom 20%",
-        onEnter: () =>
-          document.documentElement.style.setProperty("--flow-color", "rgba(252,252,250,0.35)"),
-        onEnterBack: () =>
-          document.documentElement.style.setProperty("--flow-color", "rgba(252,252,250,0.35)"),
-        onLeave: () =>
-          document.documentElement.style.removeProperty("--flow-color"),
-        onLeaveBack: () =>
-          document.documentElement.style.removeProperty("--flow-color"),
-      });
+    let ctx: ReturnType<typeof gsap.context> | null = null;
 
-      if (isMobile) {
-        // ── MOBILE: no scroll animation — sections stack normally ──
-        // Just show signature fully drawn, no GSAP needed
-        sigContainer.style.cssText = `
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%) scale(0.5);
-          opacity: 1;
-        `;
-        paths.forEach((p) => {
-          p.style.strokeDasharray = "none";
-          p.style.strokeDashoffset = "0";
-          p.style.fillOpacity = "1";
-          p.style.opacity = "1";
-        });
-        gsap.set(".bp-line, .bp-eyebrow, .bp-meta", { opacity: 1, y: 0 });
-        return;
-      }
+    const init = () => {
+      if (ctx) ctx.revert();
 
-      // ── DESKTOP: full choreographed animation ────────────────────────────
-      gsap.set(heroLayer, { scale: 1, opacity: 1, borderRadius: "0px" });
-      gsap.set(promiseLayer, { opacity: 0 });
+      const isMobile = window.innerWidth < 1024;
 
-      gsap.set(sigContainer, {
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        xPercent: -50,
-        yPercent: -50,
-        scale: 1,
-        opacity: 1,
-      });
-
-      // Use normalized pathLength=1 (set in JSX) instead of getTotalLength().
-      paths.forEach((p) => {
-        gsap.set(p, { strokeDasharray: 1, strokeDashoffset: 1, fillOpacity: 0 });
-      });
-
-      gsap.set(content, { opacity: 0, y: 40 });
-      gsap.set(".bp-line", { y: 60, opacity: 0 });
-      gsap.set(".bp-eyebrow", { y: 30, opacity: 0 });
-      gsap.set(".bp-meta", { y: 20, opacity: 0 });
-      sticky.style.setProperty("--bp-bg", "transparent");
-      sticky.style.setProperty("--bp-fg", "#0a0a0a");
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
+      ctx = gsap.context(() => {
+        // Flow-color for cursor/particle effects
+        ScrollTrigger.create({
           trigger: outer,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: 0.5,
-          invalidateOnRefresh: true,
-        },
-      });
+          start: "top 80%",
+          end: "bottom 20%",
+          onEnter:     () => document.documentElement.style.setProperty("--flow-color", "rgba(252,252,250,0.35)"),
+          onEnterBack: () => document.documentElement.style.setProperty("--flow-color", "rgba(252,252,250,0.35)"),
+          onLeave:     () => document.documentElement.style.removeProperty("--flow-color"),
+          onLeaveBack: () => document.documentElement.style.removeProperty("--flow-color"),
+        });
 
-      tl.to(heroLayer, { scale: 0.55, duration: 0.2, ease: "power2.inOut" }, 0);
-      tl.to(sticky, {
-        "--bp-bg": "rgba(40,44,32,0.92)",
-        "--bp-fg": "#fcfcfa",
-        duration: 0.2,
-        ease: "power2.inOut",
-      } as gsap.TweenVars, 0.05);
-      tl.to(promiseLayer, { opacity: 1, duration: 0.15, ease: "power2.out" }, 0.1);
-      tl.to(heroLayer, { scale: 0.3, opacity: 0, duration: 0.12, ease: "power2.in" }, 0.2);
+        if (isMobile) {
+          // Mobile: no animation, everything static and visible
+          sigContainer.style.cssText = `position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.5);opacity:1;`;
+          paths.forEach((p) => {
+            p.style.strokeDasharray = "none";
+            p.style.strokeDashoffset = "0";
+            p.style.fillOpacity = "1";
+          });
+          gsap.set(".bp-line, .bp-eyebrow, .bp-meta", { opacity: 1, y: 0 });
+          return;
+        }
 
-      const STROKE_START = 0.18;
-      const STROKE_SPAN = 0.37;
-      const perStroke = STROKE_SPAN / paths.length;
-      paths.forEach((p, i) => {
-        tl.to(p, { strokeDashoffset: 0, duration: perStroke * 1.1, ease: "none" }, STROKE_START + i * perStroke * 0.9);
-      });
+        // ── DESKTOP ──────────────────────────────────────────────────────────
 
-      tl.to(paths, { fillOpacity: 1, duration: 0.08, ease: "power2.out" }, 0.55);
-      tl.to({}, { duration: 0.07 }, 0.63);
-      tl.fromTo(sigContainer, { top: "50%" }, { top: "28%", scale: 0.35, duration: 0.12, ease: "power2.inOut" }, 0.7);
-      tl.to(content, { opacity: 1, y: 0, duration: 0.07, ease: "power2.out" }, 0.75)
-        .to(".bp-eyebrow", { y: 0, opacity: 1, duration: 0.04 }, 0.78)
-        .to(".bp-line", { y: 0, opacity: 1, duration: 0.04, stagger: 0.03 }, 0.82)
-        .to(".bp-meta", { y: 0, opacity: 1, duration: 0.04 }, 0.9);
-    }, outer);
+        // Snap to final state if the user hard-refreshed mid-section.
+        // Navigation-back never triggers this because we scrollTo(0) on mount above.
+        const rect = outer.getBoundingClientRect();
+        if (rect.top < 0 && rect.bottom > 0) {
+          gsap.set(heroLayer, { opacity: 0, scale: 0.3 });
+          gsap.set(promiseLayer, { opacity: 1 });
+          gsap.set(sigContainer, { position: "absolute", top: "28%", left: "50%", xPercent: -50, yPercent: -50, scale: 0.35, opacity: 1 });
+          paths.forEach((p) => gsap.set(p, { strokeDasharray: "none", strokeDashoffset: 0, fillOpacity: 1 }));
+          gsap.set(content, { opacity: 1, y: 0 });
+          gsap.set(".bp-line, .bp-eyebrow, .bp-meta", { opacity: 1, y: 0 });
+          sticky.style.setProperty("--bp-bg", "rgba(40,44,32,0.92)");
+          sticky.style.setProperty("--bp-fg", "#fcfcfa");
+          return;
+        }
 
-    return () => ctx.revert();
+        // Reset everything to initial hidden state
+        gsap.set(heroLayer, { scale: 1, opacity: 1 });
+        gsap.set(promiseLayer, { opacity: 0 });
+        gsap.set(sigContainer, { position: "absolute", top: "50%", left: "50%", xPercent: -50, yPercent: -50, scale: 1, opacity: 1 });
+        paths.forEach((p) => gsap.set(p, { strokeDasharray: 1, strokeDashoffset: 1, fillOpacity: 0 }));
+        gsap.set(content, { opacity: 0, y: 40 });
+        gsap.set(".bp-line", { y: 60, opacity: 0 });
+        gsap.set(".bp-eyebrow", { y: 30, opacity: 0 });
+        gsap.set(".bp-meta", { y: 20, opacity: 0 });
+        sticky.style.setProperty("--bp-bg", "transparent");
+        sticky.style.setProperty("--bp-fg", "#0a0a0a");
+
+        // Single scrubbed timeline — full sequence tied to scroll, reverses cleanly
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: outer,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 0.5,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        // 0.00–0.20: hero shrinks and fades
+        tl.to(heroLayer, { scale: 0.55, duration: 0.2, ease: "power2.inOut" }, 0);
+        tl.to(sticky, { "--bp-bg": "rgba(40,44,32,0.92)", "--bp-fg": "#fcfcfa", duration: 0.2, ease: "power2.inOut" } as gsap.TweenVars, 0.05);
+        tl.to(promiseLayer, { opacity: 1, duration: 0.15, ease: "power2.out" }, 0.1);
+        tl.to(heroLayer, { scale: 0.3, opacity: 0, duration: 0.12, ease: "power2.in" }, 0.2);
+
+        // 0.18–0.55: signature draws stroke by stroke
+        const STROKE_START = 0.18;
+        const STROKE_SPAN = 0.37;
+        const perStroke = STROKE_SPAN / paths.length;
+        paths.forEach((p, i) => {
+          tl.to(p, { strokeDashoffset: 0, duration: perStroke * 1.1, ease: "none" }, STROKE_START + i * perStroke * 0.9);
+        });
+
+        // 0.55–0.63: strokes fill solid
+        tl.to(paths, { fillOpacity: 1, duration: 0.08, ease: "power2.out" }, 0.55);
+
+        // 0.70–0.82: sig moves to top slot, content cascades in
+        tl.fromTo(sigContainer, { top: "50%" }, { top: "28%", scale: 0.35, duration: 0.12, ease: "power2.inOut" }, 0.7);
+        tl.to(content, { opacity: 1, y: 0, duration: 0.07, ease: "power2.out" }, 0.75);
+        tl.to(".bp-eyebrow", { y: 0, opacity: 1, duration: 0.04 }, 0.78);
+        tl.to(".bp-line", { y: 0, opacity: 1, duration: 0.04, stagger: 0.03 }, 0.82);
+        tl.to(".bp-meta", { y: 0, opacity: 1, duration: 0.04 }, 0.9);
+      }, outer);
+    };
+
+    init();
+
+    let lastMobile = window.innerWidth < 1024;
+    const onResize = () => {
+      const nowMobile = window.innerWidth < 1024;
+      if (nowMobile !== lastMobile) {
+        lastMobile = nowMobile;
+        init();
+      }
+    };
+    window.addEventListener("resize", onResize, { passive: true });
+
+    return () => {
+      window.removeEventListener("resize", onResize);
+      if (ctx) ctx.revert();
+    };
   }, []);
 
   return (
@@ -232,11 +253,12 @@ export function BrandPromise() {
         </div>
 
 
-        {/* PROMISE LAYER */}
+        {/* PROMISE LAYER — hidden on desktop before JS runs via noscript-safe CSS */}
+        <style>{`@media(min-width:1024px){.bp-promise-layer{opacity:0}}`}</style>
         <div
           ref={promiseLayerRef}
-          className="relative lg:absolute lg:inset-0 min-h-screen lg:min-h-0"
-          style={{ zIndex: 2, willChange: "opacity", background: "rgba(40,44,32,0.92)", color: "#fcfcfa" }}
+          className="bp-promise-layer relative lg:absolute lg:inset-0 min-h-screen lg:min-h-0"
+          style={{ zIndex: 2, background: "rgba(40,44,32,0.92)", color: "#fcfcfa" }}
         >
           {/* Scroll hint — on Promise layer, light color for dark bg */}
           <div

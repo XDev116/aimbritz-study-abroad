@@ -52,14 +52,24 @@ export function Header() {
               borderColor: "var(--hairline)",
             }}
           >
-            {/* Logo — Big Ben + compass icon only (compact, no wide wordmark) */}
+            {/* Logo */}
             <Link href="/" className="flex items-center" aria-label="AimBritz home">
+              {/* Desktop: full wordmark */}
+              <Image
+                src="/logo/aimbritz-logo-trimmed.png"
+                alt="AimBritz"
+                width={673}
+                height={279}
+                className="hidden lg:block h-10 w-auto object-contain"
+                priority
+              />
+              {/* Mobile/tablet: icon only */}
               <Image
                 src="/logo/logo-icon.png"
                 alt="AimBritz"
                 width={44}
                 height={75}
-                className="h-10 md:h-11 w-auto object-contain"
+                className="lg:hidden h-10 w-auto object-contain"
                 priority
               />
             </Link>
@@ -80,14 +90,12 @@ export function Header() {
                     style={{ background: "var(--ember)" }}
                   />
                 );
-                // Items with a mega-drawer keep the button (for hover); navigate via
-                // router.push so it's client-side, not a full reload.
                 if (item.key) {
                   return (
                     <button
                       key={item.name}
                       onMouseEnter={() => setDrawer(item.key)}
-                      onClick={() => router.push(item.href)}
+                      onClick={() => { setDrawer(null); router.push(item.href); }}
                       className={cls}
                     >
                       {item.name}
@@ -96,7 +104,6 @@ export function Header() {
                     </button>
                   );
                 }
-                // Plain items → real Next.js Link (instant client nav, prefetch)
                 return (
                   <Link key={item.name} href={item.href} onMouseEnter={() => setDrawer(null)} className={cls}>
                     {item.name}
@@ -104,6 +111,7 @@ export function Header() {
                   </Link>
                 );
               })}
+
             </div>
 
             {/* Right CTAs */}
@@ -118,6 +126,21 @@ export function Header() {
                 </svg>
                 Talk
               </a>
+              <Link
+                href="/aimmedicos"
+                onMouseEnter={() => setDrawer(null)}
+                className="hidden lg:inline-flex items-center px-3 h-8 transition-opacity hover:opacity-80"
+                style={{ background: "#0a0f1a", border: "1px solid rgba(96,165,250,0.3)", borderRadius: "4px" }}
+              >
+                <Image
+                  src="/png/aimedicos-logo.png"
+                  alt="Aimmedicos"
+                  width={110}
+                  height={18}
+                  className="w-auto"
+                  style={{ height: "16px", filter: "brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(190deg)" }}
+                />
+              </Link>
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-2 rounded-full px-4 h-9 text-[10px] font-bold uppercase tracking-[0.15em] transition-colors hover:opacity-90"
@@ -160,6 +183,7 @@ export function Header() {
                   <h3 className="mt-4 font-serif italic text-4xl leading-tight">Where will next<br />year take you?</h3>
                   <Link
                     href="/countries"
+                    onClick={() => setDrawer(null)}
                     className="inline-flex items-center gap-2 mt-5 font-mono text-[10px] tracking-[0.22em] uppercase transition-opacity hover:opacity-60"
                     style={{ color: "var(--ink-3)" }}
                   >
@@ -168,7 +192,7 @@ export function Header() {
                 </div>
                 <div className="col-span-8 grid grid-cols-3 gap-x-8 gap-y-3">
                   {COUNTRIES.map((c) => (
-                    <Link key={c.code} href={`/countries/${c.slug}`} className="flex items-baseline justify-between border-b pb-2 group" style={{ borderColor: "var(--hairline)" }}>
+                    <Link key={c.code} href={`/countries/${c.slug}`} onClick={() => setDrawer(null)} className="flex items-baseline justify-between border-b pb-2 group" style={{ borderColor: "var(--hairline)" }}>
                       <span className="font-sans font-bold uppercase tracking-[0.02em] text-[14px] group-hover:text-ember transition-colors">{c.name}</span>
                       <span className="font-mono text-[10px] tracking-[0.2em] text-ink-3">{c.unis}</span>
                     </Link>
@@ -189,7 +213,7 @@ export function Header() {
                 </div>
                 <div className="col-span-8 grid grid-cols-2 gap-x-8 gap-y-4">
                   {SERVICES.map((s) => (
-                    <Link key={s.n} href="/services" className="flex gap-4 border-b pb-4 group" style={{ borderColor: "var(--hairline)" }}>
+                    <Link key={s.n} href="/services" onClick={() => setDrawer(null)} className="flex gap-4 border-b pb-4 group" style={{ borderColor: "var(--hairline)" }}>
                       <span className="font-mono text-[10px] text-ember tracking-[0.25em]">{s.n}</span>
                       <div>
                         <div className="font-sans font-bold uppercase text-[13px] tracking-[0.03em] group-hover:text-ember transition-colors">{s.t}</div>
@@ -224,6 +248,21 @@ export function Header() {
                 {item.name}
               </Link>
             ))}
+
+            {/* Aimmedicos card */}
+            <Link
+              href="/aimmedicos"
+              onClick={() => setMenu(false)}
+              className="mt-6 flex items-center justify-between gap-4 px-4 py-4"
+              style={{ background: "#0a0f1a", border: "1px solid rgba(96,165,250,0.2)" }}
+            >
+              <div>
+                <img src="/png/aimedicos-logo.png" alt="Aimmedicos" style={{ width: 130, height: "auto", filter: "brightness(0) invert(1)", marginBottom: 6 }} />
+                <p className="font-mono text-[8px] tracking-[0.22em] uppercase" style={{ color: "rgba(96,165,250,0.55)" }}>MBBS &amp; Medical Admissions Abroad</p>
+              </div>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" strokeWidth="2.5" className="shrink-0"><path d="M7 17L17 7M17 7H8M17 7V16" /></svg>
+            </Link>
+
             <div className="mt-8 space-y-3">
               <Link href="/contact" onClick={() => setMenu(false)} className="block text-center py-4 rounded-full t-caps text-[11px]" style={{ background: "var(--ink)", color: "var(--paper)" }}>
                 Book free session →

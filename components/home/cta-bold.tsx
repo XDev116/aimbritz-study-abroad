@@ -35,28 +35,52 @@ const footerColumns: [string, { label: string; href: string }[]][] = [
     [
       { label: "hello@aimbritz.com", href: "mailto:hello@aimbritz.com" },
       { label: "+91 97472 77233", href: "tel:+919747277233" },
-      { label: "WhatsApp", href: "https://wa.me/919747277233" },
-      { label: "Instagram", href: "https://www.instagram.com/aimbritz" },
     ],
   ],
 ];
 
 /* ── Component ──────────────────────────────────────────────────────── */
+const EMPTY_CTA = { name: "", phone: "", destination: "" };
+
+function validateCta(form: typeof EMPTY_CTA) {
+  const errors: Partial<typeof EMPTY_CTA> = {};
+  if (!form.name.trim()) errors.name = "Required";
+  if (!form.phone.trim()) errors.phone = "Required";
+  else if (!/^\+?[\d\s\-()]{7,15}$/.test(form.phone)) errors.phone = "Invalid number";
+  return errors;
+}
+
 export function CtaBold() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [form, setForm] = useState({ name: "", phone: "", destination: "" });
-  const [sent, setSent] = useState(false);
+  const [form, setForm] = useState(EMPTY_CTA);
+  const [errors, setErrors] = useState<Partial<typeof EMPTY_CTA>>({});
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSent(true);
-    setTimeout(() => {
-      setSent(false);
-      setForm({ name: "", phone: "", destination: "" });
-    }, 3500);
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm((f) => ({ ...f, [name]: value }));
+    if (errors[name as keyof typeof EMPTY_CTA])
+      setErrors((err) => ({ ...err, [name]: undefined }));
   };
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const errs = validateCta(form);
+    if (Object.keys(errs).length) { setErrors(errs); return; }
+    setStatus("sending");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: form.name, phone: form.phone, country: form.destination, email: "", message: "Enquiry via homepage CTA form" }),
+      });
+      if (!res.ok) throw new Error();
+      setStatus("sent");
+      setForm(EMPTY_CTA);
+    } catch {
+      setStatus("error");
+    }
+  };
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -120,7 +144,7 @@ export function CtaBold() {
 
         {/* Right — compact form */}
         <div className="cta-reveal">
-          {sent ? (
+          {status === "sent" ? (
             <div
               className="rounded-2xl p-8 text-center"
               style={{ background: "rgba(248,244,235,0.06)", border: "1px solid rgba(248,244,235,0.15)" }}
@@ -130,29 +154,44 @@ export function CtaBold() {
               <p className="text-[14px] mt-1" style={{ color: "rgba(248,244,235,0.6)" }}>Within 24 hours.</p>
             </div>
           ) : (
-            <form onSubmit={onSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <form onSubmit={onSubmit} noValidate className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              {status === "error" && (
+                <div className="sm:col-span-2 px-4 py-2.5 rounded text-[12px]" style={{ background: "rgba(239,68,68,0.15)", border: "1px solid rgba(239,68,68,0.4)", color: "#fca5a5" }}>
+                  Something went wrong — please try again or call us.
+                </div>
+              )}
               <div className="sm:col-span-1">
                 <label htmlFor="cta-name" className={labelCls} style={{ color: "rgba(248,244,235,0.6)" }}>Name *</label>
-                <input id="cta-name" name="name" required value={form.name} onChange={onChange} placeholder="Your name" className={field} style={fieldStyle} />
+                <input id="cta-name" name="name" value={form.name} onChange={onChange} placeholder="Your name" className={field}
+                  style={{ ...fieldStyle, borderBottomColor: errors.name ? "#ef4444" : undefined }} />
+                {errors.name && <p className="mt-1 text-[10px] font-mono" style={{ color: "#fca5a5" }}>{errors.name}</p>}
               </div>
               <div className="sm:col-span-1">
                 <label htmlFor="cta-phone" className={labelCls} style={{ color: "rgba(248,244,235,0.6)" }}>Phone *</label>
-                <input id="cta-phone" name="phone" required value={form.phone} onChange={onChange} placeholder="+91 …" className={field} style={fieldStyle} />
+                <input id="cta-phone" name="phone" value={form.phone} onChange={onChange} placeholder="+91 …" className={field}
+                  style={{ ...fieldStyle, borderBottomColor: errors.phone ? "#ef4444" : undefined }} />
+                {errors.phone && <p className="mt-1 text-[10px] font-mono" style={{ color: "#fca5a5" }}>{errors.phone}</p>}
               </div>
               <div className="sm:col-span-2">
                 <label htmlFor="cta-dest" className={labelCls} style={{ color: "rgba(248,244,235,0.6)" }}>Destination of interest</label>
                 <input id="cta-dest" name="destination" value={form.destination} onChange={onChange} placeholder="UK, Canada, Australia…" className={field} style={fieldStyle} />
               </div>
               <div className="sm:col-span-2 flex flex-wrap items-center gap-3 mt-1">
-                <button
-                  type="submit"
-                  className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-[12px] font-bold uppercase tracking-[0.1em] transition-opacity hover:opacity-90"
+                <button type="submit" disabled={status === "sending"}
+                  className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-[12px] font-bold uppercase tracking-[0.1em] transition-opacity hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed"
                   style={{ background: "var(--ember)", color: "var(--ink)" }}
                 >
-                  Book free session
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <path d="M7 17L17 7M17 7H8M17 7V16" />
-                  </svg>
+                  {status === "sending" ? (
+                    <>
+                      <svg className="animate-spin" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                      Sending…
+                    </>
+                  ) : (
+                    <>
+                      Book free session
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M7 17L17 7M17 7H8M17 7V16" /></svg>
+                    </>
+                  )}
                 </button>
                 <a href="tel:+919747277233" className="text-[12px] font-bold uppercase tracking-[0.1em]" style={{ color: "rgba(248,244,235,0.6)" }}>
                   or call us →
@@ -232,6 +271,22 @@ export function CtaBold() {
                 );
               })}
             </ul>
+            {/* Social icons under Reach us */}
+            {heading === "Reach us" && (
+              <div className="flex gap-2 mt-5">
+                {[
+                  { name: "Instagram", href: "https://www.instagram.com/aimbritz", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg> },
+                  { name: "YouTube", href: "https://www.youtube.com/@AimbritzStudyAbroad", icon: <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.6 2.8 12 2.8 12 2.8s-4.6 0-6.8.2c-.6.1-1.9.1-3 1.3C1.3 5 1 7 1 7S.8 9.2.8 11.5v2.1C.8 16 1 18 1 18s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.6 22.2 12 22.2 12 22.2s4.6 0 6.8-.2c.6-.1 1.9-.1 3-1.3.9-.8 1.2-2.8 1.2-2.8s.2-2.2.2-4.4v-2.1C23.2 9.2 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg> },
+                  { name: "WhatsApp", href: "https://wa.me/919747277233", icon: <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> },
+                ].map(({ name, href, icon }) => (
+                  <a key={name} href={href} target="_blank" rel="noopener noreferrer" aria-label={name}
+                    className="h-8 w-8 rounded-full flex items-center justify-center transition-colors hover:opacity-80"
+                    style={{ border: "1px solid rgba(248,244,235,0.2)", color: "rgba(248,244,235,0.7)" }}>
+                    {icon}
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
         ))}
 

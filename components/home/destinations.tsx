@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Eyebrow, FlagChip } from "@/components/ui/primitives";
@@ -184,10 +184,10 @@ export function Destinations() {
       </section>
 
       {/* ───────────────────────────────────────────────────────────── */}
-      {/* MOBILE LAYOUT — editorial staggered vertical grid             */}
+      {/* MOBILE LAYOUT — marquee strip + 2-col stagger grid            */}
       {/* ───────────────────────────────────────────────────────────── */}
       <section
-        className="lg:hidden relative px-5"
+        className="lg:hidden relative"
         style={{
           background: "transparent",
           paddingTop: "var(--section-py)",
@@ -195,7 +195,7 @@ export function Destinations() {
         }}
       >
         {/* Mobile header */}
-        <div className="mb-12">
+        <div className="mb-10 px-5">
           <Eyebrow>Departures &middot; {COUNTRIES.length} countries</Eyebrow>
           <h2
             className="t-display mt-5"
@@ -215,30 +215,14 @@ export function Destinations() {
           </p>
         </div>
 
-        {/* Staggered editorial grid — countries alternate left/right, varied sizes */}
-        <div className="flex flex-col gap-10">
-          {COUNTRIES.map((co, i) => {
-            // Alternating layout pattern: odd indexes push right with smaller width
-            const alignLeft = i % 2 === 0;
-            const isFeature = co.shape === "tall";
-            const widthClass = alignLeft
-              ? isFeature
-                ? "w-[78%] mr-auto"
-                : "w-[62%] mr-auto"
-              : isFeature
-                ? "w-[82%] ml-auto"
-                : "w-[58%] ml-auto";
+        {/* ── Marquee strip — two rows scrolling opposite directions ── */}
+        <MobileMarquee />
 
-            return (
-              <div key={co.code} className={widthClass}>
-                <MobileCountryCard country={co} index={i} />
-              </div>
-            );
-          })}
-        </div>
+        {/* ── 2-col stagger grid ── */}
+        <MobileGrid />
 
         {/* End block — CTA */}
-        <div className="mt-16 pt-10 border-t border-hairline">
+        <div className="mt-14 pt-10 border-t border-hairline px-5">
           <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-ember">
             &mdash; End of board
           </span>
@@ -263,6 +247,184 @@ export function Destinations() {
           </a>
         </div>
       </section>
+    </div>
+  );
+}
+
+/* ── Marquee — two rows of flag + country name chips scrolling opposite ways ── */
+function MobileMarquee() {
+  const row1Ref = useRef<HTMLDivElement>(null);
+  const row2Ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const SPEED = 0.4; // px per frame
+    let raf: number;
+    let pos1 = 0;
+    let pos2 = 0;
+
+    const tick = () => {
+      const r1 = row1Ref.current;
+      const r2 = row2Ref.current;
+      if (!r1 || !r2) return;
+
+      const half1 = r1.scrollWidth / 2;
+      const half2 = r2.scrollWidth / 2;
+
+      pos1 -= SPEED;
+      if (Math.abs(pos1) >= half1) pos1 = 0;
+
+      pos2 += SPEED;
+      if (pos2 >= half2) pos2 = 0;
+
+      r1.style.transform = `translateX(${pos1}px)`;
+      r2.style.transform = `translateX(${pos2 - half2 / 2}px)`;
+
+      raf = requestAnimationFrame(tick);
+    };
+
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  const chips = COUNTRIES.map((c) => ({ code: c.code, name: c.name }));
+  const row1 = [...chips, ...chips];
+  const row2 = [...chips.slice(7), ...chips.slice(0, 7), ...chips.slice(7), ...chips.slice(0, 7)];
+
+  return (
+    <div className="mb-10 overflow-hidden" style={{ maskImage: "linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%)" }}>
+      {/* Row 1 — scrolls left */}
+      <div className="overflow-hidden mb-3">
+        <div ref={row1Ref} className="flex gap-3 w-max">
+          {row1.map((c, i) => (
+            <a
+              key={`r1-${i}`}
+              href={`/countries/${getCountrySlugByCode(c.code) ?? c.code.toLowerCase()}`}
+              className="flex items-center gap-2 shrink-0 px-3 py-2 rounded-full border border-hairline"
+              style={{ background: "var(--paper-2)" }}
+            >
+              <FlagChip code={c.code} />
+              <span className="font-mono text-[10px] tracking-[0.15em] uppercase text-ink-2 whitespace-nowrap">{c.name}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+      {/* Row 2 — scrolls right */}
+      <div className="overflow-hidden">
+        <div ref={row2Ref} className="flex gap-3 w-max">
+          {row2.map((c, i) => (
+            <a
+              key={`r2-${i}`}
+              href={`/countries/${getCountrySlugByCode(c.code) ?? c.code.toLowerCase()}`}
+              className="flex items-center gap-2 shrink-0 px-3 py-2 rounded-full border border-hairline"
+              style={{ background: "var(--paper-2)" }}
+            >
+              <FlagChip code={c.code} />
+              <span className="font-mono text-[10px] tracking-[0.15em] uppercase text-ink-2 whitespace-nowrap">{c.name}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── 2-col stagger grid with scroll-triggered fade+slide animations ── */
+function MobileGrid() {
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+
+    const ctx = gsap.context(() => {
+      const cards = grid.querySelectorAll<HTMLElement>(".mob-card");
+      cards.forEach((card, i) => {
+        const col = i % 2;
+        gsap.from(card, {
+          y: col === 0 ? 48 : 64,
+          opacity: 0,
+          duration: 0.75,
+          ease: "power3.out",
+          delay: (i % 2) * 0.12,
+          scrollTrigger: {
+            trigger: card,
+            start: "top 92%",
+          },
+        });
+      });
+    }, grid);
+
+    return () => ctx.revert();
+  }, []);
+
+  const pairs = COUNTRIES.reduce<Country[][]>((acc, c, i) => {
+    if (i % 2 === 0) acc.push([c]);
+    else acc[acc.length - 1].push(c);
+    return acc;
+  }, []);
+
+  return (
+    <div ref={gridRef} className="px-4">
+      {pairs.map((pair, pi) => (
+        <div key={pi} className="grid grid-cols-2 gap-3 mb-3">
+          {pair.map((co, ci) => {
+            const isLeft = ci === 0;
+            const isFeature = co.shape === "tall";
+            return (
+              <a
+                key={co.code}
+                href={`/countries/${getCountrySlugByCode(co.code) ?? co.code.toLowerCase()}`}
+                className="mob-card block relative overflow-hidden group"
+                style={{
+                  aspectRatio: isFeature ? "3/4" : "4/5",
+                  marginTop: isLeft ? 0 : "20px",
+                  border: "1px solid var(--hairline)",
+                  background: "var(--paper-3)",
+                }}
+              >
+                <img
+                  src={co.hero}
+                  alt={co.name}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[800ms] ease-out group-active:scale-[1.04]"
+                  style={{ filter: "grayscale(0.2) contrast(1.05)" }}
+                  loading="lazy"
+                />
+                {/* Gradient overlay */}
+                <div
+                  className="absolute inset-0"
+                  style={{ background: "linear-gradient(180deg, transparent 30%, rgba(10,10,10,0.82) 100%)" }}
+                />
+                {/* Flag top-left */}
+                <div className="absolute top-2.5 left-2.5">
+                  <FlagChip code={co.code} />
+                </div>
+                {/* Index top-right */}
+                <span
+                  className="absolute top-2.5 right-2.5 font-mono text-[9px] tracking-[0.2em]"
+                  style={{ color: "rgba(248,244,235,0.55)" }}
+                >
+                  {String(COUNTRIES.indexOf(co) + 1).padStart(2, "0")}
+                </span>
+                {/* Name + stats bottom */}
+                <div className="absolute bottom-3 left-3 right-3" style={{ color: "var(--paper)" }}>
+                  <h3
+                    className="font-sans font-black uppercase tracking-[-0.02em] leading-[1]"
+                    style={{ fontSize: "clamp(0.85rem, 3.5vw, 1.1rem)" }}
+                  >
+                    {co.name}
+                  </h3>
+                  <p
+                    className="font-mono text-[9px] tracking-[0.15em] uppercase mt-1"
+                    style={{ color: "rgba(248,244,235,0.55)" }}
+                  >
+                    {co.unis} unis &middot; {co.intake}
+                  </p>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      ))}
     </div>
   );
 }

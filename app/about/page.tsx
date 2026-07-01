@@ -1,325 +1,295 @@
-import type { Metadata } from "next";
+"use client";
+/* eslint-disable @next/next/no-img-element */
+
+import { useLayoutEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Target, Eye, Heart, Users, Globe, Shield, Lightbulb, Phone } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-export const metadata: Metadata = {
-  title: "About Us | AimBritz",
-  description: "Learn about AimBritz - your trusted partner for study abroad consultancy. Founded in 2018, recognized by Asia Book of Records & India Book of Records.",
-};
-
-const values = [
-  { icon: Shield,    title: "Integrity & Transparency",   description: "Honest and transparent guidance in every student interaction, always prioritizing student success." },
-  { icon: Heart,     title: "Student-Centric Decisions",  description: "Every decision we make is centered around what's best for our students and their future." },
-  { icon: Globe,     title: "Global Perspective",         description: "Combining global expertise with deep local knowledge to deliver the best guidance." },
-  { icon: Lightbulb, title: "Professional Excellence",    description: "Continuous improvement and innovation in our services to deliver the highest standards." },
-];
-
-const stats = [
-  { value: "2018",  label: "Founded" },
-  { value: "500+",  label: "Partner Universities" },
-  { value: "14+",   label: "Countries" },
-  { value: "5000+", label: "Students Placed" },
-];
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const team = [
-  { name: "Al Ameen Mohammed Ali", role: "Founder & CEO",               bio: "Experienced international student in the UK, Al Ameen founded AimBritz to help fellow aspirants pursue their studies without the struggles he faced abroad.", initial: "AA", image: "/images/team/alameen.png" },
-  { name: "Akshay B Darsan",       role: "Co-Founder",                  bio: "Co-founder driving AimBritz's vision for ethical, structured, and career-focused international education solutions.", initial: "AB", image: "/images/team/akshay.png", whiteBg: true },
-  { name: "Amal DS",               role: "Co-Founder",                  bio: "Co-founder committed to building transparent and results-driven overseas education guidance for students.", initial: "AD", image: "/images/team/amal.png" },
-  { name: "Ansab Muhammed",        role: "Managing Partner – Ernakulam", bio: "Heading AimBritz's Ernakulam operations, connecting students across Kochi and surrounding regions with global education opportunities.", initial: "AM", image: "/images/team/ansab.png" },
-  { name: "Adv. Reshma Salim",     role: "Chief Operating Officer",     bio: "Leading operations with a focus on compliance, student success, and delivering seamless educational journeys.", initial: "RS", image: "/images/team/reshma.png" },
-  { name: "Raju Muthuswamy",       role: "Managing Partner – Tamil Nadu", bio: "Driving AimBritz's expansion in Tamil Nadu, helping students across the region access world-class international education.", initial: "RM", image: "/images/team/raju.png" },
+  { name: "Al Ameen Mohammed Ali", role: "Founder & CEO",               bio: "Experienced international student in the UK, Al Ameen founded AimBritz to help fellow aspirants pursue their studies without the struggles he faced abroad.", image: "/images/team/alameen.webp" },
+  { name: "Akshay B Darsan",       role: "Co-Founder",                  bio: "Co-founder driving AimBritz's vision for ethical, structured, and career-focused international education solutions.", image: "/images/team/akshay.webp", whiteBg: true },
+  { name: "Amal DS",               role: "Co-Founder",                  bio: "Co-founder committed to building transparent and results-driven overseas education guidance for students.", image: "/images/team/amal.webp",   zoom: "scale(1.7) translateY(12%)" },
+  { name: "Ansab Muhammed",        role: "Managing Partner – Ernakulam", bio: "Heading AimBritz's Ernakulam operations, connecting students across Kochi and surrounding regions.", image: "/images/team/ansab.webp" },
+  { name: "Adv. Reshma Salim",     role: "Chief Operating Officer",     bio: "Leading operations with a focus on compliance, student success, and delivering seamless educational journeys.", image: "/images/team/reshma.webp", zoom: "scale(1.45) translateY(-5%)" },
+  { name: "Raju Muthuswamy",       role: "Managing Partner – Tamil Nadu", bio: "Driving AimBritz's expansion in Tamil Nadu, helping students access world-class international education.", image: "/images/team/raju.webp", zoom: "scale(1.5) translateY(-1%)" },
+];
+
+const VALUES = [
+  { n: "01", title: "Integrity",      desc: "Honest, transparent guidance — always prioritising the student, not the commission." },
+  { n: "02", title: "Student-first",  desc: "Every decision centred around what's best for the student's future." },
+  { n: "03", title: "Global lens",    desc: "Global expertise combined with deep local knowledge." },
+  { n: "04", title: "Excellence",     desc: "Continuous innovation to deliver the highest service standards." },
 ];
 
 export default function AboutPage() {
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray<HTMLElement>(".ab-rev").forEach((el) => {
+        gsap.from(el, {
+          y: 36, opacity: 0, duration: 0.85, ease: "power3.out",
+          scrollTrigger: { trigger: el, start: "top 88%", once: true },
+        });
+      });
+    }, root);
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <div style={{ background: "var(--paper)", color: "var(--ink)", minHeight: "100vh" }}>
+    <div ref={rootRef} style={{ background: "var(--paper)", color: "var(--ink)" }}>
 
-      {/* ── Dark hero ── */}
-      <div style={{ background: "#0E0E10", paddingTop: "clamp(100px,12vw,160px)", paddingBottom: "clamp(48px,6vw,80px)" }}>
-        <div className="max-w-[1280px] mx-auto px-5 md:px-10">
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10">
-
-            {/* Left — headline */}
-            <div className="flex-1">
-              <p className="font-mono text-[10px] tracking-[0.32em] uppercase mb-4" style={{ color: "var(--ember)" }}>
+      {/* ── Dark Hero ── */}
+      <section className="relative overflow-hidden flex flex-col justify-end px-5 md:px-10 pt-24 md:pt-0" style={{ background: "#0E0E10", minHeight: "clamp(420px,55vw,560px)" }}>
+        {/* Background — team/office scene */}
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1600&q=80" alt="" aria-hidden
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          style={{ filter: "grayscale(0.3) contrast(1.1)", opacity: 0.45 }} />
+        <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(135deg, rgba(14,14,16,0.82) 0%, rgba(14,14,16,0.4) 55%, rgba(14,14,16,0.75) 100%)" }} />
+        {/* Grid texture */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
+          backgroundImage: "linear-gradient(rgba(248,244,235,1) 1px,transparent 1px),linear-gradient(90deg,rgba(248,244,235,1) 1px,transparent 1px)",
+          backgroundSize: "56px 56px",
+        }} />
+        <div className="relative max-w-[1280px] mx-auto w-full pb-10 md:pb-12">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+            <div>
+              <p className="ab-rev font-mono text-[10px] tracking-[0.32em] uppercase mb-3" style={{ color: "var(--ember)" }}>
                 Who we are · Since 2018
               </p>
-              <h1 className="font-sans font-black uppercase tracking-[-0.03em] leading-[0.88] mb-6" style={{ fontSize: "clamp(2.8rem,7vw,6.5rem)", color: "#F6F2EA" }}>
-                About{" "}
-                <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>AimBritz</span>
+              <h1 className="ab-rev font-sans font-black uppercase tracking-[-0.03em] leading-[0.88]" style={{ fontSize: "clamp(2.8rem,7vw,6.5rem)", color: "#F6F2EA" }}>
+                Built by people<br />
+                <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>who&apos;ve been there.</span>
               </h1>
-              <p className="font-sans max-w-xl mb-8 leading-relaxed" style={{ fontSize: "clamp(0.95rem,1.1vw,1.05rem)", color: "rgba(246,242,234,0.55)" }}>
-                A dynamic global education consultancy connecting ambitious students with internationally recognized academic opportunities. Built by people who&apos;ve been there.
-              </p>
-              {/* Record badges */}
-              <div className="flex items-center gap-4">
-                <div className="relative w-14 h-14 rounded-full overflow-hidden" style={{ border: "1px solid rgba(246,242,234,0.15)" }}>
-                  <Image src="/png/Asia.png" alt="Asia Book of Records" fill className="object-cover object-center" />
+              <div className="ab-rev flex items-center gap-3 mt-5">
+                <div className="relative w-9 h-9 rounded-full overflow-hidden" style={{ border: "1px solid rgba(246,242,234,0.15)" }}>
+                  <Image src="/png/Asia.png" alt="Asia Book of Records" fill className="object-cover" />
                 </div>
-                <div className="relative w-14 h-14 rounded-full overflow-hidden" style={{ border: "1px solid rgba(246,242,234,0.15)" }}>
-                  <Image src="/png/india.png" alt="India Book of Records" fill className="object-cover object-center" />
+                <div className="relative w-9 h-9 rounded-full overflow-hidden" style={{ border: "1px solid rgba(246,242,234,0.15)" }}>
+                  <Image src="/png/india.webp" alt="India Book of Records" fill className="object-cover" />
                 </div>
-                <p className="font-mono text-[10px] tracking-[0.18em] uppercase" style={{ color: "rgba(246,242,234,0.4)" }}>
+                <p className="font-mono text-[9px] tracking-[0.18em] uppercase" style={{ color: "rgba(246,242,234,0.35)" }}>
                   Asia & India Book of Records
                 </p>
               </div>
             </div>
+            <p className="ab-rev max-w-xs sm:text-right text-[14px] leading-relaxed shrink-0" style={{ color: "rgba(246,242,234,0.45)" }}>
+              Founded by an international<br />student who felt the struggle —<br />and decided to fix it.
+            </p>
+          </div>
+        </div>
+      </section>
 
-            {/* Right — reach us directly */}
-            <div className="flex flex-col gap-5 lg:min-w-[280px]" style={{ borderLeft: "1px solid rgba(246,242,234,0.1)", paddingLeft: "clamp(0px,3vw,48px)" }}>
-              <p className="font-mono text-[9px] tracking-[0.3em] uppercase" style={{ color: "rgba(246,242,234,0.35)" }}>
-                Reach us directly
-              </p>
-              <a
-                href="tel:+919747277233"
-                className="font-sans font-black uppercase tracking-[-0.02em] leading-none transition-opacity hover:opacity-70"
-                style={{ fontSize: "clamp(1.5rem,2.5vw,2rem)", color: "#F6F2EA" }}
-              >
-                +91 97472 77233
-              </a>
-              <a
-                href="https://wa.me/919747277233"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] uppercase transition-opacity hover:opacity-70"
-                style={{ color: "rgba(246,242,234,0.5)" }}
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                WhatsApp us
-              </a>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 font-sans font-black uppercase tracking-[-0.01em] px-5 py-3 mt-1 transition-opacity hover:opacity-80 text-sm"
-                style={{ background: "var(--ember)", color: "#0E0E10" }}
-              >
-                Book Free Session <ArrowRight size={13} />
-              </Link>
+      {/* ── Our Story ── */}
+      <section style={{ background: "var(--paper-2)", borderTop: "1px solid var(--hairline)", borderBottom: "1px solid var(--hairline)" }}>
+        <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-20 md:py-28">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
+            <div>
+              <p className="ab-rev font-mono text-[10px] tracking-[0.32em] uppercase mb-3" style={{ color: "var(--ember)" }}>Our story</p>
+              <h2 className="ab-rev font-sans font-black uppercase tracking-[-0.025em] leading-[0.92] mb-8" style={{ fontSize: "clamp(2rem,4vw,3.2rem)" }}>
+                How we{" "}
+                <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>got here</span>
+              </h2>
+              <div className="flex flex-col gap-5 text-[14px] leading-relaxed" style={{ color: "var(--ink-3)" }}>
+                <p className="ab-rev">AimBritz was founded in 2018 and formally registered in 2020 — evolving into a dynamic global education consultancy headquartered in Trivandrum, Kerala, with presence across India and the United Kingdom.</p>
+                <p className="ab-rev">Our Founder & CEO, Al Ameen Mohammed Ali, experienced firsthand the challenges of being an international student in Britain. That experience became the foundation of AimBritz — a promise to help every student pursue their studies without the pain he once faced.</p>
+                <p className="ab-rev">Today, we are a trusted partner for students and institutions seeking transparent, results-driven international education guidance — British Council certified, Asia & India Book of Records recognised.</p>
+              </div>
+            </div>
+            {/* Mission + Vision inline */}
+            <div className="flex flex-col gap-px" style={{ background: "var(--hairline)" }}>
+              <div className="ab-rev flex flex-col gap-4 p-8" style={{ background: "var(--paper-2)" }}>
+                <p className="font-mono text-[9px] tracking-[0.25em] uppercase" style={{ color: "var(--ember)" }}>Mission</p>
+                <p className="text-[14px] leading-relaxed" style={{ color: "var(--ink-3)" }}>
+                  Deliver personalized, transparent overseas education services that align students&apos; ambitions with global industry demands — creating seamless journeys that extend beyond admissions into long-term career success.
+                </p>
+              </div>
+              <div className="ab-rev flex flex-col gap-4 p-8" style={{ background: "var(--paper-2)" }}>
+                <p className="font-mono text-[9px] tracking-[0.25em] uppercase" style={{ color: "var(--ember)" }}>Vision</p>
+                <p className="text-[14px] leading-relaxed" style={{ color: "var(--ink-3)" }}>
+                  To become a globally recognized leader in international education consultancy — enabling students from every background to access world-class academic opportunities through ethical practices and lifelong support.
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* ── Stats bar ── */}
-      <div style={{ background: "#0E0E10", borderTop: "1px solid rgba(246,242,234,0.07)" }}>
-        <div className="max-w-[1280px] mx-auto px-5 md:px-10">
-          <div className="grid grid-cols-2 md:grid-cols-4">
-            {stats.map((s, i) => (
-              <div
-                key={s.label}
-                className="py-8 px-4 text-center"
-                style={{ borderRight: i < 3 ? "1px solid rgba(246,242,234,0.07)" : undefined }}
-              >
-                <p className="font-sans font-black tabular-nums leading-none mb-1" style={{ fontSize: "clamp(1.8rem,3.5vw,3rem)", color: "#F6F2EA" }}>
-                  {s.value}
-                </p>
-                <p className="font-mono text-[9px] tracking-[0.28em] uppercase" style={{ color: "rgba(246,242,234,0.35)" }}>
-                  {s.label}
-                </p>
+      {/* ── Values ── */}
+      <section className="max-w-[1280px] mx-auto px-5 md:px-10 py-20 md:py-28">
+        <p className="ab-rev font-mono text-[10px] tracking-[0.32em] uppercase mb-3" style={{ color: "var(--ember)" }}>What drives us</p>
+        <h2 className="ab-rev font-sans font-black uppercase tracking-[-0.025em] leading-[0.92] mb-12" style={{ fontSize: "clamp(2rem,4vw,3.2rem)" }}>
+          Core{" "}
+          <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>values</span>
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px" style={{ background: "var(--hairline)" }}>
+          {VALUES.map((v) => (
+            <div key={v.n} className="ab-rev flex flex-col gap-5 p-8" style={{ background: "var(--paper)" }}>
+              <span className="font-mono text-[11px] tracking-[0.28em] tabular-nums font-bold px-2 py-1 self-start" style={{ background: "var(--ember)", color: "var(--ink)" }}>{v.n}</span>
+              <h3 className="font-sans font-black uppercase tracking-[-0.015em]" style={{ fontSize: "0.95rem" }}>{v.title}</h3>
+              <p className="text-sm leading-relaxed" style={{ color: "var(--ink-3)" }}>{v.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Achievements ── */}
+      <section style={{ background: "var(--paper-2)", borderTop: "1px solid var(--hairline)", borderBottom: "1px solid var(--hairline)" }}>
+        <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-20 md:py-28">
+          <p className="ab-rev font-mono text-[10px] tracking-[0.32em] uppercase mb-3" style={{ color: "var(--ember)" }}>Recognition</p>
+          <h2 className="ab-rev font-sans font-black uppercase tracking-[-0.025em] leading-[0.92] mb-12" style={{ fontSize: "clamp(2rem,4vw,3.2rem)" }}>
+            Our{" "}
+            <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>achievements</span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px" style={{ background: "var(--hairline)" }}>
+            {[
+              { badges: true, title: "Asia & India Book of Records", desc: "Recognized for hosting the largest overseas education seminar in the region." },
+              { title: "British Council Certified", desc: "Our counsellors are British Council certified, ensuring internationally recognized guidance.", badge: "/png/britishcouncil.png" },
+              { title: "Global Scholarship Placements", desc: "Successful scholarship placements through government-funded initiatives across multiple countries.", badge: "/png/globalscholarship.jpeg" },
+            ].map((a) => (
+              <div key={a.title} className="ab-rev flex flex-col gap-5 p-8" style={{ background: "var(--paper-2)" }}>
+                {a.badges ? (
+                  <div className="flex gap-3">
+                    <div className="relative w-11 h-11 rounded-full overflow-hidden" style={{ border: "1px solid var(--hairline)" }}><Image src="/png/Asia.png" alt="Asia Book of Records" fill className="object-cover" /></div>
+                    <div className="relative w-11 h-11 rounded-full overflow-hidden" style={{ border: "1px solid var(--hairline)" }}><Image src="/png/india.webp" alt="India Book of Records" fill className="object-cover" /></div>
+                  </div>
+                ) : a.badge ? (
+                  <div className="relative w-24 h-11" style={{ flexShrink: 0 }}>
+                    <Image src={a.badge} alt={a.title} fill className="object-contain object-left" />
+                  </div>
+                ) : null}
+                <h3 className="font-sans font-black uppercase tracking-[-0.015em]" style={{ fontSize: "0.95rem" }}>{a.title}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: "var(--ink-3)" }}>{a.desc}</p>
               </div>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* ── Our Story ── */}
-      <div style={{ background: "var(--paper-2)", borderTop: "1px solid var(--hairline)", borderBottom: "1px solid var(--hairline)" }}>
-        <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
-            <div>
-              <p className="font-mono text-[10px] tracking-[0.32em] uppercase mb-3" style={{ color: "var(--ember)" }}>Our story</p>
-              <h2 className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92] mb-8" style={{ fontSize: "clamp(2rem,4vw,3.2rem)", color: "var(--ink)" }}>
-                How we{" "}
-                <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>got here</span>
-              </h2>
-              <div className="flex flex-col gap-5 font-sans leading-relaxed" style={{ fontSize: "0.95rem", color: "var(--ink-3)" }}>
-                <p>AimBritz was founded in 2018 and formally registered in 2020, evolving into a dynamic global education consultancy headquartered in Trivandrum, Kerala, with operational presence in India and the United Kingdom.</p>
-                <p>Our Founder & CEO, Al Ameen Mohammed Ali, experienced firsthand the challenges of being an international student in Britain. That experience became the foundation of AimBritz — a promise to help every student pursue their studies without the pain and struggle he once faced.</p>
-                <p>Built by a team of globally experienced professionals — many with firsthand international academic exposure — AimBritz combines industry expertise with personalized mentorship. Today, we are a trusted partner for students, universities, and institutions seeking reliable, transparent, and results-driven international education guidance.</p>
+      {/* ── Team ── */}
+      <section style={{ background: "var(--ink)" }}>
+        <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-20 md:py-28">
+          <p className="ab-rev font-mono text-[10px] tracking-[0.32em] uppercase mb-3" style={{ color: "var(--ember)" }}>The people</p>
+          <h2 className="ab-rev font-sans font-black uppercase tracking-[-0.025em] leading-[0.92] mb-12" style={{ fontSize: "clamp(2rem,4vw,3.2rem)", color: "var(--paper)" }}>
+            Our{" "}
+            <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>leadership team</span>
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px" style={{ background: "rgba(248,244,235,0.08)" }}>
+            {team.map((m) => (
+              <div key={m.name} className="ab-rev group flex flex-col overflow-hidden" style={{ background: "var(--ink)" }}>
+                <div className="relative w-full overflow-hidden" style={{ aspectRatio: "3/4" }}>
+                  <Image src={m.image} alt={m.name} fill sizes="(max-width:640px) 100vw,(max-width:1024px) 50vw,33vw"
+                    className="object-cover object-center duration-700"
+                    style={{ transform: typeof m.zoom === "string" ? m.zoom : undefined }} />
+                  {m.whiteBg && <div className="absolute inset-0" style={{ background: "rgba(10,10,10,0.45)", mixBlendMode: "multiply" }} />}
+                  <div className="absolute bottom-0 left-0 right-0 h-28" style={{ background: "linear-gradient(to top, var(--ink), transparent)" }} />
+                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                    <span className="inline-block font-mono text-[9px] tracking-[0.2em] uppercase px-2 py-0.5 mb-2" style={{ background: "rgba(248,244,235,0.08)", color: "rgba(248,244,235,0.6)", border: "1px solid rgba(248,244,235,0.1)" }}>{m.role}</span>
+                    <h3 className="font-sans font-black uppercase tracking-[-0.015em] text-[1.05rem]" style={{ color: "var(--paper)" }}>{m.name}</h3>
+                  </div>
+                </div>
+                <div className="px-5 py-4" style={{ borderTop: "1px solid rgba(248,244,235,0.07)" }}>
+                  <p className="text-sm leading-relaxed" style={{ color: "rgba(248,244,235,0.45)" }}>{m.bio}</p>
+                </div>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Aimmedicos Wing ── */}
+      <section className="relative overflow-hidden" style={{ background: "#0a0f1a" }}>
+        <img src="https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=1600&q=80" alt="" aria-hidden
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          style={{ opacity: 0.12, filter: "grayscale(0.4)" }} />
+        <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(135deg, rgba(10,15,26,0.95) 0%, rgba(10,15,26,0.7) 100%)" }} />
+        <div className="relative max-w-[1280px] mx-auto px-5 md:px-10 py-20 md:py-28">
+          <div className="flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-20">
+            {/* Left */}
+            <div className="flex-1">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-5" style={{ border: "1px solid rgba(96,165,250,0.3)", background: "rgba(96,165,250,0.06)" }}>
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#60a5fa" }} />
+                <span className="font-mono text-[9px] tracking-[0.28em] uppercase" style={{ color: "#60a5fa" }}>A wing of AimBritz</span>
+              </div>
+              <img src="/png/aimedicos-logo.png" alt="Aimedicos" className="ab-rev mb-6" style={{ width: "clamp(280px,35vw,500px)", height: "auto", filter: "brightness(0) invert(1)" }} />
+              <p className="ab-rev text-[15px] leading-relaxed max-w-lg mb-8" style={{ color: "rgba(246,242,234,0.5)" }}>
+                The official medical education division of AimBritz — guiding aspiring doctors, nurses and healthcare professionals toward internationally recognised MBBS, Nursing, Physiotherapy and Health-Related Programmes abroad. From admission to graduation, we stand with you every step of the way.
+              </p>
+              <div className="ab-rev flex flex-wrap gap-2 mb-10">
+                {["MBBS Abroad", "B.Sc Nursing", "Physiotherapy", "Health Sciences", "Georgia", "Russia", "Albania", "Uzbekistan"].map((tag) => (
+                  <span key={tag} className="font-mono text-[9px] tracking-[0.2em] uppercase px-3 py-1.5" style={{ border: "1px solid rgba(96,165,250,0.2)", color: "rgba(96,165,250,0.7)" }}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <Link href="/aimmedicos" className="ab-rev inline-flex items-center gap-3 font-sans font-black uppercase tracking-[-0.01em] px-7 py-4 transition-opacity hover:opacity-80" style={{ background: "#60a5fa", color: "#0a0f1a", fontSize: "0.85rem" }}>
+                Explore Aimmedicos
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M7 17L17 7M17 7H8M17 7V16" /></svg>
+              </Link>
             </div>
-            <div className="grid grid-cols-2 gap-px" style={{ background: "var(--hairline)" }}>
-              {[["2018", "Founded"], ["5K+", "Students"], ["14+", "Countries"], ["500+", "Universities"]].map(([val, label]) => (
-                <div key={label} className="flex flex-col gap-2 p-8" style={{ background: "var(--paper-2)" }}>
-                  <p className="font-sans font-black tabular-nums" style={{ fontSize: "2.5rem", color: "var(--ink)", lineHeight: 1 }}>{val}</p>
-                  <p className="font-mono text-[10px] tracking-[0.28em] uppercase" style={{ color: "var(--ink-4)" }}>{label}</p>
+            {/* Right — key points */}
+            <div className="lg:w-[380px] flex flex-col gap-px" style={{ background: "rgba(96,165,250,0.08)" }}>
+              {[
+                { n: "01", t: "Medical Specialists", d: "Counsellors exclusively trained for MBBS and healthcare admissions worldwide." },
+                { n: "02", t: "Affordable Tuition", d: "Partner universities offering NMC-recognised degrees at a fraction of Indian private college costs." },
+                { n: "03", t: "End-to-end Support", d: "From counseling to visa to post-arrival — we handle every step of your medical journey." },
+                { n: "04", t: "Globally Recognised", d: "Universities in Georgia, Russia, Albania, Uzbekistan with WHO and NMC recognition." },
+              ].map((p) => (
+                <div key={p.n} className="ab-rev flex gap-5 p-6" style={{ background: "rgba(10,15,26,0.6)", borderBottom: "1px solid rgba(96,165,250,0.08)" }}>
+                  <span className="font-mono text-[10px] tracking-[0.2em] shrink-0 mt-0.5" style={{ color: "#60a5fa" }}>{p.n}</span>
+                  <div>
+                    <p className="font-sans font-black uppercase tracking-[-0.01em] text-[13px] mb-1" style={{ color: "#F6F2EA" }}>{p.t}</p>
+                    <p className="text-[13px] leading-relaxed" style={{ color: "rgba(246,242,234,0.4)" }}>{p.d}</p>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
-      </div>
-
-      {/* ── Mission & Vision ── */}
-      <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-px" style={{ background: "var(--hairline)" }}>
-          <div className="flex flex-col gap-5 p-10" style={{ background: "var(--paper)" }}>
-            <Target size={28} style={{ color: "var(--ember)" }} />
-            <h3 className="font-sans font-black uppercase tracking-[-0.02em]" style={{ fontSize: "clamp(1.2rem,2vw,1.6rem)", color: "var(--ink)" }}>Our Mission</h3>
-            <p className="font-sans text-sm leading-relaxed" style={{ color: "var(--ink-3)" }}>
-              AimBritz is committed to delivering personalized, transparent, and professionally guided overseas education services that align students&apos; ambitions with evolving global industry demands. Through expert counselling, international partnerships, and end-to-end support systems, AimBritz strives to create seamless educational journeys that extend beyond admissions into long-term career success.
-            </p>
-          </div>
-          <div className="flex flex-col gap-5 p-10" style={{ background: "var(--paper)" }}>
-            <Eye size={28} style={{ color: "var(--ember)" }} />
-            <h3 className="font-sans font-black uppercase tracking-[-0.02em]" style={{ fontSize: "clamp(1.2rem,2vw,1.6rem)", color: "var(--ink)" }}>Our Vision</h3>
-            <p className="font-sans text-sm leading-relaxed" style={{ color: "var(--ink-3)" }}>
-              To become a globally recognized leader in international education consultancy, enabling students from diverse backgrounds to access world-class academic opportunities through ethical practices, strategic innovation, and lifelong career support.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Core Values ── */}
-      <div style={{ background: "var(--paper-2)", borderTop: "1px solid var(--hairline)", borderBottom: "1px solid var(--hairline)" }}>
-        <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-20">
-          <p className="font-mono text-[10px] tracking-[0.32em] uppercase mb-3" style={{ color: "var(--ember)" }}>What drives us</p>
-          <h2 className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92] mb-12" style={{ fontSize: "clamp(2rem,4vw,3.2rem)", color: "var(--ink)" }}>
-            Our{" "}
-            <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>Core Values</span>
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px" style={{ background: "var(--hairline)" }}>
-            {values.map((v) => {
-              const Icon = v.icon;
-              return (
-                <div key={v.title} className="flex flex-col gap-4 p-8" style={{ background: "var(--paper-2)" }}>
-                  <div className="flex items-center justify-center" style={{ width: 40, height: 40, background: "var(--paper)", border: "1px solid var(--hairline)" }}>
-                    <Icon size={18} style={{ color: "var(--ember)" }} />
-                  </div>
-                  <h3 className="font-sans font-black uppercase tracking-[-0.015em]" style={{ fontSize: "0.9rem", color: "var(--ink)" }}>{v.title}</h3>
-                  <p className="font-sans text-sm leading-relaxed" style={{ color: "var(--ink-3)" }}>{v.description}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      {/* ── Achievements ── */}
-      <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-20">
-        <p className="font-mono text-[10px] tracking-[0.32em] uppercase mb-3" style={{ color: "var(--ember)" }}>Recognition</p>
-        <h2 className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92] mb-12" style={{ fontSize: "clamp(2rem,4vw,3.2rem)", color: "var(--ink)" }}>
-          Our{" "}
-          <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>Achievements</span>
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px" style={{ background: "var(--hairline)" }}>
-          <div className="flex flex-col gap-5 p-8" style={{ background: "var(--paper)" }}>
-            <div className="flex items-center gap-3">
-              <div className="relative w-12 h-12 rounded-full overflow-hidden" style={{ border: "1px solid var(--hairline)" }}>
-                <Image src="/png/Asia.png" alt="Asia Book of Records" fill className="object-cover object-center" />
-              </div>
-              <div className="relative w-12 h-12 rounded-full overflow-hidden" style={{ border: "1px solid var(--hairline)" }}>
-                <Image src="/png/india.png" alt="India Book of Records" fill className="object-cover object-center" />
-              </div>
-            </div>
-            <h3 className="font-sans font-black uppercase tracking-[-0.015em]" style={{ fontSize: "0.95rem", color: "var(--ink)" }}>Asia & India Book of Records</h3>
-            <p className="font-sans text-sm leading-relaxed" style={{ color: "var(--ink-3)" }}>Recognized for hosting the largest overseas education seminar in the region.</p>
-          </div>
-          <div className="flex flex-col gap-5 p-8" style={{ background: "var(--paper)" }}>
-            <div className="flex items-center justify-center" style={{ width: 40, height: 40, background: "var(--paper-2)", border: "1px solid var(--hairline)" }}>
-              <Users size={18} style={{ color: "var(--ember)" }} />
-            </div>
-            <h3 className="font-sans font-black uppercase tracking-[-0.015em]" style={{ fontSize: "0.95rem", color: "var(--ink)" }}>British Council Certified</h3>
-            <p className="font-sans text-sm leading-relaxed" style={{ color: "var(--ink-3)" }}>Our counsellors are British Council certified, ensuring expert and internationally recognized guidance.</p>
-          </div>
-          <div className="flex flex-col gap-5 p-8" style={{ background: "var(--paper)" }}>
-            <div className="flex items-center justify-center" style={{ width: 40, height: 40, background: "var(--paper-2)", border: "1px solid var(--hairline)" }}>
-              <Globe size={18} style={{ color: "var(--ember)" }} />
-            </div>
-            <h3 className="font-sans font-black uppercase tracking-[-0.015em]" style={{ fontSize: "0.95rem", color: "var(--ink)" }}>Global Scholarship Placements</h3>
-            <p className="font-sans text-sm leading-relaxed" style={{ color: "var(--ink-3)" }}>Successful scholarship placements through government-funded initiatives across multiple countries.</p>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Team ── */}
-      <div style={{ background: "var(--ink)", borderTop: "1px solid var(--hairline)" }}>
-        <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-20">
-          <p className="font-mono text-[10px] tracking-[0.32em] uppercase mb-3" style={{ color: "var(--ember)" }}>The people</p>
-          <h2 className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92] mb-12" style={{ fontSize: "clamp(2rem,4vw,3.2rem)", color: "var(--paper)" }}>
-            Our{" "}
-            <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>Leadership Team</span>
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px" style={{ background: "rgba(248,244,235,0.1)" }}>
-            {team.map((member) => (
-              <div key={member.name} className="group flex flex-col overflow-hidden" style={{ background: "var(--ink)" }}>
-                <div className="relative w-full aspect-[4/5] overflow-hidden">
-                  {member.image ? (
-                    <Image src={member.image} alt={member.name} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover object-top group-hover:scale-105 transition-transform duration-700" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center" style={{ background: "var(--ink-2)" }}>
-                      <span className="font-sans font-black text-8xl" style={{ color: "rgba(248,244,235,0.08)" }}>{member.initial}</span>
-                    </div>
-                  )}
-                  {member.whiteBg && <div className="absolute inset-0" style={{ background: "rgba(10,10,10,0.55)", mixBlendMode: "multiply" }} />}
-                  <div className="absolute bottom-0 left-0 right-0 h-28" style={{ background: "linear-gradient(to top, var(--ink), transparent)" }} />
-                  <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <span className="inline-block font-mono text-[9px] tracking-[0.2em] uppercase px-2 py-0.5 mb-2" style={{ background: "rgba(248,244,235,0.1)", color: "rgba(248,244,235,0.6)", border: "1px solid rgba(248,244,235,0.12)" }}>
-                      {member.role}
-                    </span>
-                    <h3 className="font-sans font-black uppercase tracking-[-0.015em]" style={{ fontSize: "1.05rem", color: "var(--paper)" }}>{member.name}</h3>
-                  </div>
-                </div>
-                <div className="px-5 py-4" style={{ borderTop: "1px solid rgba(248,244,235,0.07)" }}>
-                  <p className="font-sans text-sm leading-relaxed" style={{ color: "rgba(248,244,235,0.45)" }}>{member.bio}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* ── Why Choose Us ── */}
-      <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-20">
-        <p className="font-mono text-[10px] tracking-[0.32em] uppercase mb-3" style={{ color: "var(--ember)" }}>Why us</p>
-        <h2 className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92] mb-12" style={{ fontSize: "clamp(2rem,4vw,3.2rem)", color: "var(--ink)" }}>
-          Why Choose{" "}
-          <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>AimBritz?</span>
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px" style={{ background: "var(--hairline)" }}>
-          {[
-            ["Personalized Guidance", "Strategic career counselling tailored to your academic profile, career ambitions, and global market trends."],
-            ["End-to-End Support", "From university selection and visa processing to pre-departure and post-arrival support — we're with you every step."],
-            ["Ethical & Transparent", "Responsible counselling with honest guidance. Proudly rated 5 stars on Google for trusted guidance and outstanding student success."],
-          ].map(([title, desc]) => (
-            <div key={title} className="flex flex-col gap-3 p-8" style={{ background: "var(--paper)" }}>
-              <h3 className="font-sans font-black uppercase tracking-[-0.015em]" style={{ fontSize: "0.95rem", color: "var(--ink)" }}>{title}</h3>
-              <p className="font-sans text-sm leading-relaxed" style={{ color: "var(--ink-3)" }}>{desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+      </section>
 
       {/* ── CTA ── */}
-      <div style={{ background: "#0E0E10" }}>
-        <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-16 md:py-24">
-          <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-10">
-            <div>
-              <p className="font-mono text-[10px] tracking-[0.3em] uppercase mb-4" style={{ color: "var(--ember)" }}>Get started</p>
-              <h2 className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.88]" style={{ fontSize: "clamp(2rem,5vw,4rem)", color: "#F6F2EA" }}>
-                Ready to start<br />
-                <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>your journey?</span>
-              </h2>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-              <a
-                href="tel:+919747277233"
-                className="inline-flex items-center gap-2 font-sans font-black uppercase tracking-[-0.01em] px-7 py-4 transition-opacity hover:opacity-75"
-                style={{ border: "1px solid rgba(246,242,234,0.2)", color: "#F6F2EA", fontSize: "0.9rem" }}
-              >
-                <Phone size={14} /> Call Now
-              </a>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-3 font-sans font-black uppercase tracking-[-0.01em] px-7 py-4 transition-opacity hover:opacity-80"
-                style={{ background: "var(--ember)", color: "#0E0E10", fontSize: "0.9rem" }}
-              >
-                Free Consultation <ArrowRight size={16} />
-              </Link>
-            </div>
+      <section className="max-w-[1280px] mx-auto px-5 md:px-10 py-20 md:py-28">
+        <div
+          className="relative overflow-hidden flex flex-col md:flex-row items-start md:items-end justify-between gap-8 p-10 md:p-16"
+          style={{ background: "var(--ink)", color: "var(--paper)" }}
+        >
+          <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&q=80" alt="" aria-hidden
+            className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
+            style={{ filter: "grayscale(0.4) contrast(1.1)", opacity: 0.25 }} />
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
+            backgroundImage: "linear-gradient(rgba(248,244,235,1) 1px, transparent 1px), linear-gradient(90deg, rgba(248,244,235,1) 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
+          }} />
+          <div className="relative">
+            <p className="font-mono text-[10px] tracking-[0.3em] uppercase mb-4" style={{ color: "var(--ember)" }}>Get started — it&apos;s free</p>
+            <h2 className="font-sans font-black uppercase tracking-[-0.025em] leading-[0.92]" style={{ fontSize: "clamp(2rem,5vw,4rem)" }}>
+              Ready to begin<br />
+              <span className="font-serif italic font-normal" style={{ color: "var(--ember)" }}>your journey?</span>
+            </h2>
+            <p className="mt-5 text-[14px] leading-relaxed max-w-md" style={{ color: "rgba(246,242,234,0.5)" }}>
+              One free call. A plan built around you. No pressure, no obligation.
+            </p>
+          </div>
+          <div className="relative flex flex-col sm:flex-row gap-4 shrink-0">
+            <Link href="/contact" className="inline-flex items-center gap-3 font-sans font-black uppercase tracking-[-0.01em] px-7 py-4 transition-opacity hover:opacity-80" style={{ background: "var(--ember)", color: "var(--ink)", fontSize: "0.85rem" }}>
+              Free consultation
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M7 17L17 7M17 7H8M17 7V16" /></svg>
+            </Link>
+            <a href="tel:+919747277233" className="inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.2em] uppercase px-7 py-4 transition-opacity hover:opacity-70" style={{ border: "1px solid rgba(246,242,234,0.2)", color: "rgba(246,242,234,0.7)" }}>
+              Call us now
+            </a>
           </div>
         </div>
-      </div>
+      </section>
 
     </div>
   );

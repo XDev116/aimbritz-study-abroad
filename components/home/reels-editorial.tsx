@@ -43,8 +43,18 @@ function buildBase(cfg: FanConfig) {
   });
 }
 
+/* Mobile resting fan — visible spread but compact, no interaction needed */
+function buildCollapsed() {
+  return REELS.map((_, i) => {
+    const d = i - CY;
+    const absD = Math.abs(d);
+    return { x: d * 34, y: absD * absD * 4, r: d * 3.5, z: 10 - absD };
+  });
+}
+
 const D_BASE = buildBase(DESKTOP);
 const M_BASE = buildBase(MOBILE);
+const M_COLLAPSED = buildCollapsed();
 
 /* ── ReelCard (defined outside component to avoid re-creation) ── */
 function ReelCard({ reel, i, isActive, onEnter, onLeave, onClick, className, style }: {
@@ -154,17 +164,32 @@ export function ReelsEditorial() {
         y: 32, opacity: 0, stagger: 0.1, duration: 0.8, ease: "expo.out",
         scrollTrigger: { trigger: section, start: "top 84%", once: true },
       });
+      const mobile = window.matchMedia("(max-width: 1023px)").matches;
       REELS.forEach((_, i) => {
-        const b = isMobile ? M_BASE[i] : D_BASE[i];
-        gsap.fromTo(`.rc-${i}`,
-          { y: 220, opacity: 0 },
-          {
-            y: b.y, opacity: 1,
-            duration: 1.05, ease: "power4.out",
-            delay: 0.06 * i,
-            scrollTrigger: { trigger: ".re-fan", start: "top 86%", once: true },
-          },
-        );
+        if (mobile) {
+          // Mobile: opacity only — React inline transform owns position
+          gsap.fromTo(`.rc-${i}`,
+            { opacity: 0 },
+            {
+              opacity: 1,
+              duration: 0.6, ease: "power2.out",
+              delay: 0.05 * i,
+              scrollTrigger: { trigger: ".re-fan", start: "top 86%", once: true },
+            },
+          );
+        } else {
+          const b = D_BASE[i];
+          gsap.fromTo(`.rc-${i}`,
+            { y: 220, opacity: 0 },
+            {
+              y: b.y, opacity: 1,
+              duration: 1.05, ease: "power4.out",
+              delay: 0.06 * i,
+              clearProps: "y",
+              scrollTrigger: { trigger: ".re-fan", start: "top 86%", once: true },
+            },
+          );
+        }
       });
     }, section);
     return () => ctx.revert();
@@ -172,6 +197,12 @@ export function ReelsEditorial() {
 
   /* Compute transform for card i */
   function getTransform(i: number) {
+    // Mobile: always use tight collapsed positions as base; only lift the active card
+    if (isMobile) {
+      const b = M_COLLAPSED[i];
+      if (active === i) return { ...b, y: -18, r: 0, z: b.z + 15 };
+      return b;
+    }
     const b = base[i];
     if (active === null) return b;
     if (active === i) return { ...b, y: cfg.liftY, r: 0, z: b.z + 15 };

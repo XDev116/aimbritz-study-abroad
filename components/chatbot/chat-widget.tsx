@@ -23,7 +23,7 @@ const MessageBubble = memo(({ message }: { message: Message }) => (
     {message.sender === "bot" && (
       <div className="w-8 h-8 rounded-full bg-paper border border-hairline flex items-center justify-center flex-shrink-0 overflow-hidden">
         <img
-          src="/images/team/alameen.png"
+          src="/images/team/alameen.webp"
           alt="Advisor"
           className="w-full h-full object-cover"
         />
@@ -103,14 +103,18 @@ export function ChatWidget() {
   }, [isOpen]);
 
   useEffect(() => {
+    let greetingTimer: ReturnType<typeof setTimeout>;
     const walkInTimer = setTimeout(() => {
       setHasWalkedIn(true);
-      setTimeout(() => {
+      greetingTimer = setTimeout(() => {
         setShowGreeting(true);
       }, 10000);
     }, 1000);
 
-    return () => clearTimeout(walkInTimer);
+    return () => {
+      clearTimeout(walkInTimer);
+      clearTimeout(greetingTimer);
+    };
   }, []);
 
   const handleSendMessage = useCallback(async () => {
@@ -266,7 +270,7 @@ export function ChatWidget() {
               <div className="flex items-center gap-3">
                 <div className="relative w-11 h-11 rounded-full bg-paper overflow-hidden border border-paper/20">
                   <img
-                    src="/images/team/alameen.png"
+                    src="/images/team/alameen.webp"
                     alt="Advisor"
                     className="w-full h-full object-cover"
                   />
@@ -310,7 +314,11 @@ export function ChatWidget() {
             {!isMinimized && (
               <>
                 {/* Messages area — warm paper background */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-paper">
+                <div
+                  className="flex-1 overflow-y-auto p-4 space-y-4 bg-paper"
+                  onWheel={(e) => e.stopPropagation()}
+                  onTouchMove={(e) => e.stopPropagation()}
+                >
                   {messages.map((message) => (
                     <MessageBubble key={message.id} message={message} />
                   ))}
@@ -319,7 +327,7 @@ export function ChatWidget() {
                     <div className="flex gap-3 animate-slide-in">
                       <div className="w-8 h-8 rounded-full bg-paper-3 border border-hairline flex items-center justify-center overflow-hidden">
                         <img
-                          src="/images/team/alameen.png"
+                          src="/images/team/alameen.webp"
                           alt="Advisor"
                           className="w-full h-full object-cover"
                         />
