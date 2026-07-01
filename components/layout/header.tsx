@@ -234,7 +234,7 @@ export function Header() {
           <div className="absolute inset-0" style={{ background: "rgba(17,17,19,0.45)", backdropFilter: "blur(6px)" }} />
           <div className="absolute right-0 top-0 bottom-0 w-[min(420px,100%)] bg-paper p-8" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-10">
-              <Image src="/logo/aimbritz-logo-transparent.png" alt="AimBritz" width={120} height={28} className="h-7 w-auto" />
+              <Image src="/logo/logo-icon.png" alt="AimBritz" width={44} height={75} className="h-10 w-auto" />
               <button onClick={() => setMenu(false)} className="text-2xl" aria-label="Close">×</button>
             </div>
             {[
