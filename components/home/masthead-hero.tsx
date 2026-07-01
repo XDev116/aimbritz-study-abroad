@@ -171,8 +171,8 @@ export function MastheadHero() {
 
             {/* CTAs — hidden on mobile to save vertical space */}
             <div className="mt-6 hidden lg:flex flex-wrap items-center gap-3">
-              <BtnPrimary href="/contact">Be the next one</BtnPrimary>
-              <BtnGhost href="/stories">See how we did it</BtnGhost>
+              <BtnPrimary href="/contact" cursorNone>Be the next one</BtnPrimary>
+              <BtnGhost href="/stories" cursorNone>See how we did it</BtnGhost>
             </div>
           </div>
 

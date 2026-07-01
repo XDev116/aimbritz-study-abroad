@@ -302,14 +302,17 @@ interface BtnPrimaryProps {
   children: ReactNode;
   href?: string;
   icon?: boolean;
+  cursorNone?: boolean;
 }
 
 export function BtnPrimary({
   children,
   href = "#",
   icon = true,
+  cursorNone,
 }: BtnPrimaryProps) {
   const isInternal = href.startsWith("/") || href.startsWith("#");
+  const extraProps = cursorNone ? { "data-cursor-none": true } : {};
 
   const inner = (
     <>
@@ -333,42 +336,38 @@ export function BtnPrimary({
   const cls =
     "group inline-flex items-center gap-2 rounded-full bg-ink text-paper px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.1em] hover:bg-ember hover:text-ink transition-colors";
 
-  return (
-    <Magnetic strength={0.25}>
-      {isInternal ? (
-        <Link href={href} className={cls}>
-          {inner}
-        </Link>
-      ) : (
-        <a href={href} className={cls}>
-          {inner}
-        </a>
-      )}
-    </Magnetic>
+  const link = isInternal ? (
+    <Link href={href} className={cls} {...extraProps}>{inner}</Link>
+  ) : (
+    <a href={href} className={cls} {...extraProps}>{inner}</a>
   );
+
+  return cursorNone ? link : <Magnetic strength={0.25}>{link}</Magnetic>;
 }
 
 interface BtnGhostProps {
   children: ReactNode;
   href?: string;
+  cursorNone?: boolean;
 }
 
-export function BtnGhost({ children, href = "#" }: BtnGhostProps) {
+export function BtnGhost({ children, href = "#", cursorNone }: BtnGhostProps) {
   const isInternal = href.startsWith("/") || href.startsWith("#");
   const cls =
     "inline-flex items-center gap-2 rounded-full border-2 px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.1em] hover:bg-paper-3 transition-colors";
   const style: CSSProperties = { borderColor: "#0a0a0a", color: "#0a0a0a" };
+  const extraProps = cursorNone ? { "data-cursor-none": true } : {};
 
   if (isInternal) {
     return (
-      <Link href={href} className={cls} style={style}>
+      <Link href={href} className={cls} style={style} {...extraProps}>
         {children}
       </Link>
     );
   }
 
   return (
-    <a href={href} className={cls} style={style}>
+    <a href={href} className={cls} style={style} {...extraProps}>
       {children}
     </a>
   );

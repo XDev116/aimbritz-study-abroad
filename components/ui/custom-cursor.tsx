@@ -47,13 +47,21 @@ export function CustomCursor() {
       raf = requestAnimationFrame(animate);
     };
 
-    const onEnter = (e: Event) => {
-      const target = e.currentTarget as HTMLElement;
-      setIsHovering(true);
-      const attr = target.getAttribute("data-cursor-label");
-      setLabel(attr);
-    };
-    const onLeave = () => {
+    const onOver = (e: MouseEvent) => {
+      let node = e.target as HTMLElement | null;
+      while (node && node !== document.body) {
+        if (node.hasAttribute("data-cursor-none")) {
+          setIsHovering(false);
+          setLabel(null);
+          return;
+        }
+        if (node.hasAttribute("data-cursor-hover") || node.hasAttribute("data-cursor-label")) {
+          setIsHovering(true);
+          setLabel(node.getAttribute("data-cursor-label"));
+          return;
+        }
+        node = node.parentElement;
+      }
       setIsHovering(false);
       setLabel(null);
     };
@@ -61,35 +69,12 @@ export function CustomCursor() {
     window.addEventListener("mousemove", onMove);
     animate();
 
-    const attachHover = () => {
-      const hovers = document.querySelectorAll<HTMLElement>(
-        "a, button, [data-cursor-hover], [data-cursor-label]"
-      );
-      hovers.forEach((el) => {
-        el.addEventListener("mouseenter", onEnter);
-        el.addEventListener("mouseleave", onLeave);
-      });
-      return hovers;
-    };
-
-    let hovers = attachHover();
-    const observer = new MutationObserver(() => {
-      hovers.forEach((el) => {
-        el.removeEventListener("mouseenter", onEnter);
-        el.removeEventListener("mouseleave", onLeave);
-      });
-      hovers = attachHover();
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
+    document.addEventListener("mouseover", onOver);
 
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("mousemove", onMove);
-      hovers.forEach((el) => {
-        el.removeEventListener("mouseenter", onEnter);
-        el.removeEventListener("mouseleave", onLeave);
-      });
-      observer.disconnect();
+      document.removeEventListener("mouseover", onOver);
     };
   }, []);
 

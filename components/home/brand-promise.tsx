@@ -111,8 +111,8 @@ export function BrandPromise() {
         }
 
         // Reset everything to initial hidden state
-        gsap.set(heroLayer, { scale: 1, opacity: 1 });
-        gsap.set(promiseLayer, { opacity: 0 });
+        gsap.set(heroLayer, { scale: 1, opacity: 1, pointerEvents: "auto" });
+        gsap.set(promiseLayer, { opacity: 0, pointerEvents: "none" });
         gsap.set(sigContainer, { position: "absolute", top: "50%", left: "50%", xPercent: -50, yPercent: -50, scale: 1, opacity: 1 });
         paths.forEach((p) => gsap.set(p, { strokeDasharray: 1, strokeDashoffset: 1, fillOpacity: 0 }));
         gsap.set(content, { opacity: 0, y: 40 });
@@ -136,8 +136,8 @@ export function BrandPromise() {
         // 0.00–0.20: hero shrinks and fades
         tl.to(heroLayer, { scale: 0.55, duration: 0.2, ease: "power2.inOut" }, 0);
         tl.to(sticky, { "--bp-bg": "rgba(40,44,32,0.92)", "--bp-fg": "#fcfcfa", duration: 0.2, ease: "power2.inOut" } as gsap.TweenVars, 0.05);
-        tl.to(promiseLayer, { opacity: 1, duration: 0.15, ease: "power2.out" }, 0.1);
-        tl.to(heroLayer, { scale: 0.3, opacity: 0, duration: 0.12, ease: "power2.in" }, 0.2);
+        tl.to(promiseLayer, { opacity: 1, pointerEvents: "auto", duration: 0.15, ease: "power2.out" }, 0.1);
+        tl.to(heroLayer, { scale: 0.3, opacity: 0, pointerEvents: "none", duration: 0.12, ease: "power2.in" }, 0.2);
 
         // 0.18–0.55: signature draws stroke by stroke
         const STROKE_START = 0.18;
