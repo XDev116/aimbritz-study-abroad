@@ -99,8 +99,8 @@ export function BrandPromise() {
         // Navigation-back never triggers this because we scrollTo(0) on mount above.
         const rect = outer.getBoundingClientRect();
         if (rect.top < 0 && rect.bottom > 0) {
-          gsap.set(heroLayer, { opacity: 0, scale: 0.3 });
-          gsap.set(promiseLayer, { opacity: 1 });
+          gsap.set(heroLayer, { opacity: 0, scale: 0.3, pointerEvents: "none" });
+          gsap.set(promiseLayer, { opacity: 1, pointerEvents: "auto" });
           gsap.set(sigContainer, { position: "absolute", top: "28%", left: "50%", xPercent: -50, yPercent: -50, scale: 0.35, opacity: 1 });
           paths.forEach((p) => gsap.set(p, { strokeDasharray: "none", strokeDashoffset: 0, fillOpacity: 1 }));
           gsap.set(content, { opacity: 1, y: 0 });
@@ -254,7 +254,7 @@ export function BrandPromise() {
 
 
         {/* PROMISE LAYER — hidden on desktop before JS runs via noscript-safe CSS */}
-        <style>{`@media(min-width:1024px){.bp-promise-layer{opacity:0}}`}</style>
+        <style>{`@media(min-width:1024px){.bp-promise-layer{opacity:0;pointer-events:none}}`}</style>
         <div
           ref={promiseLayerRef}
           className="bp-promise-layer relative lg:absolute lg:inset-0 min-h-screen lg:min-h-0"
