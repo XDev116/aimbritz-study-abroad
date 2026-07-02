@@ -76,63 +76,22 @@ function fixHair(root: THREE.Object3D) {
   });
 }
 
-function CEOModel({ outfit }: { outfit: string }) {
+function CEOModel({ outfit: _outfit }: { outfit: string }) {
   const group = useRef<THREE.Group>(null);
 
-  // Base carries the body + hair + shoes + skeleton + animations
+  // New avatar has outfit baked in — single GLB with body + outfit + animations
   const base = useGLTF(BASE_URL);
-  // Selected outfit GLB (its own copy of the same skeleton + the garment skin)
-  const outfitUrl = OUTFITS[outfit] ?? OUTFITS[DEFAULT_OUTFIT];
-  const outfitGltf = useGLTF(outfitUrl);
-
-  // Animations are driven by the BASE skeleton
   const { actions } = useAnimations(base.animations, group);
 
-  /* Graft the outfit's skinned mesh(es) onto the base's skeleton so they
-     deform with the same animation. We match bones by name (identical rigs). */
-  const dressedScene = useMemo(() => {
-    const scene = base.scene;
-
-    // Build a name → Bone map from the base skeleton
-    const baseBones: Record<string, THREE.Bone> = {};
-    scene.traverse((o) => {
-      if ((o as THREE.Bone).isBone) baseBones[o.name] = o as THREE.Bone;
-    });
-
-    // Find the base armature root to attach garment meshes under
-    let baseArmature: THREE.Object3D | null = null;
-    scene.traverse((o) => {
-      if (!baseArmature && (o as THREE.Bone).isBone) baseArmature = o.parent;
-    });
-
-    // Collect the outfit's skinned meshes, rebind them to the base skeleton
-    const garmentMeshes: THREE.SkinnedMesh[] = [];
-    outfitGltf.scene.traverse((o) => {
-      const sm = o as THREE.SkinnedMesh;
-      if (sm.isSkinnedMesh) garmentMeshes.push(sm);
-    });
-
-    garmentMeshes.forEach((sm) => {
-      // Rebuild this mesh's skeleton from the BASE bones (same names/order)
-      const oldBones = sm.skeleton.bones;
-      const newBones = oldBones.map((b) => baseBones[b.name] ?? b);
-      const newSkeleton = new THREE.Skeleton(newBones, sm.skeleton.boneInverses);
-      // Detach from its original armature and attach to the base scene
-      const target = baseArmature ?? scene;
-      target.add(sm);
-      sm.bind(newSkeleton, sm.bindMatrix);
-      sm.frustumCulled = false;
-    });
-
-    fixHair(scene);
-    return scene;
-  }, [base.scene, outfitGltf.scene]);
+  const scene = useMemo(() => {
+    fixHair(base.scene);
+    return base.scene;
+  }, [base.scene]);
 
   useEffect(() => {
-    const intro = actions["intro"];
     const wave = actions["wave"];
     const idle = actions["idle"];
-    if (!intro || !wave || !idle) return;
+    if (!wave || !idle) return;
 
     if (introPlayed) {
       if (group.current) group.current.visible = true;
@@ -143,37 +102,27 @@ function CEOModel({ outfit }: { outfit: string }) {
 
     const startTimer = setTimeout(() => {
       if (group.current) group.current.visible = true;
-      intro.setLoop(THREE.LoopOnce, 1);
-      intro.clampWhenFinished = true;
-      intro.reset().play();
+      wave.setLoop(THREE.LoopOnce, 1);
+      wave.clampWhenFinished = true;
+      wave.reset().play();
 
-      const waveTimer = setTimeout(() => {
-        wave.setLoop(THREE.LoopOnce, 1);
-        wave.clampWhenFinished = true;
-        wave.reset().play();
-        intro.fadeOut(0.5);
-        wave.fadeIn(0.5);
+      const idleTimer = setTimeout(() => {
+        introPlayed = true;
+        idle.setLoop(THREE.LoopRepeat, Infinity);
+        idle.reset().play();
+        wave.fadeOut(0.5);
+        idle.fadeIn(0.5);
+      }, 4000);
 
-        const idleTimer = setTimeout(() => {
-          introPlayed = true;
-          idle.setLoop(THREE.LoopRepeat, Infinity);
-          idle.reset().play();
-          wave.fadeOut(0.5);
-          idle.fadeIn(0.5);
-        }, 5133);
-
-        return () => clearTimeout(idleTimer);
-      }, 2867);
-
-      return () => clearTimeout(waveTimer);
-    }, 2000);
+      return () => clearTimeout(idleTimer);
+    }, 1000);
 
     return () => clearTimeout(startTimer);
   }, [actions]);
 
   return (
     <group ref={group} scale={1.5} position={[0, -1.8, 0]} visible={false}>
-      <primitive object={dressedScene} />
+      <primitive object={scene} />
     </group>
   );
 }
