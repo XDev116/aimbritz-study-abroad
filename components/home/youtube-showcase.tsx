@@ -12,7 +12,7 @@ const CHANNEL_URL = "https://www.youtube.com/@AimbritzStudyAbroad";
 
 const VIDEOS = [
   {
-    id: "jOz6OvFmA-k",
+    id: "mlVAGx7jus8",
     title: "How we got this student into Oxford",
     label: "Success Story",
   },
