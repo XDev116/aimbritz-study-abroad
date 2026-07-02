@@ -32,6 +32,13 @@ const VIDEOS = [
     duration: "9:51",
     featured: false,
   },
+  {
+    id: "DV78jozbwjA",
+    title: "Study abroad on a budget — real numbers",
+    label: "Finance",
+    duration: "10:33",
+    featured: false,
+  },
 ];
 
 const YT_ICON = (
@@ -370,51 +377,16 @@ export function YoutubeShowcase() {
           {/* Featured left */}
           <FeaturedCard video={featured} index={0} />
 
-          {/* Side right — stacked */}
-          <div className="flex flex-col gap-6">
+          {/* Side right — 3 cards stacked */}
+          <div className="flex flex-col gap-0">
             {side.map((video, i) => (
               <div key={video.id}>
                 <SideCard video={video} index={i + 1} />
                 {i < side.length - 1 && (
-                  <div className="mt-6" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }} />
+                  <div className="my-5" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }} />
                 )}
               </div>
             ))}
-
-            {/* Subscribe CTA card */}
-            <a
-              href={CHANNEL_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center justify-between px-5 py-4 transition-all duration-300 hover:border-red-600/50"
-              style={{
-                border: "1px solid rgba(255,255,255,0.07)",
-                background: "rgba(255,255,255,0.02)",
-                marginTop: 2,
-              }}
-            >
-              <div>
-                <p className="font-mono text-[9px] tracking-[0.25em] uppercase mb-1" style={{ color: "rgba(255,255,255,0.3)" }}>
-                  More videos
-                </p>
-                <p className="font-sans font-bold text-sm" style={{ color: "rgba(252,252,250,0.65)" }}>
-                  Visit our channel →
-                </p>
-              </div>
-              <div
-                className="flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110"
-                style={{
-                  width: 40,
-                  height: 40,
-                  background: "rgba(255,0,0,0.12)",
-                  border: "1px solid rgba(255,0,0,0.25)",
-                }}
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,80,80,0.9)" strokeWidth="2">
-                  <path d="M7 17L17 7M17 7H8M17 7V16" />
-                </svg>
-              </div>
-            </a>
           </div>
         </div>
 
