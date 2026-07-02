@@ -123,6 +123,12 @@ export function BrandPromise() {
         sticky.style.setProperty("--bp-fg", "#0a0a0a");
 
         // Single scrubbed timeline — full sequence tied to scroll, reverses cleanly
+        // Total timeline runs 0 → 1. With 400vh the mapping is:
+        //   0.00–0.15 → hero fade  (~1 scroll)
+        //   0.15–0.45 → signature draw (~1.2 scrolls)
+        //   0.45–0.52 → fill solid
+        //   0.52–0.62 → sig moves up
+        //   0.62–1.00 → promise text cascades in + dwells (~1.5 scrolls)
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: outer,
@@ -133,29 +139,31 @@ export function BrandPromise() {
           },
         });
 
-        // 0.00–0.20: hero shrinks and fades
-        tl.to(heroLayer, { scale: 0.55, duration: 0.2, ease: "power2.inOut" }, 0);
-        tl.to(sticky, { "--bp-bg": "rgba(40,44,32,0.92)", "--bp-fg": "#fcfcfa", duration: 0.2, ease: "power2.inOut" } as gsap.TweenVars, 0.05);
-        tl.to(promiseLayer, { opacity: 1, pointerEvents: "auto", duration: 0.15, ease: "power2.out" }, 0.1);
-        tl.to(heroLayer, { scale: 0.3, opacity: 0, pointerEvents: "none", duration: 0.12, ease: "power2.in" }, 0.2);
+        // 0.00–0.15: hero shrinks and fades
+        tl.to(heroLayer, { scale: 0.55, duration: 0.12, ease: "power2.inOut" }, 0);
+        tl.to(sticky, { "--bp-bg": "rgba(40,44,32,0.92)", "--bp-fg": "#fcfcfa", duration: 0.12, ease: "power2.inOut" } as gsap.TweenVars, 0.03);
+        tl.to(promiseLayer, { opacity: 1, pointerEvents: "auto", duration: 0.1, ease: "power2.out" }, 0.07);
+        tl.to(heroLayer, { scale: 0.3, opacity: 0, pointerEvents: "none", duration: 0.08, ease: "power2.in" }, 0.12);
 
-        // 0.18–0.55: signature draws stroke by stroke
-        const STROKE_START = 0.18;
-        const STROKE_SPAN = 0.37;
+        // 0.15–0.45: signature draws stroke by stroke
+        const STROKE_START = 0.15;
+        const STROKE_SPAN = 0.30;
         const perStroke = STROKE_SPAN / paths.length;
         paths.forEach((p, i) => {
           tl.to(p, { strokeDashoffset: 0, duration: perStroke * 1.1, ease: "none" }, STROKE_START + i * perStroke * 0.9);
         });
 
-        // 0.55–0.63: strokes fill solid
-        tl.to(paths, { fillOpacity: 1, duration: 0.08, ease: "power2.out" }, 0.55);
+        // 0.45–0.52: strokes fill solid
+        tl.to(paths, { fillOpacity: 1, duration: 0.07, ease: "power2.out" }, 0.45);
 
-        // 0.70–0.82: sig moves to top slot, content cascades in
-        tl.fromTo(sigContainer, { top: "50%" }, { top: "28%", scale: 0.35, duration: 0.12, ease: "power2.inOut" }, 0.7);
-        tl.to(content, { opacity: 1, y: 0, duration: 0.07, ease: "power2.out" }, 0.75);
-        tl.to(".bp-eyebrow", { y: 0, opacity: 1, duration: 0.04 }, 0.78);
-        tl.to(".bp-line", { y: 0, opacity: 1, duration: 0.04, stagger: 0.03 }, 0.82);
-        tl.to(".bp-meta", { y: 0, opacity: 1, duration: 0.04 }, 0.9);
+        // 0.52–0.62: sig moves to top slot
+        tl.fromTo(sigContainer, { top: "50%" }, { top: "28%", scale: 0.35, duration: 0.10, ease: "power2.inOut" }, 0.52);
+
+        // 0.62–1.00: promise text cascades in — generous scroll room to read
+        tl.to(content, { opacity: 1, y: 0, duration: 0.08, ease: "power2.out" }, 0.62);
+        tl.to(".bp-eyebrow", { y: 0, opacity: 1, duration: 0.06 }, 0.68);
+        tl.to(".bp-line", { y: 0, opacity: 1, duration: 0.07, stagger: 0.06 }, 0.74);
+        tl.to(".bp-meta", { y: 0, opacity: 1, duration: 0.06 }, 0.92);
       }, outer);
     };
 
@@ -178,7 +186,7 @@ export function BrandPromise() {
   }, []);
 
   return (
-    <section ref={outerRef} className="relative h-auto lg:h-[400vh]">
+    <section ref={outerRef} className="relative h-auto lg:h-[300vh]">
       <div
         ref={stickyRef}
         className="lg:sticky top-0 lg:h-screen w-full"

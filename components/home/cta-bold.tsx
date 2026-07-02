@@ -290,6 +290,18 @@ export function CtaBold() {
           </div>
         ))}
 
+        {/* Records badge column — sits alongside Explore / Company / Reach us */}
+        <div className="col-span-6 md:col-span-2 flex flex-col justify-start">
+          <Image
+            src="/logo/asiaindiarecords.png"
+            alt="Asia Book of Records & India Book of Records"
+            width={267}
+            height={163}
+            className="w-auto object-contain opacity-90"
+            style={{ maxWidth: 140 }}
+          />
+        </div>
+
         {/* Offices — full width, 2 cols */}
         <div className="col-span-12 pt-6" style={{ borderTop: "1px solid rgba(248,244,235,0.08)" }}>
           <p className="font-mono text-[9px] tracking-[0.28em] uppercase mb-4" style={{ color: "var(--ember)" }}>Our Offices</p>

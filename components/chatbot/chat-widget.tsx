@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, memo, useCallback } from "react";
-import { X, Send, Minimize2, User } from "lucide-react";
+import { X, Send, Minimize2, User, ArrowLeftRight, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Professor3D } from "./professor-3d";
@@ -65,6 +65,8 @@ export function ChatWidget() {
   const [isMinimized, setIsMinimized] = useState(false);
   const [hasWalkedIn, setHasWalkedIn] = useState(false);
   const [showGreeting, setShowGreeting] = useState(false);
+  const [side, setSide] = useState<"right" | "left">("right");
+  const [isDismissed, setIsDismissed] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -210,22 +212,18 @@ export function ChatWidget() {
   return (
     <>
       {/* Floating CEO character — walks in on load */}
-      {!isOpen && (
+      {!isOpen && !isDismissed && (
         <>
-          {/* Speech bubble — fixed position so it's always close to the head
-              regardless of canvas empty space. Character box widths: 140/200/280px.
-              Head sits at roughly horizontal-centre of box, top ~25% height.
-              mobile: box=140px, head-bottom from viewport-bottom ≈ 240*0.75=180px
-              sm:     box=200px, head-bottom ≈ 340*0.75=255px
-              md:     box=280px, head-bottom ≈ 480*0.75=360px */}
+          {/* Speech bubble */}
           {showGreeting && hasWalkedIn && (
             <button
               onClick={() => { setIsOpen(true); setShowGreeting(false); }}
               aria-label="Chat with advisor"
-              className="fixed z-50 pointer-events-auto animate-in fade-in slide-in-from-right-2 duration-300
-                         [bottom:130px] [right:100px]
-                         sm:[bottom:220px] sm:[right:100px]
-                         md:[bottom:300px] md:[right:180px]"
+              className={`fixed z-50 pointer-events-auto animate-in fade-in duration-300
+                         [bottom:130px] sm:[bottom:220px] md:[bottom:300px]
+                         ${side === "right"
+                           ? "[right:100px] sm:[right:100px] md:[right:180px]"
+                           : "[left:100px] sm:[left:100px] md:[left:180px]"}`}
             >
               <div
                 className="relative rounded-xl px-3 py-2 sm:rounded-2xl sm:px-4 sm:py-3 shadow-lg text-left"
@@ -234,14 +232,22 @@ export function ChatWidget() {
                 <p className="font-sans text-[10px] sm:text-[12px] leading-snug font-medium" style={{ color: "var(--paper)" }}>
                   Hi! Need help finding a university?
                 </p>
-                <div className="absolute top-1/2 -translate-y-1/2 -right-[7px] w-0 h-0"
-                  style={{ borderTop: "6px solid transparent", borderBottom: "6px solid transparent", borderLeft: "8px solid var(--ink)" }} />
+                <div
+                  className={`absolute top-1/2 -translate-y-1/2 w-0 h-0 ${side === "right" ? "-right-[7px]" : "-left-[7px]"}`}
+                  style={side === "right"
+                    ? { borderTop: "6px solid transparent", borderBottom: "6px solid transparent", borderLeft: "8px solid var(--ink)" }
+                    : { borderTop: "6px solid transparent", borderBottom: "6px solid transparent", borderRight: "8px solid var(--ink)" }}
+                />
               </div>
             </button>
           )}
 
-          <div className={`fixed bottom-0 right-0 z-50 pointer-events-none ${!hasWalkedIn ? "translate-x-[200%]" : ""} transition-all duration-1000 ease-out`}>
-            {/* clicking the character opens chat; canvas stays pointer-events-none so scroll passes through */}
+          <div
+            className={`fixed bottom-0 z-50 pointer-events-none transition-all duration-1000 ease-out
+              ${side === "right" ? "right-0" : "left-0"}
+              ${!hasWalkedIn ? (side === "right" ? "translate-x-[200%]" : "-translate-x-[200%]") : ""}`}
+          >
+            {/* Character — click to open chat */}
             <button
               onClick={() => { setIsOpen(true); setShowGreeting(false); }}
               aria-label="Chat with advisor"
@@ -253,16 +259,53 @@ export function ChatWidget() {
                 <Professor3D />
               </div>
             </button>
+
+            {/* Control buttons — swap side / dismiss to chat bubble */}
+            <div
+              className={`absolute bottom-3 pointer-events-auto flex gap-1.5
+                ${side === "right" ? "left-1/2 -translate-x-1/2" : "left-1/2 -translate-x-1/2"}`}
+            >
+              <button
+                onClick={(e) => { e.stopPropagation(); setSide(s => s === "right" ? "left" : "right"); }}
+                aria-label="Swap position"
+                className="h-7 w-7 rounded-full flex items-center justify-center transition-colors hover:opacity-80"
+                style={{ background: "var(--ink)", color: "var(--paper)", border: "1px solid rgba(255,255,255,0.15)" }}
+              >
+                <ArrowLeftRight className="h-3 w-3" />
+              </button>
+              <button
+                onClick={(e) => { e.stopPropagation(); setIsDismissed(true); }}
+                aria-label="Dismiss"
+                className="h-7 w-7 rounded-full flex items-center justify-center transition-colors hover:opacity-80"
+                style={{ background: "var(--ink)", color: "var(--paper)", border: "1px solid rgba(255,255,255,0.15)" }}
+              >
+                <X className="h-3 w-3" />
+              </button>
+            </div>
           </div>
         </>
+      )}
+
+      {/* Minimised chat bubble — shown after dismiss */}
+      {!isOpen && isDismissed && (
+        <button
+          onClick={() => { setIsDismissed(false); setIsOpen(true); }}
+          aria-label="Open chat"
+          data-cursor-label="Chat"
+          className={`fixed bottom-6 z-50 h-14 w-14 rounded-full flex items-center justify-center shadow-lg transition-colors hover:opacity-90
+            ${side === "right" ? "right-6" : "left-6"}`}
+          style={{ background: "var(--ink)", color: "var(--paper)" }}
+        >
+          <MessageCircle className="h-6 w-6" />
+        </button>
       )}
 
       {/* Chat window — paper surface, hairline border, Fraunces header */}
       {isOpen && (
         <div
-          className={`fixed bottom-6 right-6 z-50 transition-all duration-300 ${
-            isMinimized ? "w-80 h-16" : "w-full sm:w-96 h-[600px]"
-          } max-w-[calc(100vw-3rem)] max-h-[calc(100vh-3rem)]`}
+          className={`fixed bottom-6 z-50 transition-all duration-300 ${
+            side === "right" ? "right-6" : "left-6"
+          } ${isMinimized ? "w-80 h-16" : "w-full sm:w-96 h-[600px]"} max-w-[calc(100vw-3rem)] max-h-[calc(100vh-3rem)]`}
         >
           <div className="bg-paper-3 rounded-3xl shadow-paper h-full flex flex-col overflow-hidden border border-hairline animate-scale-in">
             {/* Header — ink surface, editorial title */}
