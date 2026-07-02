@@ -377,16 +377,48 @@ export function YoutubeShowcase() {
           {/* Featured left */}
           <FeaturedCard video={featured} index={0} />
 
-          {/* Side right — 3 cards stacked */}
-          <div className="flex flex-col gap-0">
+          {/* Side right — 3 cards + see more CTA */}
+          <div className="flex flex-col">
             {side.map((video, i) => (
               <div key={video.id}>
                 <SideCard video={video} index={i + 1} />
-                {i < side.length - 1 && (
-                  <div className="my-5" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }} />
-                )}
+                <div className="my-5" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }} />
               </div>
             ))}
+
+            {/* See more CTA */}
+            <a
+              href={CHANNEL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center justify-between px-5 py-4 transition-all duration-300"
+              style={{
+                border: "1px solid rgba(255,0,0,0.18)",
+                background: "rgba(255,0,0,0.04)",
+              }}
+            >
+              <div>
+                <p className="font-mono text-[8px] tracking-[0.28em] uppercase mb-1" style={{ color: "rgba(255,255,255,0.3)" }}>
+                  More videos
+                </p>
+                <p className="font-sans font-bold text-sm transition-colors duration-200 group-hover:text-white" style={{ color: "rgba(252,252,250,0.6)" }}>
+                  See more on YouTube
+                </p>
+              </div>
+              <div
+                className="flex items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:bg-red-600/20"
+                style={{
+                  width: 38,
+                  height: 38,
+                  background: "rgba(255,0,0,0.1)",
+                  border: "1px solid rgba(255,0,0,0.3)",
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,80,80,0.9)" strokeWidth="2.2">
+                  <path d="M7 17L17 7M17 7H8M17 7V16" />
+                </svg>
+              </div>
+            </a>
           </div>
         </div>
 
