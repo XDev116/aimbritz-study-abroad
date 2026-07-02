@@ -178,7 +178,7 @@ export function BrandPromise() {
   }, []);
 
   return (
-    <section ref={outerRef} className="relative h-auto lg:h-[700vh]">
+    <section ref={outerRef} className="relative h-auto lg:h-[400vh]">
       <div
         ref={stickyRef}
         className="lg:sticky top-0 lg:h-screen w-full"
